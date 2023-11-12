@@ -41,7 +41,6 @@ public abstract class Entity : MonoBehaviour
         DamageCasterCompo = GetComponent<DamageCaster>();
 
         HealthCompo.OnKnockBack += HandleKnockback;
-        Debug.Log($"awake : {gameObject.name}");
         HealthCompo.OnChangeHealth += HandleChangeHealth;
         HealthCompo.OnDied += HandleDie;
     }
@@ -55,7 +54,7 @@ public abstract class Entity : MonoBehaviour
 
     private void HandleChangeHealth()
     {
-        
+        //나중에 UI 갱신관련 로직이 여기 들어가야 한다.
     }
 
     private void HandleKnockback(Vector2 direction)
