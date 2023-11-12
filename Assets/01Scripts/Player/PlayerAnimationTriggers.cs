@@ -21,10 +21,16 @@ public class PlayerAnimationTriggers : MonoBehaviour
     {
         _player.AnimationTrigger();
     }
-
-    //이건 공격 콤포넌트를 따로 만들어야 해. SOLID에 어긋나.
+    
     private void AttackTrigger()
     {
         _player.Attack();
+    }
+
+    //칼을 던지는 이벤트.
+    private void ThrowSword()
+    {
+        SwordSkill skill = _player.skill.GetSkill(PlayerSkill.Sword) as SwordSkill;
+        skill.CreateSword();
     }
 }

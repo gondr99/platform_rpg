@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -7,6 +8,12 @@ public class Skill : MonoBehaviour
 {
     [SerializeField] protected float _cooldown;
     protected float _cooldownTimer;
+    protected Player _player;
+
+    protected virtual void Start()
+    {
+        _player = GameManager.Instance.Player;
+    }
 
     protected virtual void Update()
     {

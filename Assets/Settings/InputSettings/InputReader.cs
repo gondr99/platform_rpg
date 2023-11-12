@@ -9,10 +9,13 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public event Action JumpEvent;
     public event Action DashEvent;
     public event Action CounterAttackEvent;
+    public event Action<bool> ThrowAimEvent;
+    public Vector2 AimPosition { get; private set; }
     public float xInput { get; private set; }
     public float yInput { get; private set; }
 
     private Controls _controls;
+    private Controls.IPlayerActions _playerActionsImplementation;
 
     private void OnEnable()
     {
@@ -49,6 +52,22 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
         {
             CounterAttackEvent?.Invoke();
         }
+    }
+
+    public void OnThrowAim(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            ThrowAimEvent?.Invoke(true);
+        }else if (context.canceled)
+        {
+            ThrowAimEvent?.Invoke(false);
+        }
+    }
+
+    public void OnMouseAim(InputAction.CallbackContext context)
+    {
+        AimPosition = context.ReadValue<Vector2>();
     }
 
     public void OnJump(InputAction.CallbackContext context)

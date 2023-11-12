@@ -15,6 +15,7 @@ public class PlayerGroundedState : PlayerState
         _player.PlayerInput.JumpEvent += OnHandleJump;
         _player.PlayerInput.AttackEvent += OnHandleAttack;
         _player.PlayerInput.CounterAttackEvent += OnCounterAttack;
+        _player.PlayerInput.ThrowAimEvent += OnThrowAim;
     }
     
     public override void UpdateState()
@@ -31,7 +32,14 @@ public class PlayerGroundedState : PlayerState
         _player.PlayerInput.JumpEvent -= OnHandleJump;
         _player.PlayerInput.AttackEvent -= OnHandleAttack;
         _player.PlayerInput.CounterAttackEvent -= OnCounterAttack;
+        _player.PlayerInput.ThrowAimEvent -= OnThrowAim;
         base.Exit();
+    }
+
+    private void OnThrowAim(bool state)
+    {
+        if(state)
+            _stateMachine.ChangeState(StateEnum.AimSword);
     }
 
     private void OnHandleAttack()

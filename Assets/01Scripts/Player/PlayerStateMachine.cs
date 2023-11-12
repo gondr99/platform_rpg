@@ -12,6 +12,8 @@ public enum StateEnum
     WallJump,
     PrimaryAttack,
     CounterAttack,
+    AimSword,
+    CatchSword,
 }
 public class PlayerStateMachine
 {

@@ -7,6 +7,7 @@ public enum PlayerSkill
 {
     Dash,
     Clone,
+    Sword,
 }
 
 public class SkillManager : MonoSingleton<SkillManager>
