@@ -8,7 +8,8 @@ public enum SkelectonStateEnum
     Idle,
     Move,
     Battle,
-    Attack
+    Attack,
+    Stuned
 }
 
 public class EnemySkelecton : Enemy
@@ -36,6 +37,9 @@ public class EnemySkelecton : Enemy
     {
         base.Start();
         StateMachine.Initialize(SkelectonStateEnum.Idle);
+        //체력에 구독. 만약 구독해제 안되면 이거 나중에 고쳐야함.
+        // 이렇게 하면 안되는게 일단 카운터 어택이면 체력을 더 깔 수가 없음.
+        //HealthCompo.OnHitEvent.AddListener(()=> CanBeStunned());
     }
 
     protected override void Update()
@@ -43,6 +47,17 @@ public class EnemySkelecton : Enemy
         base.Update();
         StateMachine.CurrentState.UpdateState();
     }
-    
+
+    public override bool CanBeStunned()
+    {
+        if (base.CanBeStunned())
+        {
+            StateMachine.ChangeState(SkelectonStateEnum.Stuned);
+            return true;
+        }
+
+        return false;
+    }
+
     public override void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
 }

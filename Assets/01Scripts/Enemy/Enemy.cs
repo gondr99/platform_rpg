@@ -5,14 +5,17 @@ using UnityEngine;
 public abstract class Enemy : Entity
 {
 
+    
     [Header("셋팅값들")]
     public float moveSpeed;
     public float idleTime;
     public float battleTime; //전투시간을 초과하면 idle상태로 이동한다.
     
+    
     [SerializeField] protected LayerMask _whatIsPlayer;
     [SerializeField] protected LayerMask _whatIsObstacle;
 
+    [Header("공격상태설정값")]
     public float runAwayDistance;
     public float attackDistance;
     public float attackCooldown;
@@ -40,6 +43,27 @@ public abstract class Enemy : Entity
     }
 
     public abstract void AnimationFinishTrigger();
+
+    public virtual void OpenCounterAttackWindow()
+    {
+        _canBeStuned = true;
+    }
+
+    public virtual void CloseCounterAttackWindow()
+    {
+        _canBeStuned = false;
+    }
+
+    public virtual bool CanBeStunned()
+    {
+        if (_canBeStuned)
+        {
+            CloseCounterAttackWindow();
+            return true;
+        }
+
+        return false;
+    }
     
     #if UNITY_EDITOR
     protected override void OnDrawGizmos()

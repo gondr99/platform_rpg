@@ -17,6 +17,7 @@ public class Player: Entity
     [Header("Attack Settings")]
     public Vector2[] attackMovement;  //앞으로 전진하는 정도.
     public float attackSpeed = 1f;
+    public float counterAttackDuration = 0.2f;
 
 
     public bool IsBusy { get; private set; } = false;

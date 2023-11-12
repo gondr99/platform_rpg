@@ -26,7 +26,6 @@ public class Health : MonoBehaviour, IDamageable
 
     public void ApplyDamage(int damage, Vector2 attackDirection, Vector2 knockbackPower)
     {
-        Debug.Log("apply");
         _currentHealth = Mathf.Clamp(_currentHealth - damage, 0, _maxHealth);
 
         knockbackPower.x *= attackDirection.x; //y값은 고정으로.

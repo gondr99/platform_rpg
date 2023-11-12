@@ -10,7 +10,8 @@ public enum StateEnum
     Dash,
     WallSlide,
     WallJump,
-    PrimaryAttack
+    PrimaryAttack,
+    CounterAttack,
 }
 public class PlayerStateMachine
 {

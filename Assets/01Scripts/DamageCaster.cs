@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class DamageCaster : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class DamageCaster : MonoBehaviour
     public Vector2 knockbackPower;
     
     [SerializeField] private int _maxHitCount = 5; //최대로 때릴 수 있는 적 갯수
-    [SerializeField] private LayerMask _whatIsEnemy;
+    public LayerMask whatIsEnemy;
     private Collider2D[] _hitResult;
 
     private void Awake()
@@ -22,7 +23,7 @@ public class DamageCaster : MonoBehaviour
 
     public void CastDamage()
     {
-        int cnt = Physics2D.OverlapCircleNonAlloc(attackChecker.position, attackCheckRadius, _hitResult, _whatIsEnemy);
+        int cnt = Physics2D.OverlapCircleNonAlloc(attackChecker.position, attackCheckRadius, _hitResult, whatIsEnemy);
 
         
         for (int i = 0; i < cnt; ++i)

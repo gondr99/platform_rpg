@@ -185,6 +185,7 @@ Transform:
   m_Children:
   - {fileID: 2016038772}
   - {fileID: 239675685}
+  - {fileID: 565640368}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &107093091
@@ -290,6 +291,8 @@ MonoBehaviour:
   _wallCheck: {fileID: 1803090821}
   _wallCheckDistance: 0.8
   _knockbackDuration: 0.07
+  stunDuration: 1
+  stunDirection: {x: 5, y: 5}
   moveSpeed: 1.5
   idleTime: 2
   battleTime: 7
@@ -312,7 +315,7 @@ Transform:
   m_GameObject: {fileID: 163771118}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.319, y: -5.63, z: 0}
+  m_LocalPosition: {x: -4.09, y: -5.58, z: 0}
   m_LocalScale: {x: 1.4, y: 1.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -412,7 +415,7 @@ MonoBehaviour:
   damage: 1
   knockbackPower: {x: 4, y: 3}
   _maxHitCount: 1
-  _whatIsEnemy:
+  whatIsEnemy:
     serializedVersion: 2
     m_Bits: 128
 --- !u!114 &163771124
@@ -749,7 +752,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -870,6 +873,55 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &565640367
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 565640368}
+  - component: {fileID: 565640369}
+  m_Layer: 0
+  m_Name: PP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &565640368
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 565640367}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 57062706}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &565640369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 565640367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: d8d3ee5578fa21340aa8d5e585e4d2a4, type: 2}
 --- !u!1 &570811934
 GameObject:
   m_ObjectHideFlags: 0
@@ -1086,7 +1138,7 @@ MonoBehaviour:
   m_LightType: 4
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -1260,6 +1312,8 @@ MonoBehaviour:
   _wallCheck: {fileID: 2094480281}
   _wallCheckDistance: 0.1
   _knockbackDuration: 0.07
+  stunDuration: 0
+  stunDirection: {x: 0, y: 0}
   moveSpeed: 12
   jumpForce: 15
   dashDuration: 0.2
@@ -1270,6 +1324,7 @@ MonoBehaviour:
   - {x: 1, y: 2.5}
   - {x: 4, y: 1.5}
   attackSpeed: 1
+  counterAttackDuration: 0.2
   _inputReader: {fileID: 11400000, guid: 60fa891a105d6e34897b2af6ca489b29, type: 2}
 --- !u!4 &752292464
 Transform:
@@ -1370,7 +1425,7 @@ MonoBehaviour:
   damage: 1
   knockbackPower: {x: 5, y: 7}
   _maxHitCount: 5
-  _whatIsEnemy:
+  whatIsEnemy:
     serializedVersion: 2
     m_Bits: 256
 --- !u!114 &752292468

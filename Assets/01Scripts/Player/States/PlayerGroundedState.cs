@@ -14,6 +14,7 @@ public class PlayerGroundedState : PlayerState
         base.Enter();
         _player.PlayerInput.JumpEvent += OnHandleJump;
         _player.PlayerInput.AttackEvent += OnHandleAttack;
+        _player.PlayerInput.CounterAttackEvent += OnCounterAttack;
     }
     
     public override void UpdateState()
@@ -29,6 +30,7 @@ public class PlayerGroundedState : PlayerState
     {
         _player.PlayerInput.JumpEvent -= OnHandleJump;
         _player.PlayerInput.AttackEvent -= OnHandleAttack;
+        _player.PlayerInput.CounterAttackEvent -= OnCounterAttack;
         base.Exit();
     }
 
@@ -45,4 +47,10 @@ public class PlayerGroundedState : PlayerState
             _stateMachine.ChangeState(StateEnum.Jump);
         }
     }
+    
+    private void OnCounterAttack()
+    {
+        _stateMachine.ChangeState(StateEnum.CounterAttack);        
+    }
+
 }

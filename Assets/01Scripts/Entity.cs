@@ -17,6 +17,10 @@ public abstract class Entity : MonoBehaviour
     [SerializeField] protected float _knockbackDuration;
     protected bool _isKnocked;
     
+    [Header("Stun Info")] 
+    public float stunDuration;
+    public Vector2 stunDirection;
+    protected bool _canBeStuned;
     
     #region 컴포넌트
     public Animator AnimatorCompo { get; private set; }
@@ -79,8 +83,7 @@ public abstract class Entity : MonoBehaviour
     {
         DamageCasterCompo?.CastDamage();
     }
-
-    //넉백의 방향성은 좀 고쳐야한다. 이건 HealthComponent를 만들어서 고치자.
+    
     protected virtual IEnumerator HitKnockback(Vector2 direction)
     {
         _isKnocked = true;
@@ -122,12 +125,13 @@ public abstract class Entity : MonoBehaviour
 
     #region velocity control
 
-    public void SetVelocity(float x, float y)
+    public void SetVelocity(float x, float y, bool doNotFlip = false)
     {
         if (_isKnocked) return; //나중에 추가함. 
         
         RigidbodyCompo.velocity = new Vector2(x, y);
-        FlipController(x);
+        if(!doNotFlip)
+            FlipController(x);
     }
 
     public void StopImmediately(bool withYAxis)
