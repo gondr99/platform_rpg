@@ -25,6 +25,8 @@ public class DamageCaster : MonoBehaviour
     {
         int cnt = Physics2D.OverlapCircleNonAlloc(attackChecker.position, attackCheckRadius, _hitResult, whatIsEnemy);
 
+        //이거 쓰면 라이더가 경고 때리는데 위에껀 유니티에서 쓰지말라함..아잇...
+        //Physics2D.OverlapCircleAll(attackChecker.position, attackCheckRadius, whatIsEnemy);
         
         for (int i = 0; i < cnt; ++i)
         {

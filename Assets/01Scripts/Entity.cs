@@ -38,7 +38,7 @@ public abstract class Entity : MonoBehaviour
         AnimatorCompo = transform.Find("Visual").GetComponent<Animator>();
         RigidbodyCompo = GetComponent<Rigidbody2D>();
         HealthCompo = GetComponent<Health>();
-        DamageCasterCompo = GetComponent<DamageCaster>();
+        DamageCasterCompo = transform.Find("DamageCaster").GetComponent<DamageCaster>();
 
         HealthCompo.OnKnockBack += HandleKnockback;
         HealthCompo.OnChangeHealth += HandleChangeHealth;

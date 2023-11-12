@@ -14,6 +14,10 @@ public class PlayerDashState : PlayerState
         base.Enter();
         _dashDirection = _player.PlayerInput.xInput != 0 ? _player.PlayerInput.xInput : _player.FacingDirection; 
         _dashStartTime = Time.time;
+
+        //지나간 자리에 클론 생성.
+        CloneSkill cloneSkill = _player.skill.GetSkill(PlayerSkill.Clone) as CloneSkill;
+        cloneSkill.CreateClone(_player.transform);
     }
 
     public override void UpdateState()

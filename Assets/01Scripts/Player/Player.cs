@@ -11,17 +11,16 @@ public class Player: Entity
     public float jumpForce = 12f;
     public float dashDuration = 0.4f;
     public float dashSpeed = 20f;
-    [SerializeField] private float _dashCoolTime;
-    private float _lastDashTime;
 
     [Header("Attack Settings")]
     public Vector2[] attackMovement;  //앞으로 전진하는 정도.
     public float attackSpeed = 1f;
     public float counterAttackDuration = 0.2f;
-
-
-    public bool IsBusy { get; private set; } = false;
     
+    
+    public bool IsBusy { get; private set; } = false;
+
+    public SkillManager skill;
     
     public PlayerStateMachine StateMachine { get; private set; }
     [SerializeField] private InputReader _inputReader;
@@ -45,6 +44,7 @@ public class Player: Entity
     protected override void Start()
     {
         base.Start();
+        skill = SkillManager.Instance; //스킬매니저 캐싱
         StateMachine.Initialize(StateEnum.Idle);
     }
 
@@ -64,10 +64,10 @@ public class Player: Entity
         if (IsWallDetected())
             return;
         
-        if (_lastDashTime + _dashCoolTime <= Time.time)
+        //대시 스킬 사용 성공시.
+        if (SkillManager.Instance.GetSkill(PlayerSkill.Dash).AttemptUseSkill())
         {
             StateMachine.ChangeState(StateEnum.Dash);
-            _lastDashTime = Time.time;
         }
     }
 

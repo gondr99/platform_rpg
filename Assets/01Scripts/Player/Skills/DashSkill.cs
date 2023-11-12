@@ -1,18 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class DashSkill : MonoBehaviour
+public class DashSkill : Skill
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void UseSkill()
     {
+        base.UseSkill();
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Debug.Log("뒤쪽에 클론 생성하기.");
     }
 }
