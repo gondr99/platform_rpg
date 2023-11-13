@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 
 public class SwordSkillController : MonoBehaviour
 {
     [SerializeField] private float _disappearDistance = 1f;
+    private SpriteRenderer _spriteRenderer;
     private Animator _animator;
     private Rigidbody2D _rigidbody;
     private CircleCollider2D _circleCollider;
@@ -15,12 +17,14 @@ public class SwordSkillController : MonoBehaviour
     private bool _canRotate = true;
     private bool _isReturning = false;
     private float _returnSpeed;
-
+    private float _lifeTime = 0f;
+    private bool _isDestroyed = false;
+    
     //바운스 관련 변수들. 
     private bool _isBouncing;
     private float _bounceSpeed;
     private int _bounceAmount;
-    private List<Health> _targetList = new List<Health>();
+    private List<Enemy> _targetList = new List<Enemy>();
     private int _targetIndex;
     private int _currentBounceCount = 0;
 
@@ -41,7 +45,9 @@ public class SwordSkillController : MonoBehaviour
     private readonly int _rotationHash = Animator.StringToHash("Rotation");
     private void Awake()
     {
-        _animator = transform.Find("Visual").GetComponent<Animator>();
+        Transform visualTrm = transform.Find("Visual");
+        _animator = visualTrm.GetComponent<Animator>();
+        _spriteRenderer = visualTrm.GetComponent<SpriteRenderer>();
         _rigidbody = GetComponent<Rigidbody2D>();
         _circleCollider = GetComponent<CircleCollider2D>();
     }
@@ -54,6 +60,9 @@ public class SwordSkillController : MonoBehaviour
         _swordSkill = swordSkill;
         _returnSpeed = returnSpeed;
 
+        _lifeTime = _swordSkill.destroyTimer; //시간제한 설정
+        _isDestroyed = false;
+        
         _spinXDirection = Mathf.Clamp(_rigidbody.velocity.x, -1, 1);//노멀라이즈된 방향값.
         //피어싱 소드가 아닐경우만 회전.
         if(_pierceAmount <= 0)
@@ -62,6 +71,8 @@ public class SwordSkillController : MonoBehaviour
     
     private void Update()
     {
+        if (_isDestroyed) return; //이미 파괴된 칼이면 
+        
         if(_canRotate)
             transform.right = _rigidbody.velocity;
 
@@ -78,6 +89,14 @@ public class SwordSkillController : MonoBehaviour
             }
 
             return;
+        }
+
+        _lifeTime -= Time.deltaTime;
+        if (_lifeTime <= 0) //라이프타임이 끝났다면
+        {
+            _isDestroyed = true;
+            _swordSkill.DestroyGenerateSword(); //만들어진 소드를 널로 만들고
+            _spriteRenderer.DOFade(0, 0.8f).OnComplete(() => Destroy(gameObject));
         }
 
         if (_isBouncing)
@@ -125,9 +144,9 @@ public class SwordSkillController : MonoBehaviour
                     transform.position, _circleCollider.radius + 0.5f, _swordSkill.whatIsEnemy);
                 foreach (Collider2D collider in colliders)
                 {
-                    if (collider.TryGetComponent<Health>(out Health health))
+                    if (collider.TryGetComponent<Enemy>(out Enemy enemy))
                     {
-                        DamageToTarget(health);
+                        DamageToTarget(enemy);
                     }
                 }
             }
@@ -147,7 +166,7 @@ public class SwordSkillController : MonoBehaviour
         //적에게 맞아서 리스트를 뽑았다면.
         if (_targetList.Count > 0)
         {
-            Health currentTarget = _targetList[_targetIndex];
+            Enemy currentTarget = _targetList[_targetIndex];
 
             transform.position = Vector2.MoveTowards(
                 transform.position,
@@ -175,9 +194,8 @@ public class SwordSkillController : MonoBehaviour
 
 
         //적에게 꽂혔다면.
-        if (other.TryGetComponent<Health>(out Health health))
+        if (other.TryGetComponent<Enemy>(out Enemy enemy))
         {
-            DamageToTarget(health);
             
             //바운싱 옵션이 있다면.
             if (_isBouncing && _targetList.Count <= 0)
@@ -185,7 +203,11 @@ public class SwordSkillController : MonoBehaviour
                 Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 10f, _swordSkill.whatIsEnemy);
                 
                 //Health 콤포넌트를 뽑아온다.
-                _targetList = colliders.Select(x => x.GetComponent<Health>()).ToList();
+                _targetList = colliders.Select(x => x.GetComponent<Enemy>()).ToList();
+            }
+            else
+            {
+                DamageToTarget(enemy);    
             }
         }
         
@@ -193,11 +215,14 @@ public class SwordSkillController : MonoBehaviour
         StuckIntoTarget(other);
     }
 
-    private void DamageToTarget(Health health)
+    private void DamageToTarget(Enemy enemy)
     {
+        Debug.Log($"Damage to {enemy.name}");
+        //프리징 옵션
+        enemy.FreezeTimerFor(_swordSkill.freezeTime);
         //데미지 옵션
-        Vector2 direction = (health.transform.position - transform.position).normalized;
-        health.ApplyDamage(_swordSkill.skillDamage, direction, _swordSkill.knockbackPower);
+        Vector2 direction = (enemy.transform.position - transform.position).normalized;
+        enemy.HealthCompo.ApplyDamage(_swordSkill.skillDamage, direction, _swordSkill.knockbackPower);
     }
 
     private void StuckIntoTarget(Collider2D other)

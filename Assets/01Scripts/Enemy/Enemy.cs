@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,7 +11,8 @@ public abstract class Enemy : Entity
     public float moveSpeed;
     public float idleTime;
     public float battleTime; //전투시간을 초과하면 idle상태로 이동한다.
-    
+
+    private float _defaultMoveSpeed;
     
     [SerializeField] protected LayerMask _whatIsPlayer;
     [SerializeField] protected LayerMask _whatIsObstacle;
@@ -24,7 +26,7 @@ public abstract class Enemy : Entity
     protected override void Awake()
     {
         base.Awake();
-        
+        _defaultMoveSpeed = moveSpeed;
     }
 
     protected override void Update()
@@ -44,6 +46,29 @@ public abstract class Enemy : Entity
 
     public abstract void AnimationFinishTrigger();
 
+    //만약 타임 프리징에 걸렸다면.
+    public virtual void FreezeTime(bool timeFrozen)
+    {
+        if (timeFrozen)
+        {
+            moveSpeed = 0;
+            AnimatorCompo.speed = 0; //애니메이션 정지. 이동 정지.
+        }
+        else
+        {
+            moveSpeed = _defaultMoveSpeed;
+            AnimatorCompo.speed = 1;
+        }
+    }
+
+    public virtual async void FreezeTimerFor(float delaySec)
+    {
+        FreezeTime(true); //정지
+        await Task.Delay(Mathf.FloorToInt(delaySec * 1000));
+        FreezeTime(false); //재생
+    }
+    
+    #region counter attack region
     public virtual void OpenCounterAttackWindow()
     {
         _canBeStuned = true;
@@ -64,6 +89,7 @@ public abstract class Enemy : Entity
 
         return false;
     }
+    #endregion
     
     #if UNITY_EDITOR
     protected override void OnDrawGizmos()
