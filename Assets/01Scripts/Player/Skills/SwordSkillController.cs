@@ -105,7 +105,7 @@ public class SwordSkillController : MonoBehaviour
         {
             _spinTimer -= Time.deltaTime;
 
-            //천천히 앞으로 전진.
+            //천천히 앞으로 전진
             transform.position = Vector2.MoveTowards(
                 transform.position,
                 new Vector2(transform.position.x + _spinXDirection, transform.position.y), 1.5f * Time.deltaTime);
