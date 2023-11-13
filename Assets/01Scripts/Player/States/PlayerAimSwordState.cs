@@ -12,26 +12,38 @@ public class PlayerAimSwordState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        _player.StopImmediately(false);
+            
         _releaseKey = false;
         _player.PlayerInput.ThrowAimEvent += OnThrowAim;
         
-        (_player.skill.GetSkill(PlayerSkill.Sword) as SwordSkill)?.DotsActive(true);
+        _player.skill.GetSkill<SwordSkill>(PlayerSkill.Sword)?.DotsActive(true);
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
+        Vector2 mousePosition = GameManager.Instance.MainCam.ScreenToWorldPoint(_player.PlayerInput.AimPosition);
+
+        if ((_player.transform.position.x > mousePosition.x && _player.FacingDirection > 0) ||
+            (_player.transform.position.x < mousePosition.x && _player.FacingDirection < 0))
+        {
+            _player.Flip();
+        }
+       
+        
         if (_releaseKey && _triggerCalled)
         {
             //키도 눌렸고 애니메이션도 종료되었다면 Idle상태로 전환
             _stateMachine.ChangeState(StateEnum.Idle);
         }
+        
     }
 
     public override void Exit()
     {
-        (_player.skill.GetSkill(PlayerSkill.Sword) as SwordSkill)?.DotsActive(false);
+        _player.skill.GetSkill<SwordSkill>(PlayerSkill.Sword)?.DotsActive(false);
         _player.PlayerInput.ThrowAimEvent -= OnThrowAim;
         base.Exit();
     }

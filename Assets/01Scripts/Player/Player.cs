@@ -65,7 +65,7 @@ public class Player: Entity
             return;
         
         //대시 스킬 사용 성공시.
-        if (SkillManager.Instance.GetSkill(PlayerSkill.Dash).AttemptUseSkill())
+        if (SkillManager.Instance.GetSkill<DashSkill>(PlayerSkill.Dash).AttemptUseSkill())
         {
             StateMachine.ChangeState(StateEnum.Dash);
         }

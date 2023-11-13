@@ -59,5 +59,12 @@ public class EnemySkelecton : Enemy
         return false;
     }
 
+    
+    protected override void HandleHit()
+    {
+        base.HandleHit();
+        StateMachine.ChangeState(SkelectonStateEnum.Battle); //공격상태로 넘긴다.
+    }
+
     public override void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
 }

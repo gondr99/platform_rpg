@@ -23,11 +23,11 @@ public class SkillManager : MonoSingleton<SkillManager>
         }
     }
 
-    public Skill GetSkill(PlayerSkill skill)
+    public T GetSkill<T>(PlayerSkill skill) where T : Skill
     {
         if (_skills.TryGetValue(skill, out Skill target))
         {
-            return target;
+            return target as T;
         }
 
         return null;

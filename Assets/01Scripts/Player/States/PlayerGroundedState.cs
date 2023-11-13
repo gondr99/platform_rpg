@@ -38,8 +38,20 @@ public class PlayerGroundedState : PlayerState
 
     private void OnThrowAim(bool state)
     {
-        if(state)
+        //이미 칼을 던진상태면 더이상 진행안함.
+        SwordSkill swordSkill = _player.skill.GetSkill<SwordSkill>(PlayerSkill.Sword);
+        if (swordSkill == null) 
+            return;
+        
+        bool hasSwordAlready = swordSkill.generatedSword != null;
+        if (state && !hasSwordAlready)
+        {
             _stateMachine.ChangeState(StateEnum.AimSword);
+        }
+        else if (state)
+        {
+            swordSkill.ReturnGenerateSword();
+        }
     }
 
     private void OnHandleAttack()

@@ -7,7 +7,7 @@ public class Health : MonoBehaviour, IDamageable
     [SerializeField] private int _maxHealth;
     private int _currentHealth;
 
-    public Action OnChangeHealth;
+    public Action OnHit;
     public Action OnDied;
     public Action<Vector2> OnKnockBack;
     
@@ -16,7 +16,6 @@ public class Health : MonoBehaviour, IDamageable
     private void Start()
     {
         _currentHealth = _maxHealth;
-        OnChangeHealth?.Invoke();
     }
 
     public float GetNormalizedHealth()
@@ -31,7 +30,7 @@ public class Health : MonoBehaviour, IDamageable
         knockbackPower.x *= attackDirection.x; //y값은 고정으로.
         OnKnockBack?.Invoke(knockbackPower);
         OnHitEvent?.Invoke();
-        OnChangeHealth?.Invoke();
+        OnHit?.Invoke();
         
         if (_currentHealth == 0)
         {

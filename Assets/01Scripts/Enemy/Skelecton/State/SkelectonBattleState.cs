@@ -18,8 +18,15 @@ public class SkelectonBattleState : EnemyState<SkelectonStateEnum>
     public override void UpdateState()
     {
         base.UpdateState();
+        if (_playerTrm.position.x > _enemy.transform.position.x)
+            _moveDirection = 1;
+        else
+            _moveDirection = -1;
+        _enemy.SetVelocity(_enemy.moveSpeed * _moveDirection, _rigidbody.velocity.y);
+        
         RaycastHit2D hit = _enemy.IsPlayerDetected();
         //레이캐스트힛구조체 안에 operator bool 이 재정의 되어 있음. hit.collider == null 체크함.
+        
         if (hit && !_enemy.IsObstacleInLine(hit.distance))
         {
             _timer = _enemy.battleTime; //타이머 설정
@@ -31,18 +38,9 @@ public class SkelectonBattleState : EnemyState<SkelectonStateEnum>
             }
         }
 
-      
-        
-        if (_playerTrm.position.x > _enemy.transform.position.x)
-            _moveDirection = 1;
-        else
-            _moveDirection = -1;
-
         float distance = Vector2.Distance(_playerTrm.position, _enemy.transform.position);
         
         
-        _enemy.SetVelocity(_enemy.moveSpeed * _moveDirection, _rigidbody.velocity.y);
-
         //앞이 절벽이거나 적이 근거리라면.
         if (!_enemy.IsGroundDetected() || (distance <=  _enemy.attackDistance))
         {
@@ -64,6 +62,13 @@ public class SkelectonBattleState : EnemyState<SkelectonStateEnum>
     {
         base.Enter();
         _playerTrm = GameManager.Instance.PlayerTrm;
+        SetDirectionToEnemy();
+    }
+
+    //적 위치를 바라보도록 코드
+    private void SetDirectionToEnemy()
+    {
+        _enemy.FlipController(_playerTrm.position.x - _enemy.transform.position.x);
     }
 
     public override void Exit()

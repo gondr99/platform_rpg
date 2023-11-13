@@ -35,7 +35,7 @@ public abstract class Enemy : Entity
 
     //전방 50에 플레이어가 있는지 검사.
     public virtual RaycastHit2D IsPlayerDetected()
-        => Physics2D.Raycast(_wallCheck.position, Vector2.right * FacingDirection, 50f, _whatIsPlayer);
+        => Physics2D.Raycast(_wallCheck.position, Vector2.right * FacingDirection, runAwayDistance, _whatIsPlayer);
 
     public virtual bool IsObstacleInLine(float distance)
     {

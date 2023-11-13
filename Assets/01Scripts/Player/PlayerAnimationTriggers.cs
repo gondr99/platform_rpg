@@ -30,7 +30,7 @@ public class PlayerAnimationTriggers : MonoBehaviour
     //칼을 던지는 이벤트.
     private void ThrowSword()
     {
-        SwordSkill skill = _player.skill.GetSkill(PlayerSkill.Sword) as SwordSkill;
+        SwordSkill skill = _player.skill.GetSkill<SwordSkill>(PlayerSkill.Sword);
         skill.CreateSword();
     }
 }

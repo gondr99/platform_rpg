@@ -6,6 +6,6 @@ public class DashSkill : Skill
     {
         base.UseSkill();
         
-        Debug.Log("뒤쪽에 클론 생성하기.");
+        
     }
 }

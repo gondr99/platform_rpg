@@ -1,15 +1,38 @@
-
-using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+public enum SwordSkillType
+{
+    Regular,
+    Bounce,
+    Pierce,
+    Spin
+}
+
 public class SwordSkill : Skill
 {
+    public SwordSkillType swordSkillType = SwordSkillType.Regular;
+    
     [Header("Skill info")] 
     [SerializeField] private SwordSkillController _swordPrefab;
     [SerializeField] private Vector2 _launchForce;
     [SerializeField] private float _swordGravity;
+    [SerializeField] private float _returnSpeed = 16f;
 
+    public int skillDamage = 1;
+    public Vector2 knockbackPower;
+    public float returnImpactPower = 8;
+    public LayerMask whatIsEnemy;
+
+    [Header("Pierce info")] 
+    [SerializeField] private int _pierceAmount;
+    [SerializeField] private float _pierceGravity;
+    
+    [Header("bouncing")]
+    [SerializeField] private float _bounceSpeed = 20f;
+    [SerializeField] private int _bounceAmount = 4;
+    [SerializeField] private float _bounceGravity = 3f;
+    
     [Header("Aiming Dots")] 
     [SerializeField] private int _numberOfDots;
     [SerializeField] private float _spaceBetweenDots;
@@ -20,17 +43,33 @@ public class SwordSkill : Skill
     private Vector2 _finalDirection;
     private bool _holdKey = false;
 
+    [HideInInspector] public SwordSkillController generatedSword;
+
     protected override void Start()
     {
         base.Start();
         _player.PlayerInput.ThrowAimEvent += OnThrowAim; //던지는 키 
         GenerateDots(); //점들을 만들어두고.
+        SetupGravity(); //현재 스킬의 종류에 맞게 그라비티 셋팅
+    }
+
+    private void SetupGravity()
+    {
+        if (swordSkillType == SwordSkillType.Pierce)
+        {
+            _swordGravity = _pierceGravity;
+        }
+
+        if (swordSkillType == SwordSkillType.Bounce)
+        {
+            _swordGravity = _bounceGravity;
+        }
     }
 
     protected override void Update()
     {
         base.Update();
-        if (_holdKey)
+        if (_holdKey && generatedSword == null)
         {
             for (int i = 0; i < _dots.Length; ++i)
             {
@@ -57,7 +96,18 @@ public class SwordSkill : Skill
     public void CreateSword()
     {
         SwordSkillController newSword = Instantiate(_swordPrefab, _player.transform.position, Quaternion.identity);
-        newSword.SetupSword(_finalDirection, _swordGravity, _player);
+
+        if (swordSkillType == SwordSkillType.Bounce)
+        {
+            newSword.SetupBounce(_bounceAmount, _bounceSpeed);
+        }else if (swordSkillType == SwordSkillType.Pierce)
+        {
+            newSword.SetupPierce(_pierceAmount); //관통 검 셋팅
+        }
+        //최종적으로 셋업을 해서 칼이 결정하도록 한다.
+        newSword.SetupSword(_finalDirection, _swordGravity, _player, this, _returnSpeed);
+        
+        generatedSword = newSword; //만들어진 검을 할당함.
     }
 
     public Vector2 AimDirection()
@@ -69,6 +119,23 @@ public class SwordSkill : Skill
         
         return direction;
     }
+
+    public void CatchSword()
+    {
+        //칼을 잡았다면 플레이어를 캐치소드로 변경.
+        _player.StateMachine.ChangeState(StateEnum.CatchSword);
+        Destroy(generatedSword.gameObject);
+    }
+
+    public void ReturnGenerateSword()
+    {
+        if (generatedSword != null)
+        {
+            generatedSword.ReturnSword();
+        }
+    }
+    
+    #region Guide Dots region
 
     //가이드 점을 껐다 켰다.
     public void DotsActive(bool state)
@@ -104,4 +171,7 @@ public class SwordSkill : Skill
         //만약 mass가 있다면 질량으로 나눠주면 돼.
         return position;
     }
+    
+    #endregion
+    
 }

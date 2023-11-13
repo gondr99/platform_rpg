@@ -41,18 +41,18 @@ public abstract class Entity : MonoBehaviour
         DamageCasterCompo = transform.Find("DamageCaster").GetComponent<DamageCaster>();
 
         HealthCompo.OnKnockBack += HandleKnockback;
-        HealthCompo.OnChangeHealth += HandleChangeHealth;
+        HealthCompo.OnHit += HandleHit;
         HealthCompo.OnDied += HandleDie;
     }
 
     private void OnDestroy()
     {
         HealthCompo.OnKnockBack -= HandleKnockback;
-        HealthCompo.OnChangeHealth -= HandleChangeHealth;
+        HealthCompo.OnHit -= HandleHit;
         HealthCompo.OnDied -= HandleDie;
     }
 
-    private void HandleChangeHealth()
+    protected virtual void HandleHit()
     {
         //나중에 UI 갱신관련 로직이 여기 들어가야 한다.
     }

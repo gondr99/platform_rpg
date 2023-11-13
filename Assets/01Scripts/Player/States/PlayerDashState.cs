@@ -16,7 +16,7 @@ public class PlayerDashState : PlayerState
         _dashStartTime = Time.time;
 
         //지나간 자리에 클론 생성.
-        CloneSkill cloneSkill = _player.skill.GetSkill(PlayerSkill.Clone) as CloneSkill;
+        CloneSkill cloneSkill = _player.skill.GetSkill<CloneSkill>(PlayerSkill.Clone);
         cloneSkill.CreateClone(_player.transform);
     }
 
