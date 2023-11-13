@@ -19,9 +19,11 @@ public class SwordSkill : Skill
     [SerializeField] private float _swordGravity;
     [SerializeField] private float _returnSpeed = 16f;
 
+    public float freezeTime = 0.7f;
     public int skillDamage = 1;
     public Vector2 knockbackPower;
     public float returnImpactPower = 8;
+    public float destroyTimer = 7f;
     public LayerMask whatIsEnemy;
 
     [Header("Pierce info")] 
@@ -140,6 +142,13 @@ public class SwordSkill : Skill
         //칼을 잡았다면 플레이어를 캐치소드로 변경.
         _player.StateMachine.ChangeState(StateEnum.CatchSword);
         Destroy(generatedSword.gameObject);
+        generatedSword = null;
+    }
+
+    //생성된 칼이 너무 멀리 갔을 때 파괴하는것.
+    public void DestroyGenerateSword()
+    {
+        generatedSword = null;
     }
 
     public void ReturnGenerateSword()
