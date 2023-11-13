@@ -20,14 +20,23 @@ public class SwordSkillController : MonoBehaviour
     private bool _isBouncing;
     private float _bounceSpeed;
     private int _bounceAmount;
-    private List<Transform> _targetList = new List<Transform>();
+    private List<Health> _targetList = new List<Health>();
     private int _targetIndex;
     private int _currentBounceCount = 0;
 
     //피어싱 관련 변수들
-    //private bool _isPiercing;
     private int _pierceAmount;
     
+    
+    //spinner관련 변수들
+    private float _maxTravelDistance;
+    private float _spinDuration;
+    private float _spinTimer;
+    private bool _wasStopped;
+    private bool _isSpining;
+    private float _hitTimer;
+    private float _hitCooldown;
+    private float _spinXDirection; //스피너가 나가는 X방향.
     
     private readonly int _rotationHash = Animator.StringToHash("Rotation");
     private void Awake()
@@ -44,20 +53,13 @@ public class SwordSkillController : MonoBehaviour
         _player = player;
         _swordSkill = swordSkill;
         _returnSpeed = returnSpeed;
-        
+
+        _spinXDirection = Mathf.Clamp(_rigidbody.velocity.x, -1, 1);//노멀라이즈된 방향값.
         //피어싱 소드가 아닐경우만 회전.
         if(_pierceAmount <= 0)
             _animator.SetBool(_rotationHash, true);
     }
-
-    public void SetupBounce(int bounceAmount, float bounceSpeed)
-    {
-        _isBouncing = true;
-        _bounceAmount = bounceAmount;
-        _bounceSpeed = bounceSpeed;
-        _currentBounceCount = 0;
-    }
-
+    
     private void Update()
     {
         if(_canRotate)
@@ -74,10 +76,70 @@ public class SwordSkillController : MonoBehaviour
             {
                 _swordSkill.CatchSword();
             }
+
+            return;
         }
 
-        if(_isBouncing)
+        if (_isBouncing)
+        {
             BounceProcess();
+        }
+
+        if (_isSpining)
+        {
+            SpinProcess();
+        }
+            
+    }
+
+    private void SpinProcess()
+    {
+        float distance = Vector2.Distance(_player.transform.position, transform.position);
+        if (distance > _maxTravelDistance && !_wasStopped)
+        {
+            StopSpinning();
+        }
+
+        //이미 정지된 상태라면 갈갈이 시작.
+        if (_wasStopped)
+        {
+            _spinTimer -= Time.deltaTime;
+
+            //천천히 앞으로 전진.
+            transform.position = Vector2.MoveTowards(
+                transform.position,
+                new Vector2(transform.position.x + _spinXDirection, transform.position.y), 1.5f * Time.deltaTime);
+
+            if (_spinTimer < 0)
+            {
+                _isReturning = true;
+                _isSpining = true;
+            }
+
+            _hitTimer -= Time.deltaTime;
+            if (_hitTimer < 0)
+            {
+                _hitTimer = _hitCooldown;
+                //여기서 데미지 주는 식.
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(
+                    transform.position, _circleCollider.radius + 0.5f, _swordSkill.whatIsEnemy);
+                foreach (Collider2D collider in colliders)
+                {
+                    if (collider.TryGetComponent<Health>(out Health health))
+                    {
+                        DamageToTarget(health);
+                    }
+                }
+            }
+        }
+    }
+
+    //스피너를 멈춰야 할 때.
+    private void StopSpinning()
+    {
+        _wasStopped = true;
+        _rigidbody.constraints = RigidbodyConstraints2D.FreezePosition;
+        _spinTimer = _spinDuration;
     }
 
     private void BounceProcess()
@@ -85,14 +147,15 @@ public class SwordSkillController : MonoBehaviour
         //적에게 맞아서 리스트를 뽑았다면.
         if (_targetList.Count > 0)
         {
-            Transform currentTarget = _targetList[_targetIndex];
+            Health currentTarget = _targetList[_targetIndex];
 
             transform.position = Vector2.MoveTowards(
                 transform.position,
-                currentTarget.position, _bounceSpeed * Time.deltaTime);
+                currentTarget.transform.position, _bounceSpeed * Time.deltaTime);
 
-            if (Vector2.Distance(transform.position, currentTarget.position) < 0.1f)
+            if (Vector2.Distance(transform.position, currentTarget.transform.position) < 0.1f)
             {
+                DamageToTarget(currentTarget);
                 _targetIndex = (_targetIndex + 1) % _targetList.Count;
                 ++_currentBounceCount;
                 //한계만큼 다 튕겼다면.
@@ -121,8 +184,8 @@ public class SwordSkillController : MonoBehaviour
             {
                 Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 10f, _swordSkill.whatIsEnemy);
                 
-                //transform 콤포넌트를 뽑아온다.
-                _targetList = colliders.Select(x => x.transform).ToList();
+                //Health 콤포넌트를 뽑아온다.
+                _targetList = colliders.Select(x => x.GetComponent<Health>()).ToList();
             }
         }
         
@@ -139,10 +202,19 @@ public class SwordSkillController : MonoBehaviour
 
     private void StuckIntoTarget(Collider2D other)
     {
-        if (_pierceAmount > 0 && other.GetComponent<Enemy>() != null)
+        bool isEnemy = other.GetComponent<Enemy>() != null;
+        if (_pierceAmount > 0 && isEnemy)
         {
             //적에게 맞혔으나 _pierce횟수가 더 남아있다면 피어싱
             --_pierceAmount;
+            return;
+        }
+
+        //스핀 검은 박히지 않는다. 다만 땅에 꼴아밖으면 밖힌다.
+        if (_isSpining && isEnemy)
+        {
+            if(!_wasStopped)
+                StopSpinning();
             return;
         }
         
@@ -171,9 +243,25 @@ public class SwordSkillController : MonoBehaviour
         _isReturning = true; //돌아오도록 설정
     }
 
+    //종류별 셋업
+    public void SetupBounce(int bounceAmount, float bounceSpeed)
+    {
+        _isBouncing = true;
+        _bounceAmount = bounceAmount;
+        _bounceSpeed = bounceSpeed;
+        _currentBounceCount = 0;
+    }
+    
     public void SetupPierce(int pierceAmount)
     {
-        
         _pierceAmount = pierceAmount;
+    }
+
+    public void SetupSpin(float maxTravalDistance, float spinDuration, float hitCooldown)
+    {
+        _isSpining = true;
+        _maxTravelDistance = maxTravalDistance;
+        _spinDuration = spinDuration;
+        _hitCooldown = hitCooldown;
     }
 }

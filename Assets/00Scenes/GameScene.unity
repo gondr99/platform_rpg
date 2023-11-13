@@ -12403,13 +12403,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cooldown: 0
-  swordSkillType: 2
+  swordSkillType: 3
   _swordPrefab: {fileID: 241971243242143719, guid: 8de6ffe4e5e12b843ae2273a91ad40a4, type: 3}
   _launchForce: {x: 35, y: 25}
   _swordGravity: 4.5
   _returnSpeed: 40
   skillDamage: 1
-  knockbackPower: {x: 6, y: 3}
+  knockbackPower: {x: 5, y: 3}
   returnImpactPower: 8
   whatIsEnemy:
     serializedVersion: 2
@@ -12419,6 +12419,10 @@ MonoBehaviour:
   _bounceSpeed: 20
   _bounceAmount: 4
   _bounceGravity: 3
+  _maxTravelDistance: 7
+  _spinDuration: 2
+  _spinGravity: 1
+  _hitCooldown: 0.35
   _numberOfDots: 20
   _spaceBetweenDots: 0.07
   _dotPrefab: {fileID: 7511963945562560407, guid: 8f44d02308ab5ff46a7d02a33f033b08, type: 3}

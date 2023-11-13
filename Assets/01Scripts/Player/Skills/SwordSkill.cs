@@ -28,10 +28,16 @@ public class SwordSkill : Skill
     [SerializeField] private int _pierceAmount;
     [SerializeField] private float _pierceGravity;
     
-    [Header("bouncing")]
+    [Header("Bouncing info")]
     [SerializeField] private float _bounceSpeed = 20f;
     [SerializeField] private int _bounceAmount = 4;
     [SerializeField] private float _bounceGravity = 3f;
+
+    [Header("Spin info")]
+    [SerializeField] private float _maxTravelDistance = 7;
+    [SerializeField] private float _spinDuration = 2;
+    [SerializeField] private float _spinGravity = 1;
+    [SerializeField] private float _hitCooldown = 0.35f;
     
     [Header("Aiming Dots")] 
     [SerializeField] private int _numberOfDots;
@@ -53,6 +59,7 @@ public class SwordSkill : Skill
         SetupGravity(); //현재 스킬의 종류에 맞게 그라비티 셋팅
     }
 
+    //각 스킬에 맞게 중력 설정.
     private void SetupGravity()
     {
         if (swordSkillType == SwordSkillType.Pierce)
@@ -63,6 +70,11 @@ public class SwordSkill : Skill
         if (swordSkillType == SwordSkillType.Bounce)
         {
             _swordGravity = _bounceGravity;
+        }
+
+        if (swordSkillType == SwordSkillType.Spin)
+        {
+            _swordGravity = _spinGravity;
         }
     }
 
@@ -103,6 +115,9 @@ public class SwordSkill : Skill
         }else if (swordSkillType == SwordSkillType.Pierce)
         {
             newSword.SetupPierce(_pierceAmount); //관통 검 셋팅
+        }else if (swordSkillType == SwordSkillType.Spin)
+        {
+            newSword.SetupSpin(_maxTravelDistance, _spinDuration, _hitCooldown); //회전검 셋팅
         }
         //최종적으로 셋업을 해서 칼이 결정하도록 한다.
         newSword.SetupSword(_finalDirection, _swordGravity, _player, this, _returnSpeed);
