@@ -1018,7 +1018,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -39.99, y: -0.9100003, z: -10}
+  m_LocalPosition: {x: -42.14, y: -0.9100003, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1665,7 +1665,7 @@ Transform:
   m_GameObject: {fileID: 752292462}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -39.99, y: -7.56, z: 0}
+  m_LocalPosition: {x: -42.14, y: -7.51, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1881,9 +1881,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917c9892d33cf26409de2698543a2df7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxSize: 0
-  _growSpeed: 0
+  _maxSize: 6
+  _growSpeed: 1
   _canGrow: 0
+  _maxRiffleCount: 2
+  _maxRiffleSpeed: 1
   targets: []
 --- !u!212 &1144428521
 SpriteRenderer:
@@ -1905,7 +1907,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: d2155302fb06d8c4092a700dc683200e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1926,12 +1928,12 @@ SpriteRenderer:
   m_SortingLayerID: -158247373
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 10a8e09f62fe61e4bbb0e92dcfc67f87, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.56, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1947,7 +1949,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -34.23824, y: -5.244684, z: 0}
-  m_LocalScale: {x: 12, y: 12, z: 12}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -12054,7 +12056,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cooldown: 0
-  swordSkillType: 0
+  swordSkillType: 3
   _swordPrefab: {fileID: 241971243242143719, guid: 8de6ffe4e5e12b843ae2273a91ad40a4, type: 3}
   _launchForce: {x: 35, y: 25}
   _swordGravity: 4.5
@@ -12227,7 +12229,7 @@ Transform:
   m_GameObject: {fileID: 2136670472}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -39.99, y: -0.9100003, z: -10}
+  m_LocalPosition: {x: -42.14, y: -0.9100003, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
