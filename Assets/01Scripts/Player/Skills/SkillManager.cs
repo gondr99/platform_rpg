@@ -8,7 +8,8 @@ public enum PlayerSkill
     Dash,
     Clone,
     Sword,
-    Blackhole
+    Blackhole,
+    Crystal
 }
 
 public class SkillManager : MonoSingleton<SkillManager>
@@ -26,6 +27,7 @@ public class SkillManager : MonoSingleton<SkillManager>
 
     public T GetSkill<T>(PlayerSkill skill) where T : Skill
     {
+        
         if (_skills.TryGetValue(skill, out Skill target))
         {
             return target as T;

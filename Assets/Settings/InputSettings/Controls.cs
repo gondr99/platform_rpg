@@ -107,6 +107,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CrystalSkill"",
+                    ""type"": ""Button"",
+                    ""id"": ""56e6e507-886e-4111-8811-e3da8484c9a3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -252,6 +261,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""UltiSkill"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d9977f81-72a3-461a-98a6-e4e65e137426"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CrystalSkill"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -286,6 +306,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_ThrowAim = m_Player.FindAction("ThrowAim", throwIfNotFound: true);
         m_Player_MouseAim = m_Player.FindAction("MouseAim", throwIfNotFound: true);
         m_Player_UltiSkill = m_Player.FindAction("UltiSkill", throwIfNotFound: true);
+        m_Player_CrystalSkill = m_Player.FindAction("CrystalSkill", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -356,6 +377,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_ThrowAim;
     private readonly InputAction m_Player_MouseAim;
     private readonly InputAction m_Player_UltiSkill;
+    private readonly InputAction m_Player_CrystalSkill;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -369,6 +391,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @ThrowAim => m_Wrapper.m_Player_ThrowAim;
         public InputAction @MouseAim => m_Wrapper.m_Player_MouseAim;
         public InputAction @UltiSkill => m_Wrapper.m_Player_UltiSkill;
+        public InputAction @CrystalSkill => m_Wrapper.m_Player_CrystalSkill;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -405,6 +428,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @UltiSkill.started += instance.OnUltiSkill;
             @UltiSkill.performed += instance.OnUltiSkill;
             @UltiSkill.canceled += instance.OnUltiSkill;
+            @CrystalSkill.started += instance.OnCrystalSkill;
+            @CrystalSkill.performed += instance.OnCrystalSkill;
+            @CrystalSkill.canceled += instance.OnCrystalSkill;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -436,6 +462,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @UltiSkill.started -= instance.OnUltiSkill;
             @UltiSkill.performed -= instance.OnUltiSkill;
             @UltiSkill.canceled -= instance.OnUltiSkill;
+            @CrystalSkill.started -= instance.OnCrystalSkill;
+            @CrystalSkill.performed -= instance.OnCrystalSkill;
+            @CrystalSkill.canceled -= instance.OnCrystalSkill;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -473,5 +502,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnThrowAim(InputAction.CallbackContext context);
         void OnMouseAim(InputAction.CallbackContext context);
         void OnUltiSkill(InputAction.CallbackContext context);
+        void OnCrystalSkill(InputAction.CallbackContext context);
     }
 }

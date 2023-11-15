@@ -57,13 +57,15 @@ public class Player: Entity
     private void OnEnable()
     {
         PlayerInput.DashEvent += HandleDashInput;
+        PlayerInput.CrystalSkillEvent += HandleCrystalInput;
     }
 
     private void OnDisable()
     {
-        PlayerInput.DashEvent += HandleDashInput;
+        PlayerInput.DashEvent -= HandleDashInput;
+        PlayerInput.CrystalSkillEvent -= HandleCrystalInput;
     }
-
+    
     private void HandleDashInput()
     {
         //벽에 붙어있는 동안은 대시가 안되도록
@@ -71,12 +73,17 @@ public class Player: Entity
             return;
         
         //대시 스킬 사용 성공시.
-        if (SkillManager.Instance.GetSkill<DashSkill>(PlayerSkill.Dash).AttemptUseSkill())
+        if (skill.GetSkill<DashSkill>(PlayerSkill.Dash).AttemptUseSkill())
         {
             StateMachine.ChangeState(StateEnum.Dash);
         }
     }
 
+    private void HandleCrystalInput()
+    {
+        CrystalSkill crystalSkill = skill.GetSkill<CrystalSkill>(PlayerSkill.Crystal);
+        crystalSkill.AttemptUseSkill(); //사용시도.
+    }
     
     protected override void Update()
     {

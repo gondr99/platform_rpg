@@ -10,6 +10,7 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public event Action DashEvent;
     public event Action CounterAttackEvent;
     public event Action UltiSkillEvent;
+    public event Action CrystalSkillEvent;
     public event Action<bool> ThrowAimEvent;
     public Vector2 AimPosition { get; private set; }
     public float xInput { get; private set; }
@@ -76,6 +77,14 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
         if (context.performed)
         {
             UltiSkillEvent?.Invoke();
+        }
+    }
+
+    public void OnCrystalSkill(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            CrystalSkillEvent?.Invoke();
         }
     }
 
