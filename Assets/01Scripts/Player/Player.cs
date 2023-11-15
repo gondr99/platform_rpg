@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -25,6 +26,9 @@ public class Player: Entity
     public PlayerStateMachine StateMachine { get; private set; }
     [SerializeField] private InputReader _inputReader;
     public InputReader PlayerInput => _inputReader;
+
+    //궁극기 썼을 때 하늘로 올라가는 시간 설정. 경우에 따라 다르게 설정됨.
+    [HideInInspector] public float flyTimerOnUlti = 0.3f;
     
     protected override void Awake()
     {
@@ -38,7 +42,6 @@ public class Player: Entity
             var playerState = Activator.CreateInstance(t, this, StateMachine, typeName) as PlayerState;
 
             StateMachine.AddState(state, playerState);
-            
         }
     }
     protected override void Start()
@@ -82,7 +85,6 @@ public class Player: Entity
     //현재 상태에서 애니메이션이 종료되었음을 트리거 한다.
     public void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
     
-
     
     //IsBusy 셋팅함수  (MS단위로 입력)
     public async void SetIsBusyWhenDelayTime(int delayTimeMS)
@@ -92,4 +94,11 @@ public class Player: Entity
         IsBusy = false;
     }
 
+
+    public void FadePlayer(bool fadeOut, float sec)
+    {
+        float endValue = fadeOut ? 0 : 1f;
+        SpriteRendererCompo.DOFade(endValue, sec);
+    }
+    
 }

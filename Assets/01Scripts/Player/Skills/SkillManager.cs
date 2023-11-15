@@ -8,6 +8,7 @@ public enum PlayerSkill
     Dash,
     Clone,
     Sword,
+    Blackhole
 }
 
 public class SkillManager : MonoSingleton<SkillManager>

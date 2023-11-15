@@ -22,6 +22,8 @@ public abstract class Enemy : Entity
     public float attackDistance;
     public float attackCooldown;
     [HideInInspector] public float lastTimeAttacked;
+
+    protected bool _isFrozon = false; //얼어있는 상태
     
     protected override void Awake()
     {
@@ -47,9 +49,10 @@ public abstract class Enemy : Entity
     public abstract void AnimationFinishTrigger();
 
     //만약 타임 프리징에 걸렸다면.
-    public virtual void FreezeTime(bool timeFrozen)
+    public virtual void FreezeTime(bool isFreeze)
     {
-        if (timeFrozen)
+        _isFrozon = isFreeze;
+        if (isFreeze)
         {
             moveSpeed = 0;
             AnimatorCompo.speed = 0; //애니메이션 정지. 이동 정지.

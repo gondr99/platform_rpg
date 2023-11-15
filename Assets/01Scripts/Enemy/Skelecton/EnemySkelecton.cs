@@ -45,6 +45,8 @@ public class EnemySkelecton : Enemy
     protected override void Update()
     {
         base.Update();
+        
+        if (_isFrozon) return;
         StateMachine.CurrentState.UpdateState();
     }
 
@@ -63,7 +65,8 @@ public class EnemySkelecton : Enemy
     protected override void HandleHit()
     {
         base.HandleHit();
-        StateMachine.ChangeState(SkelectonStateEnum.Battle); //공격상태로 넘긴다.
+        if(!_isFrozon)
+            StateMachine.ChangeState(SkelectonStateEnum.Battle); //공격상태로 넘긴다.
     }
 
     public override void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();

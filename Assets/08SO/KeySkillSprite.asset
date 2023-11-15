@@ -19,13 +19,9 @@ MonoBehaviour:
     sprite: {fileID: -1884851578, guid: 74f574612b16ebf4085d4e690ef5bf02, type: 3}
   - key: 19
     sprite: {fileID: -1520039939, guid: 74f574612b16ebf4085d4e690ef5bf02, type: 3}
-  - key: 32
-    sprite: {fileID: -1119425621, guid: 74f574612b16ebf4085d4e690ef5bf02, type: 3}
   - key: 15
     sprite: {fileID: -1089461880, guid: 74f574612b16ebf4085d4e690ef5bf02, type: 3}
   - key: 33
     sprite: {fileID: 1609426553, guid: 74f574612b16ebf4085d4e690ef5bf02, type: 3}
   - key: 18
     sprite: {fileID: 1028749658, guid: 74f574612b16ebf4085d4e690ef5bf02, type: 3}
-  - key: 20
-    sprite: {fileID: 340989494, guid: 74f574612b16ebf4085d4e690ef5bf02, type: 3}

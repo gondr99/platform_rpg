@@ -26,8 +26,9 @@ public abstract class Entity : MonoBehaviour
     public Animator AnimatorCompo { get; private set; }
     public Rigidbody2D RigidbodyCompo { get; private set; }
     public Health HealthCompo { get; private set; }
-
     public DamageCaster DamageCasterCompo { get; private set; }
+    
+    public SpriteRenderer SpriteRendererCompo { get; private set; }
     #endregion
     
     public int FacingDirection { get; private set; } = 1;
@@ -35,11 +36,14 @@ public abstract class Entity : MonoBehaviour
     
     protected virtual void Awake()
     {
-        AnimatorCompo = transform.Find("Visual").GetComponent<Animator>();
+        Transform visualTrm = transform.Find("Visual");
+        AnimatorCompo = visualTrm.GetComponent<Animator>();
         RigidbodyCompo = GetComponent<Rigidbody2D>();
         HealthCompo = GetComponent<Health>();
         DamageCasterCompo = transform.Find("DamageCaster").GetComponent<DamageCaster>();
-
+        SpriteRendererCompo = visualTrm.GetComponent<SpriteRenderer>();
+        
+        
         HealthCompo.OnKnockBack += HandleKnockback;
         HealthCompo.OnHit += HandleHit;
         HealthCompo.OnDied += HandleDie;

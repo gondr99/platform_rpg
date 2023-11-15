@@ -98,6 +98,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""UltiSkill"",
+                    ""type"": ""Button"",
+                    ""id"": ""daacc0f2-617d-4e9c-a0be-57fd8eb32769"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -232,6 +241,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""MouseAim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bebae9dc-e38d-4234-af17-37ee41f2398f"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardAndMouse"",
+                    ""action"": ""UltiSkill"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -265,6 +285,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_CounterAttack = m_Player.FindAction("CounterAttack", throwIfNotFound: true);
         m_Player_ThrowAim = m_Player.FindAction("ThrowAim", throwIfNotFound: true);
         m_Player_MouseAim = m_Player.FindAction("MouseAim", throwIfNotFound: true);
+        m_Player_UltiSkill = m_Player.FindAction("UltiSkill", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -334,6 +355,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_CounterAttack;
     private readonly InputAction m_Player_ThrowAim;
     private readonly InputAction m_Player_MouseAim;
+    private readonly InputAction m_Player_UltiSkill;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -346,6 +368,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @CounterAttack => m_Wrapper.m_Player_CounterAttack;
         public InputAction @ThrowAim => m_Wrapper.m_Player_ThrowAim;
         public InputAction @MouseAim => m_Wrapper.m_Player_MouseAim;
+        public InputAction @UltiSkill => m_Wrapper.m_Player_UltiSkill;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -379,6 +402,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @MouseAim.started += instance.OnMouseAim;
             @MouseAim.performed += instance.OnMouseAim;
             @MouseAim.canceled += instance.OnMouseAim;
+            @UltiSkill.started += instance.OnUltiSkill;
+            @UltiSkill.performed += instance.OnUltiSkill;
+            @UltiSkill.canceled += instance.OnUltiSkill;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -407,6 +433,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @MouseAim.started -= instance.OnMouseAim;
             @MouseAim.performed -= instance.OnMouseAim;
             @MouseAim.canceled -= instance.OnMouseAim;
+            @UltiSkill.started -= instance.OnUltiSkill;
+            @UltiSkill.performed -= instance.OnUltiSkill;
+            @UltiSkill.canceled -= instance.OnUltiSkill;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -443,5 +472,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnCounterAttack(InputAction.CallbackContext context);
         void OnThrowAim(InputAction.CallbackContext context);
         void OnMouseAim(InputAction.CallbackContext context);
+        void OnUltiSkill(InputAction.CallbackContext context);
     }
 }

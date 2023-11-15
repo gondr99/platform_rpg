@@ -9,6 +9,7 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public event Action JumpEvent;
     public event Action DashEvent;
     public event Action CounterAttackEvent;
+    public event Action UltiSkillEvent;
     public event Action<bool> ThrowAimEvent;
     public Vector2 AimPosition { get; private set; }
     public float xInput { get; private set; }
@@ -68,6 +69,14 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public void OnMouseAim(InputAction.CallbackContext context)
     {
         AimPosition = context.ReadValue<Vector2>();
+    }
+
+    public void OnUltiSkill(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            UltiSkillEvent?.Invoke();
+        }
     }
 
     public void OnJump(InputAction.CallbackContext context)

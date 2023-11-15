@@ -9,9 +9,9 @@ public class CloneSkill : Skill
     [SerializeField] private float _cloneDuration;
     [SerializeField] private bool _canAttack;
 
-    public void CreateClone(Transform originTrm)
+    public void CreateClone(Transform originTrm, Vector3 offset = new Vector3())
     {
         CloneSkillController newClone = Instantiate(_clonePrefab);
-        newClone.SetupClone(originTrm, _cloneDuration, _canAttack);
+        newClone.SetupClone(originTrm, offset, _cloneDuration, _canAttack);
     }
 }

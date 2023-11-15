@@ -14,6 +14,7 @@ public enum StateEnum
     CounterAttack,
     AimSword,
     CatchSword,
+    Blackhole,
 }
 public class PlayerStateMachine
 {

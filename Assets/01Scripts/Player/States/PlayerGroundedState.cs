@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerGroundedState : PlayerState
 {
+    private const float _groundFlyTime = 0.3f;
     public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
         
@@ -16,6 +17,9 @@ public class PlayerGroundedState : PlayerState
         _player.PlayerInput.AttackEvent += OnHandleAttack;
         _player.PlayerInput.CounterAttackEvent += OnCounterAttack;
         _player.PlayerInput.ThrowAimEvent += OnThrowAim;
+        
+        //이건 나중에 공중에서도 쓸 수 있게 해줘야 할듯.
+        _player.PlayerInput.UltiSkillEvent += OnUltiSkill;
     }
     
     public override void UpdateState()
@@ -33,7 +37,17 @@ public class PlayerGroundedState : PlayerState
         _player.PlayerInput.AttackEvent -= OnHandleAttack;
         _player.PlayerInput.CounterAttackEvent -= OnCounterAttack;
         _player.PlayerInput.ThrowAimEvent -= OnThrowAim;
+        _player.PlayerInput.UltiSkillEvent -= OnUltiSkill;
         base.Exit();
+    }
+
+    private void OnUltiSkill()
+    {
+        _player.flyTimerOnUlti = _groundFlyTime;
+        if (_player.skill.GetSkill<BlackholeSkill>(PlayerSkill.Blackhole).AttemptUseSkill())
+        {
+            _stateMachine.ChangeState(StateEnum.Blackhole);
+        }
     }
 
     private void OnThrowAim(bool state)
