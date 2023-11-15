@@ -8,6 +8,7 @@ public class BlackholeSkill : Skill
     [Header("Attack info")] 
     public int amountOfAttack = 4;
     public float cloneAttackCooldown = 0.3f;
+    public float holdBlackholeTime = 2f; //2초간 유지. 2초간 아무것도 안누르면 취소.
 
     [Header("Effect info")]
     public float maxSize;

@@ -1656,6 +1656,8 @@ MonoBehaviour:
   counterAttackDuration: 0.2
   skill: {fileID: 0}
   _inputReader: {fileID: 11400000, guid: 60fa891a105d6e34897b2af6ca489b29, type: 2}
+  flyTimerOnUlti: 0.3
+  canStateChangeable: 1
 --- !u!4 &752292464
 Transform:
   m_ObjectHideFlags: 0
@@ -11995,10 +11997,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cooldown: 0
   _blackholeSkillPrefab: {fileID: 4964265463989141659, guid: 588fa63a0556353479f7c50f701f5b99, type: 3}
-  amountOfAttack: 4
+  amountOfAttack: 7
   cloneAttackCooldown: 0.3
-  maxSize: 12
-  growSpeed: 1.5
+  holdBlackholeTime: 2
+  maxSize: 15
+  growSpeed: 3
   maxRiffleCount: 2
   maxRiffleSpeed: 1
 --- !u!1 &2094480280

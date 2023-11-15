@@ -30,6 +30,9 @@ public class Player: Entity
     //궁극기 썼을 때 하늘로 올라가는 시간 설정. 경우에 따라 다르게 설정됨.
     [HideInInspector] public float flyTimerOnUlti = 0.3f;
     
+    //궁극기 쓰면 피격이나 
+    public bool canStateChangeable = true;
+    
     protected override void Awake()
     {
         base.Awake();
@@ -48,7 +51,7 @@ public class Player: Entity
     {
         base.Start();
         skill = SkillManager.Instance; //스킬매니저 캐싱
-        StateMachine.Initialize(StateEnum.Idle);
+        StateMachine.Initialize(StateEnum.Idle, this);
     }
 
     private void OnEnable()

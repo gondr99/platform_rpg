@@ -23,7 +23,8 @@ public abstract class Enemy : Entity
     public float attackCooldown;
     [HideInInspector] public float lastTimeAttacked;
 
-    protected bool _isFrozon = false; //얼어있는 상태
+    protected bool _isFrozen = false; //얼어있는 상태
+    protected bool _isFrozenWithoutTimer = false; //시간제한 없이 프리즈 시킬때
     
     protected override void Awake()
     {
@@ -49,9 +50,14 @@ public abstract class Enemy : Entity
     public abstract void AnimationFinishTrigger();
 
     //만약 타임 프리징에 걸렸다면.
-    public virtual void FreezeTime(bool isFreeze)
+    public virtual void FreezeTime(bool isFreeze, bool isFrozenWithoutTimer = false)
     {
-        _isFrozon = isFreeze;
+        if (isFrozenWithoutTimer)
+        {
+            _isFrozenWithoutTimer = isFrozenWithoutTimer; //시간제한없이 얼릴때가 true일때만. 
+        }
+        
+        _isFrozen = isFreeze;
         if (isFreeze)
         {
             moveSpeed = 0;
@@ -61,6 +67,7 @@ public abstract class Enemy : Entity
         {
             moveSpeed = _defaultMoveSpeed;
             AnimatorCompo.speed = 1;
+            _isFrozenWithoutTimer = false;
         }
     }
 
@@ -68,7 +75,12 @@ public abstract class Enemy : Entity
     {
         FreezeTime(true); //정지
         await Task.Delay(Mathf.FloorToInt(delaySec * 1000));
-        FreezeTime(false); //재생
+
+        if (!_isFrozenWithoutTimer)
+        {
+            FreezeTime(false); //재생
+        }//영구 결빙 상태일때는 타이머가 풀지 못한다.
+        
     }
     
     #region counter attack region

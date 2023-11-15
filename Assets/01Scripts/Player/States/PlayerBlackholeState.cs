@@ -22,6 +22,8 @@ public class PlayerBlackholeState : PlayerState
         _startTimer = _flyTime;
         _originalGravityScale = _rigidbody.gravityScale;
         _rigidbody.gravityScale = 0;
+        _player.canStateChangeable = false; //상태를 변경하지 못하도록 하고
+
         _skill = _player.skill.GetSkill<BlackholeSkill>(PlayerSkill.Blackhole);
 
         _skill.SkillEffectEnd += OnSkillEffectEnd;
@@ -58,16 +60,14 @@ public class PlayerBlackholeState : PlayerState
     //스킬 이펙트까지 모두 종료되면.
     private void OnSkillEffectEnd()
     {
+        _player.canStateChangeable = true; //상태를 변경하지 못하도록 하고
         _stateMachine.ChangeState(StateEnum.Idle);
-        _player.FadePlayer(false, 0.3f); //공격이 끝나면 페이드인
-        _player.StopImmediately(false);
     }
 
     private void OnUltiSkillPressed()
     {
         if (_skillUsed)
         {
-            _player.FadePlayer(true, 0.3f); //플레이어를 페이드 아웃 시키고
             _skill.ReleaseAttack(); //공격시작.
         }
     }

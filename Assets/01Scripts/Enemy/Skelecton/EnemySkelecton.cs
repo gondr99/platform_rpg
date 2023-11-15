@@ -46,7 +46,7 @@ public class EnemySkelecton : Enemy
     {
         base.Update();
         
-        if (_isFrozon) return;
+        if (_isFrozen) return;
         StateMachine.CurrentState.UpdateState();
     }
 
@@ -65,7 +65,7 @@ public class EnemySkelecton : Enemy
     protected override void HandleHit()
     {
         base.HandleHit();
-        if(!_isFrozon)
+        if(!_isFrozenWithoutTimer)
             StateMachine.ChangeState(SkelectonStateEnum.Battle); //공격상태로 넘긴다.
     }
 

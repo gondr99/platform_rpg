@@ -30,6 +30,8 @@ public class BlackholeSkillController : MonoBehaviour
     private int _remainAttackAmount = 0; //공격횟수를 저장하는 내부 변수
     private bool _skillEnd = false;
 
+    private float _blackholeSkillTimer;
+
     private BlackholeSkill _skill;
     private void Awake()
     {
@@ -49,6 +51,7 @@ public class BlackholeSkillController : MonoBehaviour
         _hitTargets.Clear();
         _freezedTarget.Clear();
         _makedHotKeyList.Clear();
+        _blackholeSkillTimer = 0;
     }
 
     public void SetUpSkill(BlackholeSkill blackholeSkill)
@@ -60,6 +63,13 @@ public class BlackholeSkillController : MonoBehaviour
 
     private void Update()
     {
+        _blackholeSkillTimer += Time.deltaTime;
+        //스킬이 아직 안끝났는데 시간이 다되었다면 강제로 R키 발동.
+        if (_blackholeSkillTimer >= _skill.holdBlackholeTime && _skillEnd == false)
+        {
+            ReleaseCloneAttack();
+        }
+        
         _cloneAttackTimer -= Time.deltaTime;
         
         if (_cloneAttackTimer < 0 && _cloneAttackReleased )
@@ -78,16 +88,18 @@ public class BlackholeSkillController : MonoBehaviour
     //공격을 종료해주는 것.
     public void ReleaseCloneAttack()
     {
+        _skillEnd = true; //발동
+        
         if (_hitTargets.Count <= 0)
         {
-            ShrinkBlackhole(); //공격종료
+            ShrinkBlackhole(false); //공격종료
         }
         else
         {
+            GameManager.Instance.Player.FadePlayer(true, 0.3f); //플레이어를 페이드 아웃 시키고
             _cloneAttackReleased = true;
         }
 
-        _skillEnd = true; //발동
     }
 
     //클론 공격 
@@ -104,17 +116,18 @@ public class BlackholeSkillController : MonoBehaviour
         --_remainAttackAmount;
         if (_remainAttackAmount <= 0)
         {
-            ShrinkBlackhole(); //공격종료
+            ShrinkBlackhole(true); //공격종료
             _cloneAttackReleased = false;
         }
     }
 
     //블랙홀 접기
-    private async void ShrinkBlackhole()
+    private async void ShrinkBlackhole(bool isDelayed)
     {
         _canGrow = false;
 
-        await Task.Delay(1000); //1초 정도 대기하고 (분신들이 사라질 시간.
+        if(isDelayed)
+            await Task.Delay(1000); //1초 정도 대기하고 (분신들이 사라질 시간.
         
         
         transform.DOScale(Vector3.zero, 0.4f).OnComplete(()=>
@@ -130,6 +143,8 @@ public class BlackholeSkillController : MonoBehaviour
                 Destroy(hotkey.gameObject);
             }
             
+            if(_hitTargets.Count > 0)
+                GameManager.Instance.Player.FadePlayer(false, 0.3f); //공격이 끝나면 페이드인
             //콘트롤러 엔딩
             _skill.SkillControllerEnd();
         });
@@ -139,7 +154,7 @@ public class BlackholeSkillController : MonoBehaviour
     {
         if (other.TryGetComponent<Enemy>(out Enemy enemy) && !_skillEnd)
         {
-            enemy.FreezeTime(true); //정지
+            enemy.FreezeTime(true, isFrozenWithoutTimer:true); //영구결빙
             _freezedTarget.Add(enemy); //프리징 시킨 적들은 나중에 풀어줘야 해.
             
             CreateHoyKeyOnEnemyHead(enemy);
