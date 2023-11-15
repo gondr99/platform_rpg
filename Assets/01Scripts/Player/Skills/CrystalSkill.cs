@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CrystalSkill : Skill
@@ -20,6 +21,8 @@ public class CrystalSkill : Skill
 
     [Header("Multiple Crystal")] 
     public int amountOfCrystal;
+    public float multiCrystalCooldown;
+    [HideInInspector] public List<CrystalController> crystalList;
 
     public override void UseSkill()
     {
@@ -41,6 +44,11 @@ public class CrystalSkill : Skill
         }
     }
 
+    public void RefillCrystal()
+    {
+        
+    }
+    
     public void UnlinkThisCrystal()
     {
         _currentCrystal = null;
