@@ -12,7 +12,8 @@ public class CloneSkillController : MonoBehaviour
     private Transform _closestEnemy;
     
     private readonly int _attackNumberHash = Animator.StringToHash("AttackNumber");
-    
+
+    private CloneSkill _skill;
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -20,13 +21,14 @@ public class CloneSkillController : MonoBehaviour
         _damageCaster = transform.Find("DamageCaster").GetComponent<DamageCaster>();
     }
     
-    public void SetupClone(Transform originTrm, Vector3 offset, float cloneDuration,  bool canAttack = false)
+    public void SetupClone(CloneSkill skill, Transform originTrm, Vector3 offset, float cloneDuration,  bool canAttack = false)
     {
         if (canAttack)
         {
             _animator.SetInteger(_attackNumberHash, Random.Range(1, _attackCategoryCount + 1));
         }
-        
+
+        _skill = skill;
         transform.position = originTrm.position + offset;
         FacingClosetTarget(); //가장 가까운 적 찾아서 바라보고.
         FadeAfterDelay(cloneDuration);
@@ -44,20 +46,7 @@ public class CloneSkillController : MonoBehaviour
     //생성되면 가장 가까운 적을 향하도록 함.
     private void FacingClosetTarget()
     {
-        _closestEnemy = null;
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 10f, _damageCaster.whatIsEnemy);
-
-        float closestDistance = Mathf.Infinity;
-
-        foreach (Collider2D collider in colliders)
-        {
-            float distanceToEnemy = Vector2.Distance(transform.position, collider.transform.position);
-            if (distanceToEnemy < closestDistance)
-            {
-                closestDistance = distanceToEnemy;
-                _closestEnemy = collider.transform;
-            }
-        }
+        _closestEnemy = _skill.FindClosestEnemy(transform, _damageCaster.whatIsEnemy, _skill.findEnemyRadius);        
 
         if (_closestEnemy != null)
         {

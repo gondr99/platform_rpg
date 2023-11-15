@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CrystalSkill : Skill
@@ -10,13 +8,18 @@ public class CrystalSkill : Skill
     
     public int damage = 5;
     public Vector2 knockPower;
-    [Header("Moving Crystal")] 
+    
+    [Header("Explosion Crystal")] 
     public bool canExplode;
     public float explosionRadius = 3f;
 
     [Header("Moving Crystal")] 
     public bool canMoveToEnemy;
     public float moveSpeed;
+    public float findEnemyRadius = 10f;
+
+    [Header("Multiple Crystal")] 
+    public int amountOfCrystal;
 
     public override void UseSkill()
     {
@@ -25,9 +28,9 @@ public class CrystalSkill : Skill
         if (_currentCrystal == null)
         {
             _currentCrystal = Instantiate(_crystalPrefab, _player.transform.position, Quaternion.identity);
-            _currentCrystal.SetupCrystal(this,_timeOut);
+            _currentCrystal.SetupCrystal(this,_timeOut, _player.DamageCasterCompo.whatIsEnemy);
         }
-        else
+        else if(!canMoveToEnemy)
         {
             //플레이어와 위치 바꾸기
             Vector2 playerPos = _player.transform.position;

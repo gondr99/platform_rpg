@@ -11944,6 +11944,7 @@ MonoBehaviour:
   _clonePrefab: {fileID: 8060747046434103044, guid: 28c60af6706dcc546a6b0532e9cd16f5, type: 3}
   _cloneDuration: 1.5
   _canAttack: 1
+  findEnemyRadius: 5
 --- !u!114 &2021626185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12024,8 +12025,9 @@ MonoBehaviour:
   knockPower: {x: 4, y: 5}
   canExplode: 1
   explosionRadius: 2
-  canMoveToEnemy: 0
-  moveSpeed: 0
+  canMoveToEnemy: 1
+  moveSpeed: 10
+  findEnemyRadius: 10
 --- !u!1 &2094480280
 GameObject:
   m_ObjectHideFlags: 0

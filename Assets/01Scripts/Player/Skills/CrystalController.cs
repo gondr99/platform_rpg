@@ -10,6 +10,7 @@ public class CrystalController : MonoBehaviour
     private Animator _animator;
 
     private bool _isDestroyed = false;
+    private Transform _closestTarget = null;
     
     private readonly int _hashExplodeTrigger = Animator.StringToHash("Explode");
     private void Awake()
@@ -18,10 +19,11 @@ public class CrystalController : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    public void SetupCrystal(CrystalSkill skill, float timer)
+    public void SetupCrystal(CrystalSkill skill, float timer, LayerMask whatIsEnemy)
     {
         _skill = skill;
         _crystalExistTimer = timer;
+        _closestTarget = _skill.FindClosestEnemy(transform, whatIsEnemy, _skill.findEnemyRadius); //가장 가까운 적을 찾는다.
     }
 
 
@@ -31,6 +33,18 @@ public class CrystalController : MonoBehaviour
         if (_crystalExistTimer <= 0 && !_isDestroyed)
         {
             EndOfCrystal();
+            return;
+        }
+
+        if (_skill.canMoveToEnemy && _closestTarget != null && !_isDestroyed)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, _closestTarget.position,
+                _skill.moveSpeed * Time.deltaTime);
+
+            if (Vector2.Distance(transform.position, _closestTarget.position) < 1f)
+            {
+                EndOfCrystal();
+            }
         }
     }
 
