@@ -50,6 +50,11 @@ public class EnemySkelecton : Enemy
         StateMachine.CurrentState.UpdateState();
     }
 
+    protected override void HandleDie()
+    {
+        Debug.Log("skelecton died");
+    }
+
     public override bool CanBeStunned()
     {
         if (base.CanBeStunned())

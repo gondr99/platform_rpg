@@ -16,7 +16,7 @@ MonoBehaviour:
     _baseValue: 10
     modifiers: 
   maxHP:
-    _baseValue: 100
+    _baseValue: 5
     modifiers: 
   Strength:
     _baseValue: 5

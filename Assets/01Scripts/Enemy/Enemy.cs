@@ -25,6 +25,8 @@ public abstract class Enemy : Entity
 
     protected bool _isFrozen = false; //얼어있는 상태
     protected bool _isFrozenWithoutTimer = false; //시간제한 없이 프리즈 시킬때
+
+    protected int _lastAnimationBoolHash; //마지막으로 재생된 애니메이션 해시
     
     protected override void Awake()
     {
@@ -35,9 +37,14 @@ public abstract class Enemy : Entity
     protected override void Update()
     {
         base.Update();
-
+        
     }
 
+    public virtual void AssignLastAnimHash(int hashCode)
+    {
+        _lastAnimationBoolHash = hashCode;
+    }
+    
     //전방 50에 플레이어가 있는지 검사.
     public virtual RaycastHit2D IsPlayerDetected()
         => Physics2D.Raycast(_wallCheck.position, Vector2.right * FacingDirection, runAwayDistance, _whatIsPlayer);

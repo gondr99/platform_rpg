@@ -15,6 +15,7 @@ public enum StateEnum
     AimSword,
     CatchSword,
     Blackhole,
+    Dead,
 }
 public class PlayerStateMachine
 {

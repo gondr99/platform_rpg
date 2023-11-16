@@ -66,15 +66,12 @@ public abstract class Entity : MonoBehaviour
         //나중에 UI 갱신관련 로직이 여기 들어가야 한다.
     }
 
-    private void HandleKnockback(Vector2 direction)
+    protected virtual void HandleKnockback(Vector2 direction)
     {
         StartCoroutine(HitKnockback(direction));
     }
-    
-    private void HandleDie()
-    {
-        Debug.Log($"{gameObject.name} died");
-    }
+
+    protected abstract void HandleDie();
 
 
     protected virtual void Start()

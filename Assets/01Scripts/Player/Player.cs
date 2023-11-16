@@ -32,6 +32,7 @@ public class Player: Entity
     
     //궁극기 쓰면 피격이나 
     public bool canStateChangeable = true;
+    protected bool _isDead = false;
     
     protected override void Awake()
     {
@@ -48,6 +49,7 @@ public class Player: Entity
         }
         
     }
+    
     protected override void Start()
     {
         base.Start();
@@ -66,7 +68,20 @@ public class Player: Entity
         PlayerInput.DashEvent -= HandleDashInput;
         PlayerInput.CrystalSkillEvent -= HandleCrystalInput;
     }
-    
+
+    protected override void HandleDie()
+    {
+        //사망처리
+        _isDead = true;
+        StateMachine.ChangeState(StateEnum.Dead);
+    }
+
+    protected override void HandleKnockback(Vector2 direction)
+    {
+        if(!_isDead)
+            base.HandleKnockback(direction);  //베이스 넉백은 실행할지 말지 사망에 따라 결정.
+    }
+
     private void HandleDashInput()
     {
         //벽에 붙어있는 동안은 대시가 안되도록
