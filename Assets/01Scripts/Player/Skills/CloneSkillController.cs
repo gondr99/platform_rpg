@@ -1,6 +1,8 @@
+using System;
 using System.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CloneSkillController : MonoBehaviour
 {
@@ -12,7 +14,8 @@ public class CloneSkillController : MonoBehaviour
     private Transform _closestEnemy;
     
     private readonly int _attackNumberHash = Animator.StringToHash("AttackNumber");
-
+    private int _facingDirection = 1;
+    
     private CloneSkill _skill;
     private void Awake()
     {
@@ -42,7 +45,7 @@ public class CloneSkillController : MonoBehaviour
             Destroy(gameObject); //페이딩 끝나면 삭제. 굳이 풀매니징까지는 안해도 된다.
         });
     }
-
+    
     //생성되면 가장 가까운 적을 향하도록 함.
     private void FacingClosetTarget()
     {
@@ -52,6 +55,7 @@ public class CloneSkillController : MonoBehaviour
         {
             if (transform.position.x > _closestEnemy.position.x)
             {
+                _facingDirection = -1;
                 transform.Rotate(0, 180, 0);
             }
         }
@@ -65,6 +69,14 @@ public class CloneSkillController : MonoBehaviour
     //이건 공격 콤포넌트를 따로 만들어야 해. SOLID에 어긋나.
     private void AttackTrigger()
     {
-        _damageCaster.CastDamage();
+        bool success = _damageCaster.CastDamage();
+
+        if (success && _skill.canDuplicateClone)
+        {
+            if (Random.value < _skill.duplicatePercent)
+            {
+                _skill.CreateClone(transform, new Vector3(1.5f * _facingDirection,0,0));
+            }
+        }
     }
 }

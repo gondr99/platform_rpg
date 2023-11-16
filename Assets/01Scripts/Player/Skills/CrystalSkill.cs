@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -8,6 +7,8 @@ public class CrystalSkill : Skill
     [SerializeField] private CrystalController _crystalPrefab;
     [SerializeField] private float _timeOut = 5f;
     private CrystalController _currentCrystal;
+
+    public bool cloneInsteadOfCystal;
     
     public int damage = 5;
     public Vector2 knockPower;
@@ -27,15 +28,19 @@ public class CrystalSkill : Skill
     public float multiCrystalCooldown;
     [HideInInspector] public List<CrystalController> crystalList;
     private bool _readyToLaunch = false;
-
+  
+    
+    //최대 5개까지만 크리스털 생성하게 해둠. 
     private Vector2[] offsets =
     {
         new Vector2(0.3f, 0.3f),
         new Vector2(-0.3f, 0.3f),
-        new Vector2(0, -0.3f),
+        new Vector2(0.3f, -0.3f),
+        new Vector2(-0.3f, -0.3f),
+        new Vector2(0, 0)
     };
 
-        public override void UseSkill()
+    public override void UseSkill()
     {
         base.UseSkill();
 
@@ -69,11 +74,9 @@ public class CrystalSkill : Skill
         }
         
         
-
         if (_currentCrystal == null)
         {
-            _currentCrystal = Instantiate(_crystalPrefab, _player.transform.position, Quaternion.identity);
-            _currentCrystal.SetupCrystal(this,_timeOut, _player.DamageCasterCompo.whatIsEnemy);
+            CreateCrystal(_player.transform.position);
         }
         else if(!canMoveToEnemy)
         {
@@ -81,12 +84,24 @@ public class CrystalSkill : Skill
             Vector2 playerPos = _player.transform.position;
             _player.transform.position = _currentCrystal.transform.position;
             _currentCrystal.transform.position = playerPos;
-            
+
+            if (cloneInsteadOfCystal)
+            {
+                _player.skill.GetSkill<CloneSkill>(PlayerSkill.Clone).CreateClone(_currentCrystal.transform);
+            }
+           
             _currentCrystal?.EndOfCrystal();
+           
         }
     }
 
-    //등뒤에 다중 크리스털 생성
+    public void CreateCrystal(Vector3 position)
+    {
+        _currentCrystal = Instantiate(_crystalPrefab, position, Quaternion.identity);
+        _currentCrystal.SetupCrystal(this, _timeOut, _player.DamageCasterCompo.whatIsEnemy);
+    }
+
+        //등뒤에 다중 크리스털 생성
     private async void MakeMultipleCrystal()
     {
         //지정된 갯수만큼 크리스탈을 만든다.

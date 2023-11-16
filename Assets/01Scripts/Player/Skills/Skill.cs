@@ -10,9 +10,12 @@ public class Skill : MonoBehaviour
     protected float _cooldownTimer;
     protected Player _player;
 
+    [HideInInspector] public LayerMask whatIsEnemy;
+
     protected virtual void Start()
     {
         _player = GameManager.Instance.Player;
+        whatIsEnemy = _player.DamageCasterCompo.whatIsEnemy;
     }
 
     protected virtual void Update()

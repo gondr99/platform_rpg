@@ -15,6 +15,7 @@ public class CrystalController : MonoBehaviour
     private readonly int _hashExplodeTrigger = Animator.StringToHash("Explode");
 
     private bool _isLauched = false;
+    private bool _autoFindCloset = false;
     
     private void Awake()
     {
@@ -26,6 +27,7 @@ public class CrystalController : MonoBehaviour
     {
         _skill = skill;
         _crystalExistTimer = timer;
+        _autoFindCloset = findClosest;
         if(findClosest)
             _closestTarget = _skill.FindClosestEnemy(transform, whatIsEnemy, _skill.findEnemyRadius); //가장 가까운 적을 찾는다.
         _isLauched = false;
@@ -34,6 +36,11 @@ public class CrystalController : MonoBehaviour
 
     private void Update()
     {
+        if (_autoFindCloset && _closestTarget == null)
+        {
+            _closestTarget = _skill.FindClosestEnemy(transform, _skill.whatIsEnemy, _skill.findEnemyRadius);
+        }
+        
         _crystalExistTimer -= Time.deltaTime;
         if (_crystalExistTimer <= 0 && !_isDestroyed)
         {

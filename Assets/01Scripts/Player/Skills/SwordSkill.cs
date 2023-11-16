@@ -24,7 +24,6 @@ public class SwordSkill : Skill
     public Vector2 knockbackPower;
     public float returnImpactPower = 8;
     public float destroyTimer = 7f;
-    public LayerMask whatIsEnemy;
 
     [Header("Pierce info")] 
     [SerializeField] private int _pierceAmount;

@@ -21,7 +21,7 @@ public class DamageCaster : MonoBehaviour
         _hitResult = new Collider2D[_maxHitCount];
     }
 
-    public void CastDamage()
+    public bool CastDamage()
     {
         int cnt = Physics2D.OverlapCircleNonAlloc(attackChecker.position, attackCheckRadius, _hitResult, whatIsEnemy);
 
@@ -36,6 +36,8 @@ public class DamageCaster : MonoBehaviour
                 health.ApplyDamage(damage, direction, knockbackPower);
             }
         }
+
+        return cnt > 0;
     }
 
     private void OnDrawGizmos()

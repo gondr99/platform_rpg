@@ -11977,6 +11977,11 @@ MonoBehaviour:
   _clonePrefab: {fileID: 8060747046434103044, guid: 28c60af6706dcc546a6b0532e9cd16f5, type: 3}
   _cloneDuration: 1.5
   _canAttack: 1
+  _createCloneOnDashStart: 1
+  _createCloneOnDashOver: 0
+  _createCloneOnCounterAttack: 0
+  canDuplicateClone: 1
+  duplicatePercent: 0.3
   findEnemyRadius: 5
 --- !u!114 &2021626185
 MonoBehaviour:
@@ -12051,14 +12056,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e5d385701baf14aaef9dda1acf125f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cooldown: 2
+  _cooldown: 0
   _crystalPrefab: {fileID: 2170614571147662110, guid: c4627c5b0d4e2f1478accb602e8ad969, type: 3}
   _timeOut: 5
+  cloneInsteadOfCystal: 1
   damage: 5
   knockPower: {x: 4, y: 5}
-  canExplode: 1
+  canExplode: 0
   explosionRadius: 2
-  canMoveToEnemy: 1
+  canMoveToEnemy: 0
   moveSpeed: 10
   findEnemyRadius: 10
   isMultipleCrystal: 0

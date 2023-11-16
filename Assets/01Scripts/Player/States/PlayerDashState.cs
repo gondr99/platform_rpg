@@ -17,7 +17,7 @@ public class PlayerDashState : PlayerState
 
         //지나간 자리에 클론 생성.
         CloneSkill cloneSkill = _player.skill.GetSkill<CloneSkill>(PlayerSkill.Clone);
-        cloneSkill.CreateClone(_player.transform);
+        cloneSkill.CreateCloneOnDashStart();
     }
 
     public override void UpdateState()
@@ -32,6 +32,9 @@ public class PlayerDashState : PlayerState
 
     public override void Exit()
     {
+        //지나간 자리에 클론 생성.
+        CloneSkill cloneSkill = _player.skill.GetSkill<CloneSkill>(PlayerSkill.Clone);
+        cloneSkill.CreateCloneOnDashOver();
         _player.StopImmediately(false);
         base.Exit();
     }
