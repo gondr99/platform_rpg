@@ -17,7 +17,7 @@ public class Player: Entity
     public Vector2[] attackMovement;  //앞으로 전진하는 정도.
     public float attackSpeed = 1f;
     public float counterAttackDuration = 0.2f;
-    
+    public Transform backTrm; //후면에 따라다니는 오브젝트들을 위한
     
     public bool IsBusy { get; private set; } = false;
 

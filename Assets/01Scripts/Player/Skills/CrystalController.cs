@@ -13,17 +13,22 @@ public class CrystalController : MonoBehaviour
     private Transform _closestTarget = null;
     
     private readonly int _hashExplodeTrigger = Animator.StringToHash("Explode");
+
+    private bool _isLauched = false;
+    
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
     }
 
-    public void SetupCrystal(CrystalSkill skill, float timer, LayerMask whatIsEnemy)
+    public void SetupCrystal(CrystalSkill skill, float timer, LayerMask whatIsEnemy, bool findClosest = true)
     {
         _skill = skill;
         _crystalExistTimer = timer;
-        _closestTarget = _skill.FindClosestEnemy(transform, whatIsEnemy, _skill.findEnemyRadius); //가장 가까운 적을 찾는다.
+        if(findClosest)
+            _closestTarget = _skill.FindClosestEnemy(transform, whatIsEnemy, _skill.findEnemyRadius); //가장 가까운 적을 찾는다.
+        _isLauched = false;
     }
 
 
@@ -36,16 +41,46 @@ public class CrystalController : MonoBehaviour
             return;
         }
 
-        if (_skill.canMoveToEnemy && _closestTarget != null && !_isDestroyed)
+        if (_skill.canMoveToEnemy && _closestTarget != null)
         {
-            transform.position = Vector2.MoveTowards(transform.position, _closestTarget.position,
-                _skill.moveSpeed * Time.deltaTime);
-
-            if (Vector2.Distance(transform.position, _closestTarget.position) < 1f)
-            {
-                EndOfCrystal();
-            }
+            ChaseToTarget();
         }
+
+        //다중 크리스탈 시스템에서 발사시에 해야할 일.
+        if (_skill.isMultipleCrystal && _isLauched)
+        {
+            ChaseToTarget(3f);
+        }
+    }
+
+    public void StartPulseMove()
+    {
+        Vector3 pos = transform.localPosition;
+        transform.DOLocalMoveY(pos.y + 0.5f, 0.5f).SetLoops(-1, LoopType.Yoyo);
+    }
+
+    private void ChaseToTarget(float speedMultiplier = 1f)
+    {
+        transform.position = Vector2.MoveTowards(transform.position, _closestTarget.position,
+            _skill.moveSpeed * speedMultiplier * Time.deltaTime);
+
+        if (_isDestroyed) return;
+        
+        if (Vector2.Distance(transform.position, _closestTarget.position) < 1f)
+        {
+            EndOfCrystal();
+        }
+    }
+
+    public void LaunchToTarget(Transform targetTrm)
+    {
+        _closestTarget = targetTrm;
+        transform.DOKill(); //모든 트윈 제거.
+        transform.DOLocalMoveY(2f, 0.3f).OnComplete(() =>
+        {
+            _isLauched = true;
+            transform.parent = null;
+        });
     }
 
     private void AnimationExplodeEvent()

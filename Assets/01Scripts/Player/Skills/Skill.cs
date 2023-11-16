@@ -24,8 +24,8 @@ public class Skill : MonoBehaviour
     {
         if (_cooldownTimer < 0)
         {
-            UseSkill(); //스킬을 사용하고
             _cooldownTimer = _cooldown;
+            UseSkill(); //스킬을 사용하고
             return true;
         }
         Debug.Log("Skill cooldown");

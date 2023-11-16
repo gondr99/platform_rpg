@@ -1654,6 +1654,7 @@ MonoBehaviour:
   - {x: 4, y: 1.5}
   attackSpeed: 1
   counterAttackDuration: 0.2
+  backTrm: {fileID: 1749190129}
   skill: {fileID: 0}
   _inputReader: {fileID: 11400000, guid: 60fa891a105d6e34897b2af6ca489b29, type: 2}
   flyTimerOnUlti: 0.3
@@ -1677,6 +1678,7 @@ Transform:
   - {fileID: 579361621}
   - {fileID: 2100443331}
   - {fileID: 354998729}
+  - {fileID: 1749190129}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &752292465
@@ -7154,6 +7156,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallaxEffect: 1
+--- !u!1 &1749190128
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1749190129}
+  m_Layer: 7
+  m_Name: BackTrm
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1749190129
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749190128}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.14, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 752292464}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1793471911
 GameObject:
   m_ObjectHideFlags: 3
@@ -12018,7 +12051,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e5d385701baf14aaef9dda1acf125f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cooldown: 0
+  _cooldown: 2
   _crystalPrefab: {fileID: 2170614571147662110, guid: c4627c5b0d4e2f1478accb602e8ad969, type: 3}
   _timeOut: 5
   damage: 5
@@ -12028,6 +12061,10 @@ MonoBehaviour:
   canMoveToEnemy: 1
   moveSpeed: 10
   findEnemyRadius: 10
+  isMultipleCrystal: 0
+  amountOfCrystal: 3
+  multiCrystalCooldown: 4
+  crystalList: []
 --- !u!1 &2094480280
 GameObject:
   m_ObjectHideFlags: 0
