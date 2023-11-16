@@ -14,6 +14,7 @@ public class Health : MonoBehaviour, IDamageable
     
     public UnityEvent OnHitEvent;
     
+    
     private void Start()
     {
         _currentHealth = maxHealth;

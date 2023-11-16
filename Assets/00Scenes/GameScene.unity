@@ -261,7 +261,7 @@ MonoBehaviour:
   _knockbackDuration: 0.07
   stunDuration: 1
   stunDirection: {x: 5, y: 5}
-  _characterStat: {fileID: 11400000, guid: 86ec3fa8f47f7f8409a7a23e8e50d107, type: 2}
+  _characterStat: {fileID: 11400000, guid: df4742c52a3e07843822c7ea6021c6a7, type: 2}
   moveSpeed: 1.5
   idleTime: 2
   battleTime: 7
@@ -1379,7 +1379,7 @@ MonoBehaviour:
   _knockbackDuration: 0.07
   stunDuration: 0
   stunDirection: {x: 0, y: 0}
-  _characterStat: {fileID: 11400000, guid: 7f3ee371d293c2a4092c15f9c8c786d6, type: 2}
+  _characterStat: {fileID: 11400000, guid: 3e3308b24325d0d40b1a4a6340c9da49, type: 2}
   moveSpeed: 12
   jumpForce: 15
   dashDuration: 0.2

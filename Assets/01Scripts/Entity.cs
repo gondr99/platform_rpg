@@ -46,7 +46,7 @@ public abstract class Entity : MonoBehaviour
         SpriteRendererCompo = visualTrm.GetComponent<SpriteRenderer>();
 
         
-        DamageCasterCompo.SetDamage(Stat.damage.GetValue()); //자신의 스탯상 데미지를 넣어줌.
+        DamageCasterCompo.SetOwner(this); //자신의 스탯상 데미지를 넣어줌.
 
         HealthCompo.maxHealth = Stat.maxHP.GetValue(); //최대체력 Awake에서 설정하면 Start에서 현재 체력으로도 셋팅됨.
         HealthCompo.OnKnockBack += HandleKnockback;

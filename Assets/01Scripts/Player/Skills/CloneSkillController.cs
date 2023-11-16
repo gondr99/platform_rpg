@@ -25,14 +25,14 @@ public class CloneSkillController : MonoBehaviour
         
     }
     
-    public void SetupClone(CloneSkill skill, Transform originTrm, Vector3 offset, float cloneDuration, int damage,  bool canAttack = false)
+    public void SetupClone(CloneSkill skill, Transform originTrm, Vector3 offset, float cloneDuration, Entity owner,  bool canAttack = false)
     {
         if (canAttack)
         {
             _animator.SetInteger(_attackNumberHash, Random.Range(1, _attackCategoryCount + 1));
         }
         _skill = skill;
-        _damageCaster.SetDamage(damage); //데미지 셋팅
+        _damageCaster.SetOwner(owner); //데미지 셋팅
         transform.position = originTrm.position + offset;
         FacingClosetTarget(); //가장 가까운 적 찾아서 바라보고.
         FadeAfterDelay(cloneDuration);

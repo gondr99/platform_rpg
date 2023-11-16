@@ -31,7 +31,7 @@ public class CloneSkill : Skill
         }
         
         CloneSkillController newClone = Instantiate(_clonePrefab);
-        newClone.SetupClone(this, originTrm, offset, _cloneDuration, _player.Stat.damage.GetValue(), _canAttack);
+        newClone.SetupClone(this, originTrm, offset, _cloneDuration, _player, _canAttack);
     }
 
 

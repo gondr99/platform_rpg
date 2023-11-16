@@ -8,7 +8,6 @@ public class DamageCaster : MonoBehaviour
 {
     public Transform attackChecker;
     public float attackCheckRadius;
-    public int damage = 1;
 
     public Vector2 knockbackPower;
     
@@ -16,14 +15,15 @@ public class DamageCaster : MonoBehaviour
     public LayerMask whatIsEnemy;
     private Collider2D[] _hitResult;
 
+    private Entity _owner;
     private void Awake()
     {
         _hitResult = new Collider2D[_maxHitCount];
     }
 
-    public void SetDamage(int value)
+    public void SetOwner(Entity owner)
     {
-        this.damage = value;
+        _owner = owner;
     }
 
     public bool CastDamage()
@@ -38,7 +38,7 @@ public class DamageCaster : MonoBehaviour
             Vector2 direction = (_hitResult[i].transform.position - transform.position).normalized;
             if (_hitResult[i].TryGetComponent<IDamageable>(out IDamageable health))
             {
-                health.ApplyDamage(damage, direction, knockbackPower);
+                health.ApplyDamage(_owner.Stat.GetDamage(), direction, knockbackPower);
             }
         }
 
