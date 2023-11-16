@@ -1,10 +1,11 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class Health : MonoBehaviour, IDamageable
 {
-    [SerializeField] private int _maxHealth;
+    public int maxHealth;
     private int _currentHealth;
 
     public Action OnHit;
@@ -15,17 +16,17 @@ public class Health : MonoBehaviour, IDamageable
     
     private void Start()
     {
-        _currentHealth = _maxHealth;
+        _currentHealth = maxHealth;
     }
 
     public float GetNormalizedHealth()
     {
-        return Mathf.Clamp((float)_currentHealth / _maxHealth, 0, 1f);
+        return Mathf.Clamp((float)_currentHealth / maxHealth, 0, 1f);
     }
 
     public void ApplyDamage(int damage, Vector2 attackDirection, Vector2 knockbackPower)
     {
-        _currentHealth = Mathf.Clamp(_currentHealth - damage, 0, _maxHealth);
+        _currentHealth = Mathf.Clamp(_currentHealth - damage, 0, maxHealth);
 
         knockbackPower.x *= attackDirection.x; //y값은 고정으로.
         OnKnockBack?.Invoke(knockbackPower);

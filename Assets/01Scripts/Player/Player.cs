@@ -46,6 +46,7 @@ public class Player: Entity
 
             StateMachine.AddState(state, playerState);
         }
+        
     }
     protected override void Start()
     {

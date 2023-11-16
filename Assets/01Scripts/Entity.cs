@@ -27,8 +27,10 @@ public abstract class Entity : MonoBehaviour
     public Rigidbody2D RigidbodyCompo { get; private set; }
     public Health HealthCompo { get; private set; }
     public DamageCaster DamageCasterCompo { get; private set; }
-    
     public SpriteRenderer SpriteRendererCompo { get; private set; }
+
+    [SerializeField]private CharacterStat _characterStat;
+    public CharacterStat Stat => _characterStat; 
     #endregion
     
     public int FacingDirection { get; private set; } = 1;
@@ -42,8 +44,11 @@ public abstract class Entity : MonoBehaviour
         HealthCompo = GetComponent<Health>();
         DamageCasterCompo = transform.Find("DamageCaster").GetComponent<DamageCaster>();
         SpriteRendererCompo = visualTrm.GetComponent<SpriteRenderer>();
+
         
-        
+        DamageCasterCompo.SetDamage(Stat.damage.GetValue()); //자신의 스탯상 데미지를 넣어줌.
+
+        HealthCompo.maxHealth = Stat.maxHP.GetValue(); //최대체력 Awake에서 설정하면 Start에서 현재 체력으로도 셋팅됨.
         HealthCompo.OnKnockBack += HandleKnockback;
         HealthCompo.OnHit += HandleHit;
         HealthCompo.OnDied += HandleDie;
