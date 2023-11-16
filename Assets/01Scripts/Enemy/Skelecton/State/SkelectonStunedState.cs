@@ -6,9 +6,9 @@ using UnityEngine;
 public class SkelectonStunedState : EnemyState<SkelectonStateEnum>
 {
     private EnemySkelecton _enemy;
-    public SkelectonStunedState(Enemy enemyBase, EnemyStateMachine<SkelectonStateEnum> stateMachine, string animBoolName, EnemySkelecton enemy) : base(enemyBase, stateMachine, animBoolName)
+    public SkelectonStunedState(Enemy enemyBase, EnemyStateMachine<SkelectonStateEnum> stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
-        _enemy = enemy;
+        _enemy = enemyBase as EnemySkelecton;
     }
 
 

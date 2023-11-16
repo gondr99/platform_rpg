@@ -101,7 +101,7 @@ public class CrystalController : MonoBehaviour
             if (collider.TryGetComponent<Enemy>(out Enemy enemy))
             {
                 Vector2 dir = enemy.transform.position - transform.position;
-                enemy.HealthCompo.ApplyDamage(_skill.damage, dir.normalized, _skill.knockPower);
+                enemy.HealthCompo.ApplyDamage(_skill.damage, dir.normalized, _skill.knockPower, GameManager.Instance.Player);
             }
         }
     }

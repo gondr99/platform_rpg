@@ -10,9 +10,9 @@ public class SkelectonBattleState : EnemyState<SkelectonStateEnum>
 
     private float _timer;
     
-    public SkelectonBattleState(Enemy enemyBase, EnemyStateMachine<SkelectonStateEnum> stateMachine, string animBoolName, EnemySkelecton enemy) : base(enemyBase, stateMachine, animBoolName)
+    public SkelectonBattleState(Enemy enemyBase, EnemyStateMachine<SkelectonStateEnum> stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
-        _enemy = enemy; //타입캐스트해도 된다.
+        _enemy = enemyBase as EnemySkelecton;
     }
 
     public override void UpdateState()

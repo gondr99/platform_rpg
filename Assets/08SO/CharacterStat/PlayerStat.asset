@@ -12,12 +12,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75ffc14e5ad44987b75bb20e8f894f02, type: 3}
   m_Name: PlayerStat
   m_EditorClassIdentifier: 
+  strength:
+    _baseValue: 0
+    modifiers: 
+  agility:
+    _baseValue: 0
+    modifiers: 
+  intelligence:
+    _baseValue: 0
+    modifiers: 
+  vitality:
+    _baseValue: 0
+    modifiers: 
+  maxHP:
+    _baseValue: 100
+    modifiers: 
+  armor:
+    _baseValue: 3
+    modifiers: 
+  evasion:
+    _baseValue: 10
+    modifiers: 
   damage:
     _baseValue: 10
     modifiers: 
-  maxHP:
-    _baseValue: 5
+  criticalChance:
+    _baseValue: 10
     modifiers: 
-  Strength:
-    _baseValue: 5
+  criticalDamage:
+    _baseValue: 150
     modifiers: 

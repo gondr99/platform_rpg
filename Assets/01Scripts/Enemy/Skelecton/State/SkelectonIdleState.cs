@@ -6,8 +6,8 @@ using UnityEngine;
 public class SkelectonIdleState : SkelectonGroundState
 {
     private bool _isAlreadyChanged = false;
-    public SkelectonIdleState(Enemy enemyBase, EnemyStateMachine<SkelectonStateEnum> stateMachine, string animBoolName, EnemySkelecton enemy) 
-        : base(enemyBase, stateMachine, animBoolName, enemy)
+    public SkelectonIdleState(Enemy enemyBase, EnemyStateMachine<SkelectonStateEnum> stateMachine, string animBoolName) 
+        : base(enemyBase, stateMachine, animBoolName)
     {
     }
 

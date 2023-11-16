@@ -33,6 +33,7 @@ public class EnemyState<T> where T : Enum
     public virtual void Exit()
     {
         _enemyBase.AnimatorCompo.SetBool(_animBoolHash, false);
+        _enemyBase.AssignLastAnimHash(_animBoolHash); //마지막으로 실행한 해시를 저장한다.
     }
 
     public void AnimationFinishTrigger()

@@ -44,6 +44,11 @@ public abstract class Enemy : Entity
     {
         _lastAnimationBoolHash = hashCode;
     }
+
+    public int GetLastAnimHash()
+    {
+        return _lastAnimationBoolHash;
+    }
     
     //전방 50에 플레이어가 있는지 검사.
     public virtual RaycastHit2D IsPlayerDetected()

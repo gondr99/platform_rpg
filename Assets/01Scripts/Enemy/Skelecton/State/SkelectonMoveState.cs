@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SkelectonMoveState : SkelectonGroundState
 {
-    public SkelectonMoveState(Enemy enemyBase, EnemyStateMachine<SkelectonStateEnum> stateMachine, string animBoolName, EnemySkelecton enemy) 
-        : base(enemyBase, stateMachine, animBoolName, enemy)
+    public SkelectonMoveState(Enemy enemyBase, EnemyStateMachine<SkelectonStateEnum> stateMachine, string animBoolName) 
+        : base(enemyBase, stateMachine, animBoolName)
     {
     }
 

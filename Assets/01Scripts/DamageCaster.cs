@@ -38,7 +38,7 @@ public class DamageCaster : MonoBehaviour
             Vector2 direction = (_hitResult[i].transform.position - transform.position).normalized;
             if (_hitResult[i].TryGetComponent<IDamageable>(out IDamageable health))
             {
-                health.ApplyDamage(_owner.Stat.GetDamage(), direction, knockbackPower);
+                health.ApplyDamage(_owner.Stat.GetDamage(), direction, knockbackPower, _owner);
             }
         }
 

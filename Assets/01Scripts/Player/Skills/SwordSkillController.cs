@@ -222,7 +222,7 @@ public class SwordSkillController : MonoBehaviour
         enemy.FreezeTimerFor(_swordSkill.freezeTime);
         //데미지 옵션
         Vector2 direction = (enemy.transform.position - transform.position).normalized;
-        enemy.HealthCompo.ApplyDamage(_swordSkill.skillDamage, direction, _swordSkill.knockbackPower);
+        enemy.HealthCompo.ApplyDamage(_swordSkill.skillDamage, direction, _swordSkill.knockbackPower, GameManager.Instance.Player);
     }
 
     private void StuckIntoTarget(Collider2D other)

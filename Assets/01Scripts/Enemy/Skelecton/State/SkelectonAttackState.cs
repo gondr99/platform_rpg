@@ -6,9 +6,9 @@ public class SkelectonAttackState : EnemyState<SkelectonStateEnum>
 {
     private EnemySkelecton _enemy;
     
-    public SkelectonAttackState(Enemy enemyBase, EnemyStateMachine<SkelectonStateEnum> stateMachine, string animBoolName, EnemySkelecton enemy) : base(enemyBase, stateMachine, animBoolName)
+    public SkelectonAttackState(Enemy enemyBase, EnemyStateMachine<SkelectonStateEnum> stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
-        _enemy = enemy;
+        _enemy = enemyBase as EnemySkelecton;
     }
 
     public override void UpdateState()

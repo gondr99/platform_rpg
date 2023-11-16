@@ -7,9 +7,9 @@ public class SkelectonGroundState : EnemyState<SkelectonStateEnum>
     protected EnemySkelecton _enemy;
     protected Transform _playerTrm;
     
-    public SkelectonGroundState(Enemy enemyBase, EnemyStateMachine<SkelectonStateEnum> stateMachine, string animBoolName, EnemySkelecton enemy) : base(enemyBase, stateMachine, animBoolName)
+    public SkelectonGroundState(Enemy enemyBase, EnemyStateMachine<SkelectonStateEnum> stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
-        _enemy = enemy;
+        _enemy = enemyBase as EnemySkelecton;
     }
 
     public override void UpdateState()

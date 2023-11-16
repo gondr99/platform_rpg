@@ -228,9 +228,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 163771120}
-  - component: {fileID: 163771119}
   - component: {fileID: 163771122}
-  - component: {fileID: 163771121}
+  - component: {fileID: 163771125}
+  - component: {fileID: 163771119}
   - component: {fileID: 163771124}
   m_Layer: 8
   m_Name: Enemy_Skelecton
@@ -295,51 +295,6 @@ Transform:
   - {fileID: 169182544}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &163771121
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 163771118}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.16643643, y: -0.2508607}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.9855275, y: 1.5017214}
-  m_EdgeRadius: 0
 --- !u!50 &163771122
 Rigidbody2D:
   serializedVersion: 4
@@ -395,6 +350,41 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!70 &163771125
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163771118}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.037644953, y: -0.250968}
+  m_Size: {x: 0.7007749, y: 1.5019361}
+  m_Direction: 0
 --- !u!1 &169182543
 GameObject:
   m_ObjectHideFlags: 0
@@ -11661,7 +11651,7 @@ MonoBehaviour:
   _createCloneOnCounterAttack: 1
   canDuplicateClone: 0
   duplicatePercent: 0.3
-  _crystalInsteadOfClone: 1
+  _crystalInsteadOfClone: 0
   findEnemyRadius: 5
 --- !u!114 &2021626185
 MonoBehaviour:
@@ -11679,7 +11669,7 @@ MonoBehaviour:
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 256
-  swordSkillType: 3
+  swordSkillType: 1
   _swordPrefab: {fileID: 241971243242143719, guid: 8de6ffe4e5e12b843ae2273a91ad40a4, type: 3}
   _launchForce: {x: 35, y: 25}
   _swordGravity: 4.5
