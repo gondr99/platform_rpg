@@ -21,6 +21,7 @@ public class PlayerPrimaryAttackState : PlayerState
             _comboCounter = 0;
         
         _player.AnimatorCompo.SetInteger(_comboCountHash, _comboCounter);
+        _player.currentCompoCounter = _comboCounter;
         
         //애니메이션 속도를 조절
         _player.AnimatorCompo.speed = _player.attackSpeed;

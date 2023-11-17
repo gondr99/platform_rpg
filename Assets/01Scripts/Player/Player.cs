@@ -38,6 +38,9 @@ public class Player: Entity
     public bool canStateChangeable = true;
     protected bool _isDead = false;
     
+    //현재 콤보상태 저장
+    [HideInInspector] public int currentCompoCounter = 0;
+    
     protected override void Awake()
     {
         base.Awake();
@@ -109,7 +112,21 @@ public class Player: Entity
         CrystalSkill crystalSkill = skill.GetSkill<CrystalSkill>(PlayerSkill.Crystal);
         crystalSkill.AttemptUseSkill(); //사용시도.
     }
-    
+
+    public override void Attack()
+    {
+        //base.Attack();
+        if (DamageCasterCompo.CastDamage())
+        {
+            //공격성공시 현재 플레이어 콤보상태 계산.
+            if (currentCompoCounter == 2)
+            {
+                ThunderStrikeSkill thunder = skill.GetSkill<ThunderStrikeSkill>(PlayerSkill.ThunderStrike);
+                thunder.AttemptUseSkill(); //3타 공격 성공시 시도.
+            }
+        }
+    }
+
     protected override void Update()
     {
         base.Update();

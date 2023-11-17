@@ -9,7 +9,8 @@ public enum PlayerSkill
     Clone,
     Sword,
     Blackhole,
-    Crystal
+    Crystal,
+    ThunderStrike
 }
 
 public class SkillManager : MonoSingleton<SkillManager>
