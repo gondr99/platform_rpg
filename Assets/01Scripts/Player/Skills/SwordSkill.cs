@@ -20,7 +20,7 @@ public class SwordSkill : Skill
     [SerializeField] private float _returnSpeed = 16f;
 
     public float freezeTime = 0.7f;
-    public int skillDamage = 1;
+    public float damageMultiplier = 1;
     public Vector2 knockbackPower;
     public float returnImpactPower = 8;
     public float destroyTimer = 7f;

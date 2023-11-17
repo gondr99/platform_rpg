@@ -19,7 +19,7 @@ MonoBehaviour:
     _baseValue: 0
     modifiers: 
   intelligence:
-    _baseValue: 0
+    _baseValue: 5
     modifiers: 
   vitality:
     _baseValue: 0
@@ -46,19 +46,19 @@ MonoBehaviour:
     _baseValue: 150
     modifiers: 
   fireDamage:
-    _baseValue: 0
+    _baseValue: 20
     modifiers: 
   ignitePercent:
-    _baseValue: 10
+    _baseValue: 99
     modifiers: 
   iceDamage:
     _baseValue: 5
     modifiers: 
   chillPercent:
-    _baseValue: 99
+    _baseValue: 10
     modifiers: 
   lightingDamage:
-    _baseValue: 0
+    _baseValue: 1
     modifiers: 
   shockPercent:
     _baseValue: 10
@@ -66,6 +66,6 @@ MonoBehaviour:
   ailmentTimeMS:
     _baseValue: 3000
     modifiers: 
-  canIgniteByMelee: 0
-  canChillByMelee: 1
+  canIgniteByMelee: 1
+  canChillByMelee: 0
   canShockByMelee: 0

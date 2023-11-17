@@ -18,12 +18,14 @@ public class Health : MonoBehaviour, IDamageable
     public Action OnHit;
     public Action OnDied;
     public Action<Vector2> OnKnockBack;
+    public Action<Color, int> OnDamageText; //데미지 텍스트를 띄워야 할때.
     
     public UnityEvent OnHitEvent;
     public UnityEvent<Ailment> OnAilmentChanged;
 
     
     private Entity _owner;
+    private bool _isDead = false;
     
     [SerializeField] private AilmentStat _ailmentStat; //질병 및 디버프 관리 스탯
     
@@ -32,6 +34,7 @@ public class Health : MonoBehaviour, IDamageable
         _ailmentStat = new AilmentStat();
         _ailmentStat.EndOFAilmentEvent += HandleEndOfAilment;
         _ailmentStat.AilmentDamageEvent += HandleAilementDamage;
+        _isDead = false;
     }
 
     private void OnDestroy()
@@ -50,12 +53,14 @@ public class Health : MonoBehaviour, IDamageable
         Debug.Log($"{gameObject.name} : cure from {ailment.ToString()}");
         //여기서 아이콘 제거등의 일들이 일어나야 한다.
         OnAilmentChanged?.Invoke(_ailmentStat.currentAilment);
+        
     }
 
     private void HandleAilementDamage(Ailment ailment, int damage)
     {
         //종류에 맞춰 글자가 뜨도록 해야한다.
         Debug.Log($"{ailment.ToString()} dot damaged : {damage}");
+        OnHit?.Invoke();
         _currentHealth = Mathf.Clamp(_currentHealth - damage, 0, maxHealth);
     }
 
@@ -78,6 +83,8 @@ public class Health : MonoBehaviour, IDamageable
 
     public void ApplyDamage(int damage, Vector2 attackDirection, Vector2 knockbackPower, Entity dealer)
     {
+        if(_isDead) return; //사망하면 더이상 데미지 없음.
+        
         //완벽 회피 계산.
         if (_owner.Stat.CanEvasion())
         {
@@ -109,6 +116,7 @@ public class Health : MonoBehaviour, IDamageable
         
         if (_currentHealth == 0)
         {
+            _isDead = true;
             OnDied?.Invoke();
         }
     }
