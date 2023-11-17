@@ -95,6 +95,19 @@ public abstract class Enemy : Entity
         
     }
     
+    public override void SlowEntityBy(float percent)
+    {
+        if (moveSpeed < _defaultMoveSpeed) return; //중복 적용 막아.
+        moveSpeed *= 1 - percent;
+        AnimatorCompo.speed *= 1 - percent;
+    }
+
+    protected override void ReturnDefaultSpeed()
+    {
+        base.ReturnDefaultSpeed();
+        moveSpeed = _defaultMoveSpeed;
+    }
+    
     #region counter attack region
     public virtual void OpenCounterAttackWindow()
     {

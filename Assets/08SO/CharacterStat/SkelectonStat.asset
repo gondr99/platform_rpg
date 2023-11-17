@@ -52,10 +52,10 @@ MonoBehaviour:
     _baseValue: 0
     modifiers: 
   iceDamage:
-    _baseValue: 0
+    _baseValue: 1
     modifiers: 
   chillPercent:
-    _baseValue: 0
+    _baseValue: 10
     modifiers: 
   lightingDamage:
     _baseValue: 0
@@ -64,7 +64,7 @@ MonoBehaviour:
     _baseValue: 0
     modifiers: 
   ailmentTimeMS:
-    _baseValue: 0
+    _baseValue: 1500
     modifiers: 
   canIgniteByMelee: 0
   canChillByMelee: 0

@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 [Flags]
 public enum Ailment : int
@@ -21,6 +20,7 @@ public class Health : MonoBehaviour, IDamageable
     public Action<Vector2> OnKnockBack;
     
     public UnityEvent OnHitEvent;
+    public UnityEvent<Ailment> OnAilmentChanged;
 
     
     private Entity _owner;
@@ -39,10 +39,17 @@ public class Health : MonoBehaviour, IDamageable
         _ailmentStat.EndOFAilmentEvent -= HandleEndOfAilment;
         _ailmentStat.AilmentDamageEvent -= HandleAilementDamage;
     }
+
+    public float GetNormailizedHealth()
+    {
+        return _currentHealth / (float)maxHealth;
+    }
+    
     private void HandleEndOfAilment(Ailment ailment)
     {
         Debug.Log($"{gameObject.name} : cure from {ailment.ToString()}");
         //여기서 아이콘 제거등의 일들이 일어나야 한다.
+        OnAilmentChanged?.Invoke(_ailmentStat.currentAilment);
     }
 
     private void HandleAilementDamage(Ailment ailment, int damage)
@@ -110,6 +117,7 @@ public class Health : MonoBehaviour, IDamageable
     public void SetAilment(Ailment ailment, float duration, int damage)
     {
         _ailmentStat.ApplyAilments(ailment, duration, damage);
+        OnAilmentChanged?.Invoke(_ailmentStat.currentAilment);
     }
 
     //데미지를 받았을 때 질병 체크하는 함수 (쇼크 데미지 같은 타격당 데미지에 적용.

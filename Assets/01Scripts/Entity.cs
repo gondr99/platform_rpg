@@ -36,6 +36,8 @@ public abstract class Entity : MonoBehaviour
     
     public int FacingDirection { get; private set; } = 1;
     protected bool _facingRight = true;
+    public UnityEvent OnFliped;
+    public UnityEvent<float> OnHealthBarChanged;
     
     protected virtual void Awake()
     {
@@ -53,6 +55,8 @@ public abstract class Entity : MonoBehaviour
         HealthCompo.OnKnockBack += HandleKnockback;
         HealthCompo.OnHit += HandleHit;
         HealthCompo.OnDied += HandleDie;
+        HealthCompo.OnAilmentChanged.AddListener(HandleAilmentChanged);
+        OnHealthBarChanged?.Invoke(HealthCompo.GetNormailizedHealth()); //최대치로 UI변경.
     }
 
     private void OnDestroy()
@@ -60,11 +64,26 @@ public abstract class Entity : MonoBehaviour
         HealthCompo.OnKnockBack -= HandleKnockback;
         HealthCompo.OnHit -= HandleHit;
         HealthCompo.OnDied -= HandleDie;
+        HealthCompo.OnAilmentChanged.RemoveListener( HandleAilmentChanged);
+    }
+
+    //동결에 따른 처리.
+    private void HandleAilmentChanged(Ailment ailment)
+    {
+        if ((ailment & Ailment.Chilled) > 0) //동결상태면 스피드 느리게
+        {
+            SlowEntityBy(0.5f);
+        }
+        else
+        {
+            ReturnDefaultSpeed();
+        }
     }
 
     protected virtual void HandleHit()
     {
-        //나중에 UI 갱신관련 로직이 여기 들어가야 한다.
+        //UI갱신
+        OnHealthBarChanged?.Invoke(HealthCompo.GetNormailizedHealth());
     }
 
     protected virtual void HandleKnockback(Vector2 direction)
@@ -97,6 +116,16 @@ public abstract class Entity : MonoBehaviour
         yield return new WaitForSeconds(_knockbackDuration);
         _isKnocked = false;
     }
+
+    public virtual void SlowEntityBy(float percent)
+    {
+        
+    }
+
+    protected virtual void ReturnDefaultSpeed()
+    {
+        AnimatorCompo.speed = 1; //원래 스피드로 되돌리기.
+    }
     
     #region Check Collision
     public virtual bool IsGroundDetected() =>
@@ -114,6 +143,7 @@ public abstract class Entity : MonoBehaviour
         FacingDirection = FacingDirection * -1;
         _facingRight = !_facingRight;
         transform.Rotate(0, 180, 0); //180도 회전. 
+        OnFliped?.Invoke();
     }
 
 

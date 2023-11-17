@@ -13,6 +13,10 @@ public class Player: Entity
     public float dashDuration = 0.4f;
     public float dashSpeed = 20f;
 
+    private float _defaultMoveSpeed;
+    private float _defaultJumpForce;
+    private float _defaultDashSpeed;
+
     [Header("Attack Settings")]
     public Vector2[] attackMovement;  //앞으로 전진하는 정도.
     public float attackSpeed = 1f;
@@ -55,6 +59,11 @@ public class Player: Entity
         base.Start();
         skill = SkillManager.Instance; //스킬매니저 캐싱
         StateMachine.Initialize(StateEnum.Idle, this);
+        
+        //기본 값 셋팅
+        _defaultMoveSpeed = moveSpeed;
+        _defaultJumpForce = jumpForce;
+        _defaultDashSpeed = dashSpeed;
     }
 
     private void OnEnable()
@@ -106,8 +115,24 @@ public class Player: Entity
         base.Update();
         StateMachine.CurrentState.UpdateState();
     }
-    
-    
+
+    public override void SlowEntityBy(float percent)
+    {
+        if (moveSpeed < _defaultMoveSpeed) return;
+        moveSpeed *= 1 - percent;
+        jumpForce *= 1 - percent;
+        dashSpeed *= 1 - percent;
+        AnimatorCompo.speed *= 1 - percent;
+    }
+
+    protected override void ReturnDefaultSpeed()
+    {
+        base.ReturnDefaultSpeed();
+        moveSpeed = _defaultMoveSpeed;
+        jumpForce = _defaultJumpForce;
+        dashSpeed = _defaultDashSpeed;
+    }
+
     //현재 상태에서 애니메이션이 종료되었음을 트리거 한다.
     public void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
     

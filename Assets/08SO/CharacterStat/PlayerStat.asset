@@ -37,7 +37,7 @@ MonoBehaviour:
     _baseValue: 0
     modifiers: 
   damage:
-    _baseValue: 10
+    _baseValue: 5
     modifiers: 
   criticalChance:
     _baseValue: 10
@@ -46,26 +46,26 @@ MonoBehaviour:
     _baseValue: 150
     modifiers: 
   fireDamage:
-    _baseValue: 5
+    _baseValue: 0
     modifiers: 
   ignitePercent:
-    _baseValue: 99
+    _baseValue: 10
     modifiers: 
   iceDamage:
-    _baseValue: 0
-    modifiers: 
-  chillPercent:
-    _baseValue: 0
-    modifiers: 
-  lightingDamage:
     _baseValue: 5
     modifiers: 
-  shockPercent:
+  chillPercent:
+    _baseValue: 99
+    modifiers: 
+  lightingDamage:
     _baseValue: 0
+    modifiers: 
+  shockPercent:
+    _baseValue: 10
     modifiers: 
   ailmentTimeMS:
     _baseValue: 3000
     modifiers: 
-  canIgniteByMelee: 1
-  canChillByMelee: 0
+  canIgniteByMelee: 0
+  canChillByMelee: 1
   canShockByMelee: 0
