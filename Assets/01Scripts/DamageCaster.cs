@@ -39,12 +39,37 @@ public class DamageCaster : MonoBehaviour
             if (_hitResult[i].TryGetComponent<IDamageable>(out IDamageable health))
             {
                 health.ApplyDamage(_owner.Stat.GetDamage(), direction, knockbackPower, _owner);
+                SetAilmentByStat(health);
             }
         }
 
         return cnt > 0;
     }
 
+    private void SetAilmentByStat(IDamageable targetHealth)
+    {
+        CharacterStat stat = _owner.Stat; //주인의 스탯참조
+        float duration = stat.ailmentTimeMS.GetValue() * 0.001f;
+        
+        if (stat.canIgniteByMelee && stat.CanAilment(Ailment.Ignited)) //점화 가능
+        {
+            int damage = stat.GetDotDamage(Ailment.Ignited);
+            targetHealth.SetAilment(Ailment.Ignited, duration, damage);
+        }
+
+        if (stat.canChillByMelee && stat.CanAilment(Ailment.Chilled))
+        {
+            int damage = stat.GetDotDamage(Ailment.Chilled);
+            targetHealth.SetAilment(Ailment.Chilled, duration, damage);
+        }
+        
+        if (stat.canShockByMelee && stat.CanAilment(Ailment.Shocked))
+        {
+            int damage = stat.GetDotDamage(Ailment.Shocked);
+            targetHealth.SetAilment(Ailment.Shocked, duration, damage);
+        }
+    }
+    
     private void OnDrawGizmos()
     {
         if(attackChecker != null)

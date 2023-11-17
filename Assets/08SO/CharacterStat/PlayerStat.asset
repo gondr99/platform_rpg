@@ -24,7 +24,7 @@ MonoBehaviour:
   vitality:
     _baseValue: 0
     modifiers: 
-  maxHP:
+  maxHealth:
     _baseValue: 100
     modifiers: 
   armor:
@@ -32,6 +32,9 @@ MonoBehaviour:
     modifiers: 
   evasion:
     _baseValue: 10
+    modifiers: 
+  magicResistance:
+    _baseValue: 0
     modifiers: 
   damage:
     _baseValue: 10
@@ -42,3 +45,27 @@ MonoBehaviour:
   criticalDamage:
     _baseValue: 150
     modifiers: 
+  fireDamage:
+    _baseValue: 5
+    modifiers: 
+  ignitePercent:
+    _baseValue: 99
+    modifiers: 
+  iceDamage:
+    _baseValue: 0
+    modifiers: 
+  chillPercent:
+    _baseValue: 0
+    modifiers: 
+  lightingDamage:
+    _baseValue: 5
+    modifiers: 
+  shockPercent:
+    _baseValue: 0
+    modifiers: 
+  ailmentTimeMS:
+    _baseValue: 3000
+    modifiers: 
+  canIgniteByMelee: 1
+  canChillByMelee: 0
+  canShockByMelee: 0

@@ -1,7 +1,4 @@
-﻿
-using System;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEngine;
 using Random = UnityEngine.Random;
 
 public abstract class CharacterStat : ScriptableObject
@@ -14,10 +11,10 @@ public abstract class CharacterStat : ScriptableObject
     
     
     [Header("Defensive stats")]
-    public Stat maxHP; //체력
+    public Stat maxHealth; //체력
     public Stat armor; //방어도
     public Stat evasion; //회피도
-    
+    public Stat magicResistance; //마법방어
     
     [Header("Offensive stats")]
     public Stat damage;
@@ -25,6 +22,23 @@ public abstract class CharacterStat : ScriptableObject
     public Stat criticalDamage;
 
 
+    [Header("Magic stats")] 
+    public Stat fireDamage;
+    public Stat ignitePercent;
+    public Stat iceDamage;
+    public Stat chillPercent;
+    public Stat lightingDamage;
+    public Stat shockPercent;
+
+    public Stat ailmentTimeMS; //밀리세컨드 단위의 질병 확률
+
+    public bool canIgniteByMelee;
+    public bool canChillByMelee;
+    public bool canShockByMelee;
+    
+    //평타로 거는 상태이상은 데미지 캐스터에서,
+    //일반 스킬들은 전부 Skill에서 진행.
+    
     private void OnEnable()
     {
         criticalDamage.SetDefaultValue(150); //처음 시작시 150% 증뎀으로 설정.
@@ -45,9 +59,10 @@ public abstract class CharacterStat : ScriptableObject
         return false;
     }
 
-    public int ArmoredDamage(int incomingDamage)
+    public int ArmoredDamage(int incomingDamage, bool isChilled)
     {
-        return Mathf.Max(1, incomingDamage - armor.GetValue());
+        float multiplier = isChilled ? 0.8f : 1f; //동상일때는 20% 아머 피어싱.
+        return Mathf.Max(1, Mathf.RoundToInt(incomingDamage - armor.GetValue() * multiplier) );
     }
 
     public bool IsCritical(ref int incomingDamage)
@@ -67,5 +82,53 @@ public abstract class CharacterStat : ScriptableObject
     {
         int percent = criticalDamage.GetValue() + strength.GetValue();
         return Mathf.RoundToInt(incomingDamage * percent * 0.01f); //0.01f 곱하면 백분율이다.
+    }
+
+    public virtual int GetMagicDamage()
+    {
+        int fire = fireDamage.GetValue();
+        int ice = iceDamage.GetValue();
+        int lighting = lightingDamage.GetValue();
+        
+        return fire + ice + lighting + intelligence.GetValue();
+    }
+
+    public virtual int GetMagicDamageAfterResist(int incomingDamage)
+    {
+        int resistTotal = magicResistance.GetValue() + intelligence.GetValue() * 3;
+        
+        return Mathf.Max(1, incomingDamage - resistTotal); 
+    }
+
+    public virtual int GetDotDamage(Ailment ailment)
+    {
+        switch (ailment)
+        {
+            case Ailment.Ignited:
+                return Mathf.Max(1, Mathf.RoundToInt(fireDamage.GetValue() * 0.1f)); //화염데미지의 10% 
+            case Ailment.Chilled:
+                return 0;
+            case Ailment.Shocked:
+                return 0;
+            default:
+                return 0;
+        }
+    }
+    
+
+    //상태이상 가능성.
+    public bool CanAilment(Ailment ailment)
+    {
+        switch (ailment)
+        {
+            case Ailment.Ignited:
+                return Random.Range(0, 100) < ignitePercent.GetValue(); 
+            case Ailment.Chilled:
+                return Random.Range(0, 100) < chillPercent.GetValue();
+            case Ailment.Shocked:
+                return Random.Range(0, 100) < shockPercent.GetValue();
+            default:
+                return false;
+        }
     }
 }

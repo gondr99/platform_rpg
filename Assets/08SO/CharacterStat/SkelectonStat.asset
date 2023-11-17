@@ -12,12 +12,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 018d4957b0cf4693bc5367cf84f84a09, type: 3}
   m_Name: SkelectonStat
   m_EditorClassIdentifier: 
+  strength:
+    _baseValue: 0
+    modifiers: 
+  agility:
+    _baseValue: 0
+    modifiers: 
+  intelligence:
+    _baseValue: 0
+    modifiers: 
+  vitality:
+    _baseValue: 0
+    modifiers: 
+  maxHealth:
+    _baseValue: 50
+    modifiers: 
+  armor:
+    _baseValue: 0
+    modifiers: 
+  evasion:
+    _baseValue: 0
+    modifiers: 
+  magicResistance:
+    _baseValue: 0
+    modifiers: 
   damage:
     _baseValue: 5
     modifiers: 
-  maxHP:
-    _baseValue: 4
-    modifiers: 
-  Strength:
+  criticalChance:
     _baseValue: 0
     modifiers: 
+  criticalDamage:
+    _baseValue: 150
+    modifiers: 
+  fireDamage:
+    _baseValue: 0
+    modifiers: 
+  ignitePercent:
+    _baseValue: 0
+    modifiers: 
+  iceDamage:
+    _baseValue: 0
+    modifiers: 
+  chillPercent:
+    _baseValue: 0
+    modifiers: 
+  lightingDamage:
+    _baseValue: 0
+    modifiers: 
+  shockPercent:
+    _baseValue: 0
+    modifiers: 
+  ailmentTimeMS:
+    _baseValue: 0
+    modifiers: 
+  canIgniteByMelee: 0
+  canChillByMelee: 0
+  canShockByMelee: 0

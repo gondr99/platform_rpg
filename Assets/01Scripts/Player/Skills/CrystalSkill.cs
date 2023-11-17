@@ -28,7 +28,9 @@ public class CrystalSkill : Skill
     public float multiCrystalCooldown;
     [HideInInspector] public List<CrystalController> crystalList;
     private bool _readyToLaunch = false;
-  
+
+    [Header("Ailment")] 
+    public bool isShockable; //감점가능
     
     //최대 5개까지만 크리스털 생성하게 해둠. 
     private Vector2[] offsets =
@@ -125,4 +127,5 @@ public class CrystalSkill : Skill
     {
         _currentCrystal = null;
     }
+    
 }

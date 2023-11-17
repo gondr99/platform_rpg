@@ -101,7 +101,14 @@ public class CrystalController : MonoBehaviour
             if (collider.TryGetComponent<Enemy>(out Enemy enemy))
             {
                 Vector2 dir = enemy.transform.position - transform.position;
-                enemy.HealthCompo.ApplyDamage(_skill.damage, dir.normalized, _skill.knockPower, GameManager.Instance.Player);
+                Player player = GameManager.Instance.Player;
+                enemy.HealthCompo.ApplyDamage(_skill.damage, dir.normalized, _skill.knockPower, player);
+                
+                if (_skill.isShockable && player.Stat.CanAilment(Ailment.Shocked)) //쇼크 공격이 가능하고 확률도 통과하면
+                {
+                    float duration = player.Stat.ailmentTimeMS.GetValue() * 0.001f;
+                    enemy.HealthCompo.SetAilment(Ailment.Shocked, duration, 0); //감전은 그 자체로 데미지는 없다.
+                }
             }
         }
     }
