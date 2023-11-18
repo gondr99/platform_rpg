@@ -1,9 +1,15 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SO/Item", fileName = "New Item data")]
+public enum ItemType
+{
+    Material,
+    Equipment
+}
+
+[CreateAssetMenu(menuName = "SO/Items/Item", fileName = "New Item data")]
 public class ItemData : ScriptableObject
 {
+    public ItemType itemType;
     public string itemName;
     public Sprite icon;
-    
 }

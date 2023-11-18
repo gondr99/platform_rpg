@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ItemObject : MonoBehaviour
@@ -5,17 +6,19 @@ public class ItemObject : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     [SerializeField] private ItemData _itemData;
 
-    private void Awake()
+    private void OnValidate()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        if(_spriteRenderer == null)
+            _spriteRenderer = GetComponent<SpriteRenderer>();
         _spriteRenderer.sprite = _itemData.icon;
+        gameObject.name = $"ItemObject-[{_itemData.itemName}]";
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.TryGetComponent<Player>(out Player player))
         {
-            Debug.Log($"pick up item : {_itemData.itemName}");
+            Inventory.Instance.AddItem(_itemData);
             Destroy(gameObject);
         }
     }
