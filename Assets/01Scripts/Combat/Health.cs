@@ -19,7 +19,8 @@ public class Health : MonoBehaviour, IDamageable
     public Action OnDied;
     public Action<Vector2> OnKnockBack;
     public Action<Color, int> OnDamageText; //데미지 텍스트를 띄워야 할때.
-    
+
+    public UnityEvent<Vector2> OnDeathEvent;
     public UnityEvent OnHitEvent;
     public UnityEvent<Ailment> OnAilmentChanged;
 
@@ -118,6 +119,7 @@ public class Health : MonoBehaviour, IDamageable
         {
             _isDead = true;
             OnDied?.Invoke();
+            OnDeathEvent?.Invoke(knockbackPower);
         }
     }
 
