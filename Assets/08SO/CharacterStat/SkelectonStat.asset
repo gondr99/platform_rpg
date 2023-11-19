@@ -69,3 +69,5 @@ MonoBehaviour:
   canIgniteByMelee: 0
   canChillByMelee: 0
   canShockByMelee: 0
+  _level: 0
+  _percentageModifier: 0

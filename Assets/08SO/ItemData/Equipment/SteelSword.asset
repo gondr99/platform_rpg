@@ -16,3 +16,20 @@ MonoBehaviour:
   itemName: Steel Sword
   icon: {fileID: 1526008332, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   equipmentType: 0
+  strength: 0
+  agility: 0
+  intelligence: 0
+  vitality: 0
+  damage: 5
+  criticalChance: 10
+  criticalDamage: 10
+  maxHealth: 0
+  armor: 0
+  evasion: 0
+  magicResistance: 0
+  fireDamage: 0
+  ignitePercent: 0
+  iceDamage: 0
+  chillPercent: 0
+  lightingDamage: 0
+  shockPercent: 0

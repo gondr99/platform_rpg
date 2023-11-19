@@ -32,6 +32,25 @@ public abstract class Enemy : Entity
     {
         base.Awake();
         _defaultMoveSpeed = moveSpeed;
+        
+        //레벨에 따른 난이도 증가        
+        ApplyLevelModifier();
+    }
+
+    private void ApplyLevelModifier()
+    {
+        EnemyStat enemyStat = _characterStat as EnemyStat;
+        if (enemyStat == null)
+        {
+            Debug.LogError($"non enemy stat infomation is assigned : {gameObject.name}");
+            return;
+        }
+
+        //데미지와 체력만 증가. 
+        enemyStat.Modify(enemyStat.damage);
+        enemyStat.Modify(enemyStat.maxHealth);
+
+        OnHealthBarChanged?.Invoke(HealthCompo.GetNormailizedHealth()); //최대치로 UI변경. 
     }
 
     protected override void Update()

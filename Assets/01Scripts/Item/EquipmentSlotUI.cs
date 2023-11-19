@@ -1,5 +1,6 @@
 
 using System;
+using UnityEngine.EventSystems;
 
 public class EquipmentSlotUI : ItemSlotUI
 {
@@ -8,5 +9,11 @@ public class EquipmentSlotUI : ItemSlotUI
     private void OnValidate()
     {
         gameObject.name = $"Equip Slot [ {slotType.ToString()} ]";
+    }
+
+    public override void OnPointerDown(PointerEventData eventData)
+    {
+        Inventory.Instance.UnEquipItem(item.data as ItemDataEquipment);
+        CleanUpSlot();
     }
 }

@@ -17,8 +17,8 @@ public class InventoryItem
         ++stackSize;
     }
 
-    public void RemoveStack()
+    public void RemoveStack(int count = 1)
     {
-        --stackSize;
+        stackSize -= 1;
     }
 }

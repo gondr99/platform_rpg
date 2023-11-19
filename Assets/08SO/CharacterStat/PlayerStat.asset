@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerStat
   m_EditorClassIdentifier: 
   strength:
-    _baseValue: 0
+    _baseValue: 5
     modifiers: 
   agility:
     _baseValue: 0
@@ -66,6 +66,6 @@ MonoBehaviour:
   ailmentTimeMS:
     _baseValue: 3000
     modifiers: 
-  canIgniteByMelee: 1
+  canIgniteByMelee: 0
   canChillByMelee: 0
   canShockByMelee: 0

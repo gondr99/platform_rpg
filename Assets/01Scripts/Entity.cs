@@ -30,7 +30,7 @@ public abstract class Entity : MonoBehaviour
     public SpriteRenderer SpriteRendererCompo { get; private set; }
     public CapsuleCollider2D Collider { get; private set; }
 
-    [SerializeField]private CharacterStat _characterStat;
+    [SerializeField]protected CharacterStat _characterStat;
     public CharacterStat Stat => _characterStat; 
     #endregion
     
@@ -57,6 +57,8 @@ public abstract class Entity : MonoBehaviour
         HealthCompo.OnDied += HandleDie;
         HealthCompo.OnAilmentChanged.AddListener(HandleAilmentChanged);
         OnHealthBarChanged?.Invoke(HealthCompo.GetNormailizedHealth()); //최대치로 UI변경.
+        
+        _characterStat = Instantiate(_characterStat); //복제본으로 탑재.
     }
 
     private void OnDestroy()

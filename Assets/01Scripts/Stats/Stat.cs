@@ -20,12 +20,14 @@ public class Stat
 
     public void AddModifier(int value)
     {
-        modifiers.Add(value);
+        if(value != 0)
+            modifiers.Add(value);
     }
 
-    public void RemoveModifire(int value)
+    public void RemoveModifier(int value)
     {
-        modifiers.Remove(value);
+        if(value != 0)
+            modifiers.Remove(value);
     }
 
     public void SetDefaultValue(int value)

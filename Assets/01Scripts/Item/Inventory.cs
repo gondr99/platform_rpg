@@ -1,10 +1,13 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
+
+//제작을 위한 구조체
+public struct MaterialPair
+{
+    public InventoryItem item;
+    public int count;
+}
 
 public class Inventory : MonoSingleton<Inventory>
 {
@@ -108,20 +111,25 @@ public class Inventory : MonoSingleton<Inventory>
 
         equipments.Add(newItem);
         equipmentDictionary.Add(newEquipment, newItem);
+        newEquipment.AddModifiers(); //장착한 아이템의 효과 적용.
+        
         
         RemoveItem(item);//장착한 아이템은 인벤토리에서 삭제한다. (장비칸으로 넘어갔으니까)
-        
         UpdateSlotUI();
     }
 
     //장비 장착 해제.
-    public void UnEquipItem(ItemDataEquipment oldEquipment)
+    public void UnEquipItem(ItemDataEquipment oldEquipment, bool backToInventory = true)
     {
         if (equipmentDictionary.TryGetValue(oldEquipment, out InventoryItem value))
         {
             equipments.Remove(value);
             equipmentDictionary.Remove(oldEquipment); //리스트와 딕셔너리에서 모두 빼준다.
-            AddItem(oldEquipment); //삭제하고 인벤토리에 다시 넣어준다.
+            oldEquipment.RemoveModifiers(); //빼준 아이템의 효과 빼준다.
+            
+            //인벤토리로 돌아가야 하면.
+            if(backToInventory)
+                AddItem(oldEquipment); //삭제하고 인벤토리에 다시 넣어준다.
         }
     }
 
@@ -166,37 +174,69 @@ public class Inventory : MonoSingleton<Inventory>
         }
     }
 
-    public void RemoveItem(ItemData item)
+    public void RemoveItem(ItemData item, int count = 1)
     {
         if (inventoryDictionary.TryGetValue(item, out InventoryItem value))
         {
-            if (value.stackSize <= 1)
+            if (value.stackSize <= count)
             {
                 inventory.Remove(value);
                 inventoryDictionary.Remove(item);
             }
             else
             {
-                value.RemoveStack();
+                value.RemoveStack(count);
             }
         }
         
         if (stashDictionary.TryGetValue(item, out InventoryItem stashValue))
         {
-            if (stashValue.stackSize <= 1)
+            if (stashValue.stackSize <= count)
             {
                 stash.Remove(stashValue);
                 stashDictionary.Remove(item);
             }
             else
             {
-                stashValue.RemoveStack();
+                stashValue.RemoveStack(count);
             }
         }
         
         UpdateSlotUI();
     }
 
+    public bool CanCraft(ItemDataEquipment itemToCraft, List<InventoryItem> requiredMaterials)
+    {
+        List<MaterialPair> materialsToRemove = new List<MaterialPair>();
+        
+        for (int i = 0; i < requiredMaterials.Count; ++i)
+        {
+            if (stashDictionary.TryGetValue(requiredMaterials[i].data, out InventoryItem stashItem))
+            {
+                if (stashItem.stackSize < requiredMaterials[i].stackSize)
+                {
+                    Debug.Log("not enough materials");
+                    return false;
+                }
+                
+                materialsToRemove.Add(new MaterialPair{ item = stashItem, count = requiredMaterials[i].stackSize});
+            }
+            else
+            {
+                Debug.Log("not enough materials");
+                return false;
+            }
+        }
+
+        for (int i = 0; i < materialsToRemove.Count; ++i)
+        {
+            RemoveItem(materialsToRemove[i].item.data, materialsToRemove[i].count); //갯수만큼 제거
+        }
+        
+        AddItem(itemToCraft);
+        Debug.Log($"crafting success : {itemToCraft.name}");
+        return true;
+    }
     
     // private void Update()
     // {
