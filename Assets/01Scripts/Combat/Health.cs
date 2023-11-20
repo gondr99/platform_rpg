@@ -102,15 +102,24 @@ public class Health : MonoBehaviour, IDamageable
         damage = _owner.Stat.ArmoredDamage(damage, _ailmentStat.HasAilment(Ailment.Chilled)); 
         _currentHealth = Mathf.Clamp(_currentHealth - damage, 0, maxHealth);
         
-        //매직데미지 추가 
-        int magicDamage = dealer.Stat.GetMagicDamage();
+        //감전데미지 체크
         CheckAilmentByDamage(damage);
-
-        magicDamage = _owner.Stat.GetMagicDamageAfterResist(magicDamage);
-        _currentHealth = Mathf.Clamp(_currentHealth - magicDamage, 0, maxHealth);
-        
         
         knockbackPower.x *= attackDirection.x; //y값은 고정으로.
+        AfterHitFeedbacks(knockbackPower);
+    }
+
+    public void ApplyMagicDamage(int damage, Vector2 attackDirection, Vector2 knockbackPower)
+    {
+        int magicDamage = _owner.Stat.GetMagicDamageAfterResist(damage);
+        _currentHealth = Mathf.Clamp(_currentHealth - magicDamage, 0, maxHealth);
+        
+        knockbackPower.x *= attackDirection.x; //y값은 고정으로.
+        AfterHitFeedbacks(knockbackPower);
+    }
+
+    private void AfterHitFeedbacks(Vector2 knockbackPower)
+    {
         OnKnockBack?.Invoke(knockbackPower);
         OnHitEvent?.Invoke();
         OnHit?.Invoke();

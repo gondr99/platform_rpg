@@ -30,6 +30,13 @@ public class ThunderStrikeSkill : Skill
         DamageToTargets();
     }
 
+    //확률상관없이 발동
+    public void UserSkillWithoutPercent()
+    {
+        FillTargetList();
+        DamageToTargets();
+    }
+
     private async void DamageToTargets()
     {
         Vector3 offset = new Vector3(0, 3.5f); //머리위에서 부터

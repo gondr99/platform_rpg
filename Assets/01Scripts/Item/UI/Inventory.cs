@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -30,6 +31,11 @@ public class Inventory : MonoSingleton<Inventory>
     private ItemSlotUI[] _inventoryItemSlots; //인벤토링 아이템 슬롯(장비등)
     private ItemSlotUI[] _stashItemSlots; //창고아이템 슬롯(재료등)
     private EquipmentSlotUI[] _equipmentSlots;
+    
+    
+    //디버그용 
+    public ItemDataEquipment[] initEquipList; 
+        
     private void Awake()
     {
         equipments = new List<InventoryItem>();
@@ -43,6 +49,15 @@ public class Inventory : MonoSingleton<Inventory>
         stash = new List<InventoryItem>();
         stashDictionary = new Dictionary<ItemData, InventoryItem>();
         _stashItemSlots = _stashSlotParent.GetComponentsInChildren<ItemSlotUI>();
+    }
+
+    //디버그용.
+    private void Start()
+    {
+        foreach (ItemDataEquipment equipment in initEquipList)
+        {
+            EquipItem(equipment);
+        }
     }
 
     private void UpdateSlotUI()
@@ -237,7 +252,24 @@ public class Inventory : MonoSingleton<Inventory>
         Debug.Log($"crafting success : {itemToCraft.name}");
         return true;
     }
+
+
+    public ItemDataEquipment GetEquipmentByType(EquipmentType type)
+    {
+        ItemDataEquipment equipItem = null;
     
+        foreach (KeyValuePair<ItemDataEquipment, InventoryItem> equipKeyValue in equipmentDictionary)
+        {
+            //지정된 장비 타입을 장착하고 있다면 가져온다. 
+            if (equipKeyValue.Key.equipmentType == type)
+            {
+                equipItem = equipKeyValue.Key;
+                break;
+            }
+        }
+        
+        return equipItem;
+    }
     // private void Update()
     // {
     //     if (Keyboard.current.lKey.wasPressedThisFrame)

@@ -9939,6 +9939,8 @@ MonoBehaviour:
   _inventorySlotParent: {fileID: 1685790686}
   _stashSlotParent: {fileID: 422198253}
   _equipmentSlotParent: {fileID: 1229643741}
+  initEquipList:
+  - {fileID: 11400000, guid: c1ea0495e1ca10e4fb9d12adeda61c50, type: 2}
 --- !u!4 &1425660315
 Transform:
   m_ObjectHideFlags: 0
@@ -16261,7 +16263,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   _skillPrefab: {fileID: 4889215701738381692, guid: 52e0fbc7329784a4ab876c1555af3cf3, type: 3}
-  isEnabled: 1
+  isEnabled: 0
   effectRadius: 15
   activePercent: 99
   amountOfThunder: 4

@@ -74,7 +74,9 @@ public abstract class Entity : MonoBehaviour
     {
         if ((ailment & Ailment.Chilled) > 0) //동결상태면 스피드 느리게
         {
-            SlowEntityBy(0.5f);
+            //마법 저항에 따라 적게
+            float resistance = (100 - Stat.magicResistance.GetValue()) * 0.01f;
+            SlowEntityBy(0.5f *  resistance );
         }
         else
         {
@@ -119,10 +121,7 @@ public abstract class Entity : MonoBehaviour
         _isKnocked = false;
     }
 
-    public virtual void SlowEntityBy(float percent)
-    {
-        
-    }
+    public abstract void SlowEntityBy(float percent); //슬로우는 자식들이 구현.
 
     protected virtual void ReturnDefaultSpeed()
     {

@@ -113,9 +113,10 @@ public class Player: Entity
         crystalSkill.AttemptUseSkill(); //사용시도.
     }
 
+    //플레이어의 공격관련 코드들.
     public override void Attack()
     {
-        //base.Attack();
+        bool hitAttack = false; //공격에 적이 맞았는가?
         if (DamageCasterCompo.CastDamage())
         {
             //공격성공시 현재 플레이어 콤보상태 계산.
@@ -124,7 +125,13 @@ public class Player: Entity
                 ThunderStrikeSkill thunder = skill.GetSkill<ThunderStrikeSkill>(PlayerSkill.ThunderStrike);
                 thunder.AttemptUseSkill(); //3타 공격 성공시 시도.
             }
+
+            hitAttack = true;
         }
+        
+        ItemDataEquipment equip = Inventory.Instance.GetEquipmentByType(EquipmentType.Weapon);
+        if(equip != null)
+            equip.ItemEffect(hitAttack);// 무기 이펙트 실행
     }
 
     protected override void Update()

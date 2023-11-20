@@ -19,6 +19,9 @@ public class ItemDataEquipment : ItemData
 {
     public EquipmentType equipmentType;
 
+    [Header("item effect")] 
+    public ItemEffectSO[] effectList;
+    
     [Header("Major stat")]
     public int strength;
     public int agility;
@@ -46,6 +49,14 @@ public class ItemDataEquipment : ItemData
     public int shockPercent;
 
     [Header("Craft requirements")] public List<InventoryItem> craftingMaterials;
+
+    public void ItemEffect(bool hitAttack = false)
+    {
+        foreach (ItemEffectSO effect in effectList)
+        {
+            effect.ExecuteEffect(hitAttack); //아이템의 각 효과들을 수행함.
+        }
+    }
     
     public void AddModifiers()
     {
