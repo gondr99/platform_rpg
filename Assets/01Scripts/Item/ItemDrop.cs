@@ -1,14 +1,22 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemDrop : MonoBehaviour
 {
+    [SerializeField] private DropTableSO _dropTable;
+    [SerializeField] private int _dropDiceCount = 2; //드롭 주사위 굴릴 횟수
     [SerializeField] private ItemObject _dropPrefab;
-    [SerializeField] private ItemData _item;
-    
+
     public void DropItem(Vector2 dropVelocity)
     {
-        ItemObject newDrop = Instantiate(_dropPrefab, transform.position, Quaternion.identity);
-        newDrop.SetupItem(_item, dropVelocity);
-        
+        for (int i = 0; i < _dropDiceCount; ++i)
+        {
+            //드롭찬스 안에서 걸리면
+            if (_dropTable.GetDropItem(out ItemData item))
+            {
+                ItemObject newDrop = Instantiate(_dropPrefab, transform.position, Quaternion.identity);
+                newDrop.SetupItem(item, dropVelocity);
+            }
+        }
     }
 }

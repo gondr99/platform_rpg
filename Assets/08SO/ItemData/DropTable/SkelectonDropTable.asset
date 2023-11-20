@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 359c27221ab62474dbd37b7200ce429a, type: 3}
-  m_Name: AnimalSkin
+  m_Script: {fileID: 11500000, guid: 98433d4f866f84d46be18bb357473f1d, type: 3}
+  m_Name: SkelectonDropTable
   m_EditorClassIdentifier: 
-  itemType: 0
-  itemName: Animal skin
-  icon: {fileID: -973012730, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  dropList:
+  - {fileID: 11400000, guid: e6392e4fd2d06d9498aac7af52c44b54, type: 2}
+  - {fileID: 11400000, guid: db4bbaebd0896404497f9612aa0c45ec, type: 2}
   dropChance: 80
