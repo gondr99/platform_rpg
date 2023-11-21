@@ -9,11 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66e39c18f9d632646b0f8347e939a5e8, type: 3}
-  m_Name: ThunderStrikeByMelee
+  m_Script: {fileID: 11500000, guid: b072e5fcff5ca064c9751aa32823f914, type: 3}
+  m_Name: DamageBuff
   m_EditorClassIdentifier: 
-  effectChance: 13.7
+  effectChance: 99
   usedByMelee: 1
   usedBySkill: 0
   activeSkillTypeList: 
   activeByHit: 1
+  buffStat: 8
+  buffAmount: 10
+  duration: 5

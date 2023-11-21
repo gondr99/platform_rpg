@@ -59,6 +59,7 @@ public abstract class Entity : MonoBehaviour
         OnHealthBarChanged?.Invoke(HealthCompo.GetNormailizedHealth()); //최대치로 UI변경.
         
         _characterStat = Instantiate(_characterStat); //복제본으로 탑재.
+        _characterStat.SetOwner(this); //자기를 오너로 설정
     }
 
     private void OnDestroy()

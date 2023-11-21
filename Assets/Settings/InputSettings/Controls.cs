@@ -116,6 +116,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""HealFlask"",
+                    ""type"": ""Button"",
+                    ""id"": ""91565cc9-7e9e-41ef-9e31-8c48718a35c7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -272,6 +281,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""CrystalSkill"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""321928db-c540-4207-8c6c-279de1c09bd8"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardAndMouse"",
+                    ""action"": ""HealFlask"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -307,6 +327,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_MouseAim = m_Player.FindAction("MouseAim", throwIfNotFound: true);
         m_Player_UltiSkill = m_Player.FindAction("UltiSkill", throwIfNotFound: true);
         m_Player_CrystalSkill = m_Player.FindAction("CrystalSkill", throwIfNotFound: true);
+        m_Player_HealFlask = m_Player.FindAction("HealFlask", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -378,6 +399,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_MouseAim;
     private readonly InputAction m_Player_UltiSkill;
     private readonly InputAction m_Player_CrystalSkill;
+    private readonly InputAction m_Player_HealFlask;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -392,6 +414,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @MouseAim => m_Wrapper.m_Player_MouseAim;
         public InputAction @UltiSkill => m_Wrapper.m_Player_UltiSkill;
         public InputAction @CrystalSkill => m_Wrapper.m_Player_CrystalSkill;
+        public InputAction @HealFlask => m_Wrapper.m_Player_HealFlask;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -431,6 +454,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @CrystalSkill.started += instance.OnCrystalSkill;
             @CrystalSkill.performed += instance.OnCrystalSkill;
             @CrystalSkill.canceled += instance.OnCrystalSkill;
+            @HealFlask.started += instance.OnHealFlask;
+            @HealFlask.performed += instance.OnHealFlask;
+            @HealFlask.canceled += instance.OnHealFlask;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -465,6 +491,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @CrystalSkill.started -= instance.OnCrystalSkill;
             @CrystalSkill.performed -= instance.OnCrystalSkill;
             @CrystalSkill.canceled -= instance.OnCrystalSkill;
+            @HealFlask.started -= instance.OnHealFlask;
+            @HealFlask.performed -= instance.OnHealFlask;
+            @HealFlask.canceled -= instance.OnHealFlask;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -503,5 +532,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnMouseAim(InputAction.CallbackContext context);
         void OnUltiSkill(InputAction.CallbackContext context);
         void OnCrystalSkill(InputAction.CallbackContext context);
+        void OnHealFlask(InputAction.CallbackContext context);
     }
 }

@@ -74,12 +74,19 @@ public class Health : MonoBehaviour, IDamageable
     public void SetOwner(Entity owner)
     {
         _owner = owner;
-        _currentHealth = maxHealth = _owner.Stat.maxHealth.GetValue();
+        _currentHealth = maxHealth = _owner.Stat.GetMaxHealthValue();
     }
 
     public float GetNormalizedHealth()
     {
         return Mathf.Clamp((float)_currentHealth / maxHealth, 0, 1f);
+    }
+
+    public void ApplyHeal(int amount)
+    {
+        _currentHealth = Mathf.Min(_currentHealth + amount, maxHealth);
+        //체력증가에 따른 UI필요.
+        Debug.Log($"{_owner.gameObject.name} is healed!! : {amount}");
     }
 
     public void ApplyDamage(int damage, Vector2 attackDirection, Vector2 knockbackPower, Entity dealer)

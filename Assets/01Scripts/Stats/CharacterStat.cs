@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 public abstract class CharacterStat : ScriptableObject
@@ -38,6 +39,24 @@ public abstract class CharacterStat : ScriptableObject
     
     //평타로 거는 상태이상은 데미지 캐스터에서,
     //일반 스킬들은 전부 Skill에서 진행.
+    private Entity _owner;
+
+    public virtual void SetOwner(Entity owner)
+    {
+        _owner = owner;
+    }
+    public virtual void IncreaseStatBy(int modifyValue, float duration, Stat statToModify)
+    {
+        _owner.StartCoroutine(StatModifyCoroutine(modifyValue, duration, statToModify));
+    }
+
+    //얘는 Task로 하면 게임 정지시에도 끝나버림.
+    private IEnumerator StatModifyCoroutine(int modifyValue, float duration, Stat statToModify)
+    {
+        statToModify.AddModifier(modifyValue);
+        yield return new WaitForSeconds(duration);
+        statToModify.RemoveModifier(modifyValue);
+    }
     
     private void OnEnable()
     {
@@ -92,10 +111,11 @@ public abstract class CharacterStat : ScriptableObject
         
         return fire + ice + lighting + intelligence.GetValue();
     }
-    
-    //마법데미지를 줄 때 발생할 매서드 
-    public virtual void ActiveMagicDamageEffect(){}
-    
+
+    public int GetMaxHealthValue()
+    {
+        return maxHealth.GetValue() + vitality.GetValue() * 5;
+    }
 
     public virtual int GetMagicDamageAfterResist(int incomingDamage)
     {

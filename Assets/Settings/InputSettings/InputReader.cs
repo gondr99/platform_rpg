@@ -12,6 +12,7 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public event Action UltiSkillEvent;
     public event Action CrystalSkillEvent;
     public event Action<bool> ThrowAimEvent;
+    public event Action HealFlaskEvent;
     public Vector2 AimPosition { get; private set; }
     public float xInput { get; private set; }
     public float yInput { get; private set; }
@@ -85,6 +86,14 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
         if (context.performed)
         {
             CrystalSkillEvent?.Invoke();
+        }
+    }
+
+    public void OnHealFlask(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            HealFlaskEvent?.Invoke();
         }
     }
 

@@ -85,17 +85,19 @@ public abstract class Enemy : Entity
     {
         if (isFrozenWithoutTimer)
         {
-            _isFrozenWithoutTimer = isFrozenWithoutTimer; //시간제한없이 얼릴때가 true일때만. 
+            _isFrozenWithoutTimer = true; //시간제한없이 얼릴때가 true일때만. 
         }
         
         _isFrozen = isFreeze;
         if (isFreeze)
         {
+            Debug.Log("Freezed");
             moveSpeed = 0;
             AnimatorCompo.speed = 0; //애니메이션 정지. 이동 정지.
         }
         else
         {
+            Debug.Log("UnFreezed");
             moveSpeed = _defaultMoveSpeed;
             AnimatorCompo.speed = 1;
             _isFrozenWithoutTimer = false;
@@ -105,8 +107,9 @@ public abstract class Enemy : Entity
     public virtual async void FreezeTimerFor(float delaySec)
     {
         FreezeTime(true); //정지
+        Debug.Log(delaySec);
         await Task.Delay(Mathf.FloorToInt(delaySec * 1000));
-
+        
         if (!_isFrozenWithoutTimer)
         {
             FreezeTime(false); //재생

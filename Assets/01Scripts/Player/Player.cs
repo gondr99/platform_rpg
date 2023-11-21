@@ -73,12 +73,14 @@ public class Player: Entity
     {
         PlayerInput.DashEvent += HandleDashInput;
         PlayerInput.CrystalSkillEvent += HandleCrystalInput;
+        PlayerInput.HealFlaskEvent += HandleFlaskInput;
     }
 
     private void OnDisable()
     {
         PlayerInput.DashEvent -= HandleDashInput;
         PlayerInput.CrystalSkillEvent -= HandleCrystalInput;
+        PlayerInput.HealFlaskEvent -= HandleFlaskInput;
     }
 
     protected override void HandleDie()
@@ -111,6 +113,11 @@ public class Player: Entity
     {
         CrystalSkill crystalSkill = skill.GetSkill<CrystalSkill>(PlayerSkill.Crystal);
         crystalSkill.AttemptUseSkill(); //사용시도.
+    }
+
+    private void HandleFlaskInput()
+    {
+        Inventory.Instance.UseFlask(); //플라스크 사용.
     }
 
     //플레이어의 공격관련 코드들.

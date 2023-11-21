@@ -10,21 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47b4a3b82e17e7f48ba22cb1bb141b89, type: 3}
-  m_Name: PlateArmor
+  m_Name: VampireSword
   m_EditorClassIdentifier: 
   itemType: 1
-  itemName: Plate armor
-  icon: {fileID: -1581127718, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
-  equipmentType: 1
-  strength: 5
-  agility: 3
+  itemName: VampireSword
+  icon: {fileID: 1426366811, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  dropChance: 1
+  equipmentType: 0
+  effectList:
+  - {fileID: 11400000, guid: 90102689af243bc4fbb01a0c6cef40d4, type: 2}
+  - {fileID: 11400000, guid: 78339b445e6aa2b4d8ffdb8fc7ebe893, type: 2}
+  effectCooldown: 5
+  strength: 0
+  agility: 0
   intelligence: 0
   vitality: 0
-  damage: 0
-  criticalChance: 0
-  criticalDamage: 0
-  maxHealth: 15
-  armor: 10
+  damage: 5
+  criticalChance: 10
+  criticalDamage: 10
+  maxHealth: 0
+  armor: 0
   evasion: 0
   magicResistance: 0
   fireDamage: 0
@@ -33,8 +38,4 @@ MonoBehaviour:
   chillPercent: 0
   lightingDamage: 0
   shockPercent: 0
-  craftingMaterials:
-  - data: {fileID: 11400000, guid: e6392e4fd2d06d9498aac7af52c44b54, type: 2}
-    stackSize: 2
-  - data: {fileID: 11400000, guid: db4bbaebd0896404497f9612aa0c45ec, type: 2}
-    stackSize: 1
+  craftingMaterials: []

@@ -7,23 +7,35 @@ public class IceAndFireEffectSO : ItemEffectSO
 {
     [SerializeField] private IceAndFireController _iceAndFirePrefab;
     [SerializeField] private float _velocity;
-    public override void ExecuteEffectByMelee(bool hitAttack)
+    public override void UseEffect()
     {
-        if (activeByHit && !hitAttack) return; 
+        CastIceAndFire(GameManager.Instance.Player);
+    }
+
+    public override bool ExecuteEffectByMelee(bool hitAttack)
+    {
+        if (activeByHit && !hitAttack) return false; 
         
         if (Random.Range(0, 100f) > effectChance)
         {
-            return;
+            return false;
         }
 
         Player player = GameManager.Instance.Player;
-        if (player.currentCompoCounter != 2) return; //매 3타마다 발동
+        if (player.currentCompoCounter != 2) return false; //매 3타마다 발동
         
+        CastIceAndFire(player);
+        
+        _lastMeleeEffectTime = Time.time;
+        return true;
+    }
+
+    private void CastIceAndFire(Player player)
+    {
         Vector3 spawnPosition = player.transform.position + new Vector3(2 * player.FacingDirection, 0);
 
         IceAndFireController instance = Instantiate(_iceAndFirePrefab, spawnPosition, Quaternion.identity);
         instance.FireToFront( new Vector2( player.FacingDirection * _velocity, 0), 2f );
         
     }
-
 }

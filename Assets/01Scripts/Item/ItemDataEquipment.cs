@@ -22,6 +22,7 @@ public class ItemDataEquipment : ItemData
     [Header("item effect")] 
     public ItemEffectSO[] effectList;
     
+    
     [Header("Major stat")]
     public int strength;
     public int agility;
@@ -50,9 +51,32 @@ public class ItemDataEquipment : ItemData
 
     [Header("Craft requirements")] public List<InventoryItem> craftingMaterials;
 
+    [Header("Use Equipment")] 
+    public float cooldown;
+    protected float _lastUseTime;
+
+    protected virtual void OnEnable()
+    {
+        _lastUseTime = -1500f;
+    }
+
+    //장비 사용
+    public void UseEquipment()
+    {
+        if (_lastUseTime + cooldown > Time.time) return;
+        
+        foreach (ItemEffectSO effect in effectList)
+        {
+            effect.UseEffect(); //기본값 실행
+        }
+
+        _lastUseTime = Time.time;
+    }
+
     //hitAttack은 적을 피격 성공했을 때만 발동하게 할 것인지를 나타냄.
     public void ItemEffectByMelee(bool hitAttack = false)
     {
+        // 각 이펙트는 각자의 확률에 따라 실행됨.
         foreach (ItemEffectSO effect in effectList)
         {
             effect.ExecuteEffectByMelee(hitAttack); //아이템의 각 효과들을 수행함.
@@ -64,6 +88,14 @@ public class ItemDataEquipment : ItemData
         foreach (ItemEffectSO effect in effectList)
         {
             effect.ExecuteEffectBySkill(skillType); //아이템의 각 효과들을 수행함.
+        }
+    }
+
+    public void ItemEffectByHit(Health health)
+    {
+        foreach (ItemEffectSO effect in effectList)
+        {
+            effect.ExecuteEffectByHit(health);
         }
     }
     

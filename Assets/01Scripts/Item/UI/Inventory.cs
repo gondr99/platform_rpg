@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -32,7 +31,9 @@ public class Inventory : MonoSingleton<Inventory>
     private ItemSlotUI[] _stashItemSlots; //창고아이템 슬롯(재료등)
     private EquipmentSlotUI[] _equipmentSlots;
     
-    
+    private float _flaskCooldown;
+    private float _lastFlaskUseTime;
+
     //디버그용 
     public ItemDataEquipment[] initEquipList; 
         
@@ -57,6 +58,31 @@ public class Inventory : MonoSingleton<Inventory>
         foreach (ItemDataEquipment equipment in initEquipList)
         {
             EquipItem(equipment);
+        }
+    }
+
+    //플라스크 쿨타임은 플라스크가 아니라 인벤토리에서 관리하는게 맞다.
+    public void UseFlask()
+    {
+        ItemDataEquipment flask = GetEquipmentByType(EquipmentType.Flask);
+        
+        if (flask != null)
+        {
+            bool canUseFlask = Time.time > _lastFlaskUseTime + _flaskCooldown;;
+            if (canUseFlask)
+            {
+                _flaskCooldown = flask.cooldown; //이렇게 하면 시작시에도 바로 사용 가능.
+                flask.UseEquipment();
+                _lastFlaskUseTime = Time.time;
+            }
+            else
+            {
+                Debug.Log("Flask cooldown");
+            }
+        }
+        else
+        {
+            Debug.Log("no flask");
         }
     }
 
@@ -270,13 +296,5 @@ public class Inventory : MonoSingleton<Inventory>
         
         return equipItem;
     }
-    // private void Update()
-    // {
-    //     if (Keyboard.current.lKey.wasPressedThisFrame)
-    //     {
-    //         ItemData newItem = inventoryItems[inventoryItems.Count - 1].data; //마지막 아이템
-    //         
-    //         RemoveItem(newItem);
-    //     }
-    // }
+    
 }

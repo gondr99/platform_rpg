@@ -5,28 +5,34 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "SO/Items/Effect/ThunderStrike")]
 public class ThunderStrikerEffectSO : ItemEffectSO
 {
-    public bool usedByMelee;
-    public bool usedBySkill;
-    public List<PlayerSkill> activeSkillTypeList;
-    
-    public override void ExecuteEffectByMelee(bool hitAttack)
+    public override void UseEffect()
     {
-        if (activeByHit && !hitAttack) return;
-        if (!usedByMelee) return;
-        
         CastThunderStrike();
     }
 
-    public override void ExecuteEffectBySkill(PlayerSkill skillType)
+    public override bool ExecuteEffectByMelee(bool hitAttack)
     {
-        Debug.Log(skillType);
-        if (!usedBySkill) return;
+        if (!base.ExecuteEffectByMelee(hitAttack)) return false;
+        
+        if (activeByHit && !hitAttack) return false;
+
+        CastThunderStrike();
+        _lastMeleeEffectTime = Time.time;
+        return true;
+    }
+
+    public override bool ExecuteEffectBySkill(PlayerSkill skillType)
+    {
+        if (!base.ExecuteEffectBySkill(skillType)) return false;
 
         PlayerSkill skill = activeSkillTypeList.FirstOrDefault(x => x == skillType);
         if (skill != 0) //못찾은경우가 아니라면 
         {
             CastThunderStrike();
+            _lastSkillEffectTime = Time.time;
+            return true;
         }
+        return false;
     }
 
     private void CastThunderStrike()

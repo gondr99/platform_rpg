@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a4fb761ff45d9547afc4cd378aae229, type: 3}
   m_Name: IceAndFire
   m_EditorClassIdentifier: 
-  effectChance: 100
+  effectChance: 50
+  usedByMelee: 1
+  usedBySkill: 0
+  activeSkillTypeList: 
   activeByHit: 0
   _iceAndFirePrefab: {fileID: 1433710472788274680, guid: 0421833a5a154b446b5fe5ded3326594, type: 3}
   _velocity: 20
