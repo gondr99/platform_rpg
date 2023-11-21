@@ -27,9 +27,12 @@ public class Inventory : MonoSingleton<Inventory>
     [SerializeField] private Transform _inventorySlotParent;
     [SerializeField] private Transform _stashSlotParent;
     [SerializeField] private Transform _equipmentSlotParent;
+
+    [SerializeField] private Transform _statSlotParent;
     private ItemSlotUI[] _inventoryItemSlots; //인벤토링 아이템 슬롯(장비등)
     private ItemSlotUI[] _stashItemSlots; //창고아이템 슬롯(재료등)
     private EquipmentSlotUI[] _equipmentSlots;
+    private UIStatSlot[] _statSlots;
     
     private float _flaskCooldown;
     private float _lastFlaskUseTime;
@@ -50,6 +53,8 @@ public class Inventory : MonoSingleton<Inventory>
         stash = new List<InventoryItem>();
         stashDictionary = new Dictionary<ItemData, InventoryItem>();
         _stashItemSlots = _stashSlotParent.GetComponentsInChildren<ItemSlotUI>();
+
+        _statSlots = _statSlotParent.GetComponentsInChildren<UIStatSlot>();
     }
 
     //디버그용.
@@ -119,6 +124,12 @@ public class Inventory : MonoSingleton<Inventory>
         for (int i = 0; i < stash.Count; ++i)
         {
             _stashItemSlots[i].UpdateSlot(stash[i]);
+        }
+        
+        //스테이터스 갱신하기
+        for (int i = 0; i < _statSlots.Length; ++i)
+        {
+            _statSlots[i].UpdateStatValueUI();
         }
     }
 

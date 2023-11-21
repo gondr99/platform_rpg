@@ -14,6 +14,7 @@ public enum EquipmentType
     Flask
 }
 
+
 [CreateAssetMenu(menuName = "SO/Items/Equipment", fileName = "New Item data")]
 public class ItemDataEquipment : ItemData
 {
@@ -55,9 +56,27 @@ public class ItemDataEquipment : ItemData
     public float cooldown;
     protected float _lastUseTime;
 
+    //필드 인포를 가지고 있는 딕셔너리.
+    protected Dictionary<StatType, FieldInfo> _fieldInfoDictionary = new Dictionary<StatType, FieldInfo>();
+
     protected virtual void OnEnable()
     {
         _lastUseTime = -1500f;
+
+        _fieldInfoDictionary.Clear();
+        Type itemStatType = typeof(ItemDataEquipment); 
+        foreach (StatType statType in Enum.GetValues(typeof(StatType)))
+        {
+            FieldInfo itemStatField = itemStatType.GetField(statType.ToString());
+            if (itemStatField == null)
+            {
+                Debug.LogError($"There are no stat! error : {statType.ToString()}");
+            }
+            else
+            {
+                _fieldInfoDictionary.Add(statType, itemStatField);
+            }
+        }
     }
 
     //장비 사용
@@ -101,57 +120,71 @@ public class ItemDataEquipment : ItemData
     
     public void AddModifiers()
     {
-        PlayerStat stat = GameManager.Instance.Player.Stat as PlayerStat;
-        if (stat == null)
+        PlayerStat playerStat = GameManager.Instance.Player.Stat as PlayerStat;
+        if (playerStat == null)
             return;
+
+        foreach (var fieldSet in _fieldInfoDictionary)
+        {
+            Stat stat = playerStat.GetStatByType(fieldSet.Key);
+            stat.AddModifier( (int)fieldSet.Value.GetValue(this));
+        }
         
-        stat.strength.AddModifier(strength);
-        stat.agility.AddModifier(agility);
-        stat.intelligence.AddModifier(intelligence);
-        stat.vitality.AddModifier(vitality);
-        
-        stat.damage.AddModifier(damage);
-        stat.criticalChance.AddModifier(criticalChance);
-        stat.criticalDamage.AddModifier(criticalDamage);
-        
-        stat.maxHealth.AddModifier(maxHealth);
-        stat.armor.AddModifier(armor);
-        stat.evasion.AddModifier(evasion);
-        stat.magicResistance.AddModifier(magicResistance);
-        
-        stat.fireDamage.AddModifier(fireDamage);
-        stat.ignitePercent.AddModifier(ignitePercent);
-        stat.iceDamage.AddModifier(iceDamage);
-        stat.chillPercent.AddModifier(chillPercent);
-        stat.lightingDamage.AddModifier(lightingDamage);
-        stat.shockPercent.AddModifier(shockPercent);
     }
 
     public void RemoveModifiers()
     {
-        PlayerStat stat = GameManager.Instance.Player.Stat as PlayerStat;
-        if (stat == null)
+        PlayerStat playerStat = GameManager.Instance.Player.Stat as PlayerStat;
+        if (playerStat == null)
             return;
         
-        stat.strength.RemoveModifier(strength);
-        stat.agility.RemoveModifier(agility);
-        stat.intelligence.RemoveModifier(intelligence);
-        stat.vitality.RemoveModifier(vitality);
-        
-        stat.damage.RemoveModifier(damage);
-        stat.criticalChance.RemoveModifier(criticalChance);
-        stat.criticalDamage.RemoveModifier(criticalDamage);
-        
-        stat.maxHealth.RemoveModifier(maxHealth);
-        stat.armor.RemoveModifier(armor);
-        stat.evasion.RemoveModifier(evasion);
-        stat.magicResistance.RemoveModifier(magicResistance);
-        
-        stat.fireDamage.RemoveModifier(fireDamage);
-        stat.ignitePercent.RemoveModifier(ignitePercent);
-        stat.iceDamage.RemoveModifier(iceDamage);
-        stat.chillPercent.RemoveModifier(chillPercent);
-        stat.lightingDamage.RemoveModifier(lightingDamage);
-        stat.shockPercent.RemoveModifier(shockPercent);
+        foreach (var fieldSet in _fieldInfoDictionary)
+        {
+            Stat stat = playerStat.GetStatByType(fieldSet.Key);
+            stat.RemoveModifier( (int)fieldSet.Value.GetValue(this));
+        }
     }
 }
+
+
+// playerStat.strength.AddModifier(strength);
+// playerStat.agility.AddModifier(agility);
+// playerStat.intelligence.AddModifier(intelligence);
+// playerStat.vitality.AddModifier(vitality);
+//         
+// playerStat.damage.AddModifier(damage);
+// playerStat.criticalChance.AddModifier(criticalChance);
+// playerStat.criticalDamage.AddModifier(criticalDamage);
+//         
+// playerStat.maxHealth.AddModifier(maxHealth);
+// playerStat.armor.AddModifier(armor);
+// playerStat.evasion.AddModifier(evasion);
+// playerStat.magicResistance.AddModifier(magicResistance);
+//         
+// playerStat.fireDamage.AddModifier(fireDamage);
+// playerStat.ignitePercent.AddModifier(ignitePercent);
+// playerStat.iceDamage.AddModifier(iceDamage);
+// playerStat.chillPercent.AddModifier(chillPercent);
+// playerStat.lightingDamage.AddModifier(lightingDamage);
+// playerStat.shockPercent.AddModifier(shockPercent);
+
+// stat.strength.RemoveModifier(strength);
+// stat.agility.RemoveModifier(agility);
+// stat.intelligence.RemoveModifier(intelligence);
+// stat.vitality.RemoveModifier(vitality);
+//         
+// stat.damage.RemoveModifier(damage);
+// stat.criticalChance.RemoveModifier(criticalChance);
+// stat.criticalDamage.RemoveModifier(criticalDamage);
+//         
+// stat.maxHealth.RemoveModifier(maxHealth);
+// stat.armor.RemoveModifier(armor);
+// stat.evasion.RemoveModifier(evasion);
+// stat.magicResistance.RemoveModifier(magicResistance);
+//         
+// stat.fireDamage.RemoveModifier(fireDamage);
+// stat.ignitePercent.RemoveModifier(ignitePercent);
+// stat.iceDamage.RemoveModifier(iceDamage);
+// stat.chillPercent.RemoveModifier(chillPercent);
+// stat.lightingDamage.RemoveModifier(lightingDamage);
+// stat.shockPercent.RemoveModifier(shockPercent);

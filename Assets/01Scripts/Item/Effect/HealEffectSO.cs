@@ -13,6 +13,7 @@ public class HealEffectSO : ItemEffectSO
     public override bool ExecuteEffectByMelee(bool hitAttack)
     {
         if (!base.ExecuteEffectByMelee(hitAttack)) return false;
+        if (activeByHit && !hitAttack) return false; //피격시 활성화 조건인데 안맞았으면 발동 안함.
         
         CastHeal();
         _lastMeleeEffectTime = Time.time;

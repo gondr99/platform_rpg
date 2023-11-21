@@ -2,26 +2,7 @@ using System.Reflection;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public enum StatType
-{
-    strength,
-    agility,
-    intelligence,
-    vitality,
-    maxHealth,
-    armor,
-    evasion,
-    magicResistance,
-    damage,
-    criticalChance,
-    criticalDamage,
-    fireDamage,
-    ignitePercent,
-    iceDamage,
-    chillPercent,
-    lightingDamage,
-    shockPercent
-}
+
 [CreateAssetMenu(menuName = "SO/Items/Effect/Buff")]
 public class BuffEffectSO : ItemEffectSO
 {

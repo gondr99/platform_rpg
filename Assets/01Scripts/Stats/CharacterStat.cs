@@ -1,6 +1,30 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using Random = UnityEngine.Random;
+
+public enum StatType
+{
+    strength,
+    agility,
+    intelligence,
+    vitality,
+    maxHealth,
+    armor,
+    evasion,
+    magicResistance,
+    damage,
+    criticalChance,
+    criticalDamage,
+    fireDamage,
+    ignitePercent,
+    iceDamage,
+    chillPercent,
+    lightingDamage,
+    shockPercent
+}
 
 public abstract class CharacterStat : ScriptableObject
 {
@@ -39,7 +63,9 @@ public abstract class CharacterStat : ScriptableObject
     
     //평타로 거는 상태이상은 데미지 캐스터에서,
     //일반 스킬들은 전부 Skill에서 진행.
-    private Entity _owner;
+    protected Entity _owner;
+
+    protected Dictionary<StatType, FieldInfo> _filedInfoDictionary = new Dictionary<StatType, FieldInfo>();
 
     public virtual void SetOwner(Entity owner)
     {
@@ -49,6 +75,7 @@ public abstract class CharacterStat : ScriptableObject
     {
         _owner.StartCoroutine(StatModifyCoroutine(modifyValue, duration, statToModify));
     }
+    
 
     //얘는 Task로 하면 게임 정지시에도 끝나버림.
     private IEnumerator StatModifyCoroutine(int modifyValue, float duration, Stat statToModify)
@@ -58,9 +85,10 @@ public abstract class CharacterStat : ScriptableObject
         statToModify.RemoveModifier(modifyValue);
     }
     
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         criticalDamage.SetDefaultValue(150); //처음 시작시 150% 증뎀으로 설정.
+        
     }
 
     public int GetDamage()
