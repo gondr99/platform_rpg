@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 288775d1aa25875418a3f3fd7acb01f5
+guid: 9c14819cb93297042aa1c7c096ce1d19
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -139,48 +139,6 @@ TextureImporter:
       bones: []
       spriteID: 764e88251dda54b44a0624248e711f33
       internalID: 2124243686
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: artdecoUI_PIPO_green_1
-      rect:
-        serializedVersion: 2
-        x: 311
-        y: 673
-        width: 312
-        height: 195
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4d20f8112df67e145b735fd24ae15b96
-      internalID: 2000374667
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: artdecoUI_PIPO_green_2
-      rect:
-        serializedVersion: 2
-        x: 680
-        y: 680
-        width: 245
-        height: 185
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8893a9097b072d04a9aa3bfdc5826e08
-      internalID: 1396786153
       vertices: []
       indices: 
       edges: []
