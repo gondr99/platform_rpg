@@ -50,11 +50,20 @@ public class ItemDataEquipment : ItemData
 
     [Header("Craft requirements")] public List<InventoryItem> craftingMaterials;
 
-    public void ItemEffect(bool hitAttack = false)
+    //hitAttack은 적을 피격 성공했을 때만 발동하게 할 것인지를 나타냄.
+    public void ItemEffectByMelee(bool hitAttack = false)
     {
         foreach (ItemEffectSO effect in effectList)
         {
-            effect.ExecuteEffect(hitAttack); //아이템의 각 효과들을 수행함.
+            effect.ExecuteEffectByMelee(hitAttack); //아이템의 각 효과들을 수행함.
+        }
+    }
+
+    public void ItemEffectBySkill(PlayerSkill skillType)
+    {
+        foreach (ItemEffectSO effect in effectList)
+        {
+            effect.ExecuteEffectBySkill(skillType); //아이템의 각 효과들을 수행함.
         }
     }
     

@@ -92,6 +92,10 @@ public abstract class CharacterStat : ScriptableObject
         
         return fire + ice + lighting + intelligence.GetValue();
     }
+    
+    //마법데미지를 줄 때 발생할 매서드 
+    public virtual void ActiveMagicDamageEffect(){}
+    
 
     public virtual int GetMagicDamageAfterResist(int incomingDamage)
     {

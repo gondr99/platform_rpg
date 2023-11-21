@@ -30,8 +30,8 @@ public class ThunderStrikeSkill : Skill
         DamageToTargets();
     }
 
-    //확률상관없이 발동
-    public void UserSkillWithoutPercent()
+    //확률이니 이펙트 상관없이 발동하는것
+    public override void UseSkillWithoutCooltimeAndEffect()
     {
         FillTargetList();
         DamageToTargets();

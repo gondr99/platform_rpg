@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
+
 using UnityEngine;
 
 public class Skill : MonoBehaviour
@@ -10,6 +7,8 @@ public class Skill : MonoBehaviour
     protected float _cooldownTimer;
     protected Player _player;
 
+    [SerializeField] protected PlayerSkill _skillType; 
+    
     [HideInInspector] public LayerMask whatIsEnemy;
 
     protected virtual void Start()
@@ -37,7 +36,13 @@ public class Skill : MonoBehaviour
 
     public virtual void UseSkill()
     {
-        
+        //스킬을 쓸 때마다 해당 스킬을 썼음을 알려주는 피드백 필요.
+        SkillManager.Instance.UseSkillFeedback(_skillType);
+    }
+
+    public virtual void UseSkillWithoutCooltimeAndEffect()
+    {
+        //자동으로 발생되는 스킬들을 이용하기 위해 만든 함수.
     }
 
     public virtual Transform FindClosestEnemy(Transform checkTransform, LayerMask whatIsEnemy, float radius)

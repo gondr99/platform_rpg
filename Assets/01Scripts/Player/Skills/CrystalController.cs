@@ -102,7 +102,7 @@ public class CrystalController : MonoBehaviour
             {
                 Vector2 dir = enemy.transform.position - transform.position;
                 Player player = GameManager.Instance.Player;
-                enemy.HealthCompo.ApplyMagicDamage(_skill.damage, dir.normalized, _skill.knockPower);
+                enemy.HealthCompo.ApplyMagicDamage(_skill.damage, dir.normalized, _skill.knockPower, player);
                 
                 if (_skill.isShockable && player.Stat.CanAilment(Ailment.Shocked)) //쇼크 공격이 가능하고 확률도 통과하면
                 {

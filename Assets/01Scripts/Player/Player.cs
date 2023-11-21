@@ -131,7 +131,7 @@ public class Player: Entity
         
         ItemDataEquipment equip = Inventory.Instance.GetEquipmentByType(EquipmentType.Weapon);
         if(equip != null)
-            equip.ItemEffect(hitAttack);// 무기 이펙트 실행
+            equip.ItemEffectByMelee(hitAttack);// 무기 이펙트 실행
     }
 
     protected override void Update()

@@ -7,7 +7,7 @@ public class IceAndFireEffectSO : ItemEffectSO
 {
     [SerializeField] private IceAndFireController _iceAndFirePrefab;
     [SerializeField] private float _velocity;
-    public override void ExecuteEffect(bool hitAttack)
+    public override void ExecuteEffectByMelee(bool hitAttack)
     {
         if (activeByHit && !hitAttack) return; 
         
@@ -25,4 +25,5 @@ public class IceAndFireEffectSO : ItemEffectSO
         instance.FireToFront( new Vector2( player.FacingDirection * _velocity, 0), 2f );
         
     }
+
 }

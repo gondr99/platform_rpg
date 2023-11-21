@@ -53,7 +53,12 @@ public class ThunderStrikeController : MonoBehaviour
         Player player = GameManager.Instance.Player;
         
         //마법공격은 
-        _target.HealthCompo.ApplyMagicDamage(player.Stat.lightingDamage.GetValue(), direction.normalized, new Vector2(1.5f, 3f));
+        _target.HealthCompo.ApplyMagicDamage(
+            player.Stat.lightingDamage.GetValue(), 
+            direction.normalized, 
+            new Vector2(1.5f, 3f), 
+            player);
+        
         _animator.SetTrigger(_hashHitTrigger);
         
         if (_skill.isShockable && player.Stat.CanAilment(Ailment.Shocked)) //쇼크 공격이 가능하고 확률도 통과하면

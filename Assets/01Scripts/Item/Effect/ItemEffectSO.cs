@@ -8,5 +8,13 @@ public abstract class ItemEffectSO : ScriptableObject
     public float effectChance;
 
     public bool activeByHit; //피격 또는 공격성공시만 발동
-    public abstract void ExecuteEffect(bool hitAttack);
+
+    public virtual void ExecuteEffectByMelee(bool hitAttack)
+    {
+        
+    }
+
+    public virtual void ExecuteEffectBySkill(PlayerSkill skillType)
+    {
+    }
 }

@@ -109,12 +109,13 @@ public class Health : MonoBehaviour, IDamageable
         AfterHitFeedbacks(knockbackPower);
     }
 
-    public void ApplyMagicDamage(int damage, Vector2 attackDirection, Vector2 knockbackPower)
+    public void ApplyMagicDamage(int damage, Vector2 attackDirection, Vector2 knockbackPower, Entity dealer)
     {
         int magicDamage = _owner.Stat.GetMagicDamageAfterResist(damage);
         _currentHealth = Mathf.Clamp(_currentHealth - magicDamage, 0, maxHealth);
         
         knockbackPower.x *= attackDirection.x; //y값은 고정으로.
+        
         AfterHitFeedbacks(knockbackPower);
     }
 

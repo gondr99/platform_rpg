@@ -30,7 +30,7 @@ public class IceAndFireController : MonoBehaviour
         {
             Player player = GameManager.Instance.Player;
             int magicDamage = player.Stat.fireDamage.GetValue() + player.Stat.iceDamage.GetValue();
-            enemy.HealthCompo.ApplyMagicDamage(magicDamage, _rigidbody.velocity.normalized, new Vector2(3, 5));
+            enemy.HealthCompo.ApplyMagicDamage(magicDamage, _rigidbody.velocity.normalized, new Vector2(3, 5), player);
             
             //동상 걸고, 화상걸고.
             enemy.HealthCompo.SetAilment(Ailment.Chilled, 2f, player.Stat.GetDotDamage(Ailment.Chilled));
