@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 63de51edbe5120b418e9a702c0cc0954
+guid: 23370c20ac7d7e349b8d0f6e3934d68c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -94,7 +94,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: Server
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -107,7 +107,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: Android
+    buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -123,64 +123,64 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: artdecoUI_PIPO_wb_0
+      name: context_background
       rect:
         serializedVersion: 2
-        x: 992
-        y: 582
-        width: 56
-        height: 52
+        x: 2
+        y: 43
+        width: 60
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 4, y: 3, z: 4, w: 3}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7b2886d83dab15f45a39fa24172a8c29
-      internalID: -1762947064
+      spriteID: 68b84ea17aca8104eac5ba4049eb492a
+      internalID: -858451925
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: artdecoUI_PIPO_wb_1
+      name: trash_button
       rect:
         serializedVersion: 2
-        x: 311
-        y: 673
-        width: 312
-        height: 195
+        x: 2
+        y: 22
+        width: 60
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 40, y: 40, z: 39, w: 40}
+      border: {x: 15, y: 4, z: 4, w: 3}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6fe10902b85ce4b4f912d2c28e700d14
-      internalID: -1146079874
+      spriteID: 33258f95a6dcb1d40b601fdca5889819
+      internalID: -617406065
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_White_Blue_0
+      name: equip_button
       rect:
         serializedVersion: 2
-        x: 971
-        y: 446
-        width: 91
-        height: 85
+        x: 2
+        y: 1
+        width: 60
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 9, y: 9, z: 9, w: 9}
+      border: {x: 16, y: 4, z: 4, w: 4}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1b122e165670ef142bfc0e0fa87ebe25
-      internalID: 1425508232
+      spriteID: 02331281106d0e8458754b71387976b5
+      internalID: -2119020149
       vertices: []
       indices: 
       edges: []
@@ -196,9 +196,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      UI_White_Blue_0: 1425508232
-      artdecoUI_PIPO_wb_0: -1762947064
-      artdecoUI_PIPO_wb_1: -1146079874
+      context_background: -858451925
+      equip_button: -2119020149
+      trash_button: -617406065
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

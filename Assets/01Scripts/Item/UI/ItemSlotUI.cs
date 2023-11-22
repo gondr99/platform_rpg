@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
 
-public class ItemSlotUI : MonoBehaviour, IPointerDownHandler
+public class ItemSlotUI : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] protected Image _itemImage;
     [SerializeField] protected TextMeshProUGUI _itemText;
@@ -43,9 +43,26 @@ public class ItemSlotUI : MonoBehaviour, IPointerDownHandler
     public virtual void OnPointerDown(PointerEventData eventData)
     {
         if (item == null) return;
+        
         if (item.data.itemType == ItemType.Equipment)
         {
-            Inventory.Instance.EquipItem(item.data);
+            //여기서 컨텍스트 메뉴 띄우고 장착할지 버릴지 결정하게 함.
+            //Inventory.Instance.EquipItem(item.data);
+            RectTransform trm = transform as RectTransform;
+            
+            UIContextManager.Instance.OpenEquipContextMenu(trm.position, this);
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (item == null || item.data == null) return;
+        UIContextManager.Instance.Tooltip.ShowTooltip(item.data as ItemDataEquipment);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (item == null || item.data == null) return;
+        UIContextManager.Instance.Tooltip.HideTooltip();
     }
 }

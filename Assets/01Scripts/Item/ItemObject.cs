@@ -31,6 +31,11 @@ public class ItemObject : MonoBehaviour
     
     public void PickUpItem()
     {
+        if (_itemData.itemType == ItemType.Equipment && !Inventory.Instance.CanAddItem())
+        {
+            _rigidbody.velocity = new Vector2(0, 7); //잠깐 위로 떠오르고
+            return; //안줍는다.
+        }
         Inventory.Instance.AddItem(_itemData);
         Destroy(gameObject);
     }

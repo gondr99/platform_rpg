@@ -1,5 +1,6 @@
 
 using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class EquipmentSlotUI : ItemSlotUI
@@ -13,6 +14,8 @@ public class EquipmentSlotUI : ItemSlotUI
 
     public override void OnPointerDown(PointerEventData eventData)
     {
+        RectTransform trm = transform as RectTransform;
+
         Inventory.Instance.UnEquipItem(item.data as ItemDataEquipment);
         CleanUpSlot();
     }

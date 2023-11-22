@@ -62,7 +62,7 @@ public class Inventory : MonoSingleton<Inventory>
     {
         foreach (ItemDataEquipment equipment in initEquipList)
         {
-            EquipItem(equipment);
+            AddItem(equipment);
         }
     }
 
@@ -76,7 +76,7 @@ public class Inventory : MonoSingleton<Inventory>
             bool canUseFlask = Time.time > _lastFlaskUseTime + _flaskCooldown;;
             if (canUseFlask)
             {
-                _flaskCooldown = flask.cooldown; //이렇게 하면 시작시에도 바로 사용 가능.
+                _flaskCooldown = flask.cooldown; //이렇게 하면 시작시에도 바로 사용 가능. ///굳이?
                 flask.UseEquipment();
                 _lastFlaskUseTime = Time.time;
             }
@@ -173,6 +173,7 @@ public class Inventory : MonoSingleton<Inventory>
     //장비 장착 해제.
     public void UnEquipItem(ItemDataEquipment oldEquipment, bool backToInventory = true)
     {
+        if (oldEquipment == null) return;
         if (equipmentDictionary.TryGetValue(oldEquipment, out InventoryItem value))
         {
             equipments.Remove(value);
@@ -185,9 +186,20 @@ public class Inventory : MonoSingleton<Inventory>
         }
     }
 
+
+    public bool CanAddItem()
+    {
+        if (inventory.Count >= _inventoryItemSlots.Length)
+        {
+            Debug.Log("No more space in inventory");
+            return false;
+        }
+        return true;
+    }
+    
     public void AddItem(ItemData item)
     {
-        if (item.itemType == ItemType.Equipment)
+        if (item.itemType == ItemType.Equipment && CanAddItem())
         {
             AddToInventory(item);
         }else if (item.itemType == ItemType.Material)
@@ -200,6 +212,7 @@ public class Inventory : MonoSingleton<Inventory>
 
     private void AddToInventory(ItemData item)
     {
+        //장비 인벤토리는 스택개념을 없앤다.
         if (inventoryDictionary.TryGetValue(item, out InventoryItem value))
         {
             value.AddStack();

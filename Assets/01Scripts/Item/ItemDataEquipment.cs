@@ -55,6 +55,7 @@ public class ItemDataEquipment : ItemData
     [Header("Use Equipment")] 
     public float cooldown;
     protected float _lastUseTime;
+    private int _descriptionLength;
 
     //필드 인포를 가지고 있는 딕셔너리.
     protected Dictionary<StatType, FieldInfo> _fieldInfoDictionary = new Dictionary<StatType, FieldInfo>();
@@ -142,6 +143,40 @@ public class ItemDataEquipment : ItemData
         {
             Stat stat = playerStat.GetStatByType(fieldSet.Key);
             stat.RemoveModifier( (int)fieldSet.Value.GetValue(this));
+        }
+    }
+
+    public override string GetDescription()
+    {
+        _stringBuilder.Clear();
+        _descriptionLength = 0;
+        foreach (var fieldSet in _fieldInfoDictionary)
+        {
+            AddItemDescription( (int)fieldSet.Value.GetValue(this), fieldSet.Key.ToString() );
+        }
+
+        if (_descriptionLength < 8)
+        {
+            for (int i = _descriptionLength; i < 8; ++i)
+            {
+                _stringBuilder.AppendLine();
+                _stringBuilder.Append("");
+            }
+        }
+        return _stringBuilder.ToString();
+    }
+
+    private void AddItemDescription(int value, string name)
+    {
+        if (value != 0)
+        {
+            if (_stringBuilder.Length > 0)
+            {
+                _stringBuilder.AppendLine();
+            }
+
+            ++_descriptionLength;
+            _stringBuilder.Append($"{name} : {value.ToString()}");
         }
     }
 }
