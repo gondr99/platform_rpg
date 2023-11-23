@@ -20,7 +20,6 @@ MonoBehaviour:
   effectList:
   - {fileID: 11400000, guid: 90102689af243bc4fbb01a0c6cef40d4, type: 2}
   - {fileID: 11400000, guid: 78339b445e6aa2b4d8ffdb8fc7ebe893, type: 2}
-  effectCooldown: 5
   strength: 0
   agility: 0
   intelligence: 0
@@ -38,4 +37,9 @@ MonoBehaviour:
   chillPercent: 0
   lightingDamage: 0
   shockPercent: 0
-  craftingMaterials: []
+  craftingMaterials:
+  - data: {fileID: 11400000, guid: db4bbaebd0896404497f9612aa0c45ec, type: 2}
+    stackSize: 10
+  - data: {fileID: 11400000, guid: e6392e4fd2d06d9498aac7af52c44b54, type: 2}
+    stackSize: 5
+  cooldown: 0

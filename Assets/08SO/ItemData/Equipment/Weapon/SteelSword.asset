@@ -15,7 +15,9 @@ MonoBehaviour:
   itemType: 1
   itemName: Steel Sword
   icon: {fileID: 1526008332, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  dropChance: 0
   equipmentType: 0
+  effectList: []
   strength: 0
   agility: 0
   intelligence: 0
@@ -33,3 +35,7 @@ MonoBehaviour:
   chillPercent: 0
   lightingDamage: 0
   shockPercent: 0
+  craftingMaterials:
+  - data: {fileID: 11400000, guid: db4bbaebd0896404497f9612aa0c45ec, type: 2}
+    stackSize: 40
+  cooldown: 0

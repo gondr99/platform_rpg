@@ -14,7 +14,9 @@ public class UIHelper : MonoSingleton<UIHelper>
 
     [SerializeField] private StatTooltipUI _statTooltip;
     public StatTooltipUI StatTooltip => _statTooltip;
-    
+
+    [SerializeField] private CraftWindowUI _craftWindowUI;
+    public CraftWindowUI CraftWindow => _craftWindowUI;
 
     private void Awake()
     {

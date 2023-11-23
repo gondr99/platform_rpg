@@ -36,4 +36,7 @@ MonoBehaviour:
   chillPercent: 0
   lightingDamage: 5
   shockPercent: 50
-  craftingMaterials: []
+  craftingMaterials:
+  - data: {fileID: 11400000, guid: db4bbaebd0896404497f9612aa0c45ec, type: 2}
+    stackSize: 20
+  cooldown: 0

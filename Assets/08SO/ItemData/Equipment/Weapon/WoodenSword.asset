@@ -17,6 +17,7 @@ MonoBehaviour:
   icon: {fileID: 1025091068, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   dropChance: 10
   equipmentType: 0
+  effectList: []
   strength: 0
   agility: 0
   intelligence: 0
@@ -34,4 +35,7 @@ MonoBehaviour:
   chillPercent: 0
   lightingDamage: 0
   shockPercent: 0
-  craftingMaterials: []
+  craftingMaterials:
+  - data: {fileID: 11400000, guid: e6392e4fd2d06d9498aac7af52c44b54, type: 2}
+    stackSize: 10
+  cooldown: 0
