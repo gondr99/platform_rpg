@@ -40,7 +40,7 @@ public class UIHelper : MonoSingleton<UIHelper>
         _equipContextMenu.gameObject.SetActive(true);
         
         _equipContextMenu.anchoredPosition = mousePosition;
-        _equipContextMenu.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBounce);
+        _equipContextMenu.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBounce).SetUpdate(true);
         
     }
 
@@ -50,7 +50,7 @@ public class UIHelper : MonoSingleton<UIHelper>
         _isContextOpen = false;
         _itemTooltipTargetSlot = null;
         _equipContextMenu.DOKill();
-        _equipContextMenu.DOScale(Vector3.zero, 0.3f).SetEase(Ease.OutBounce).OnComplete(() =>
+        _equipContextMenu.DOScale(Vector3.zero, 0.3f).SetEase(Ease.OutBounce).SetUpdate(true).OnComplete(() =>
         {
             _equipContextMenu.gameObject.SetActive(false);
         });

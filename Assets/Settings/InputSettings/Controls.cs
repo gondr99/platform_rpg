@@ -294,6 +294,34 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""0ee8a1ed-f6c0-481e-80e8-94b316a491fe"",
+            ""actions"": [
+                {
+                    ""name"": ""OpenUI"",
+                    ""type"": ""Button"",
+                    ""id"": ""73a6870b-e32f-4181-9084-93bbe7037f23"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""811d6a58-746e-4def-aa35-ba905f74384f"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenUI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -328,6 +356,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_UltiSkill = m_Player.FindAction("UltiSkill", throwIfNotFound: true);
         m_Player_CrystalSkill = m_Player.FindAction("CrystalSkill", throwIfNotFound: true);
         m_Player_HealFlask = m_Player.FindAction("HealFlask", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_OpenUI = m_UI.FindAction("OpenUI", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -511,6 +542,52 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // UI
+    private readonly InputActionMap m_UI;
+    private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
+    private readonly InputAction m_UI_OpenUI;
+    public struct UIActions
+    {
+        private @Controls m_Wrapper;
+        public UIActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @OpenUI => m_Wrapper.m_UI_OpenUI;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void AddCallbacks(IUIActions instance)
+        {
+            if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
+            @OpenUI.started += instance.OnOpenUI;
+            @OpenUI.performed += instance.OnOpenUI;
+            @OpenUI.canceled += instance.OnOpenUI;
+        }
+
+        private void UnregisterCallbacks(IUIActions instance)
+        {
+            @OpenUI.started -= instance.OnOpenUI;
+            @OpenUI.performed -= instance.OnOpenUI;
+            @OpenUI.canceled -= instance.OnOpenUI;
+        }
+
+        public void RemoveCallbacks(IUIActions instance)
+        {
+            if (m_Wrapper.m_UIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_UIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_UIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public UIActions @UI => new UIActions(this);
     private int m_KeyboardAndMouseSchemeIndex = -1;
     public InputControlScheme KeyboardAndMouseScheme
     {
@@ -533,5 +610,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnUltiSkill(InputAction.CallbackContext context);
         void OnCrystalSkill(InputAction.CallbackContext context);
         void OnHealFlask(InputAction.CallbackContext context);
+    }
+    public interface IUIActions
+    {
+        void OnOpenUI(InputAction.CallbackContext context);
     }
 }

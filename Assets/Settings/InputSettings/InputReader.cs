@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [CreateAssetMenu(menuName = "SO/InputReader")]
-public class InputReader : ScriptableObject, Controls.IPlayerActions
+public class InputReader : ScriptableObject, Controls.IPlayerActions, Controls.IUIActions
 {
     public event Action AttackEvent;
     public event Action JumpEvent;
@@ -17,6 +17,8 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public float xInput { get; private set; }
     public float yInput { get; private set; }
 
+    public event Action OpenMenuEvent;
+
     private Controls _controls;
     private Controls.IPlayerActions _playerActionsImplementation;
 
@@ -26,9 +28,20 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
         {
             _controls = new Controls();
             _controls.Player.SetCallbacks(this);
+            _controls.UI.SetCallbacks(this);
         }
         
         _controls.Player.Enable();
+        _controls.UI.Enable();
+    }
+
+    public void SetPlayerInputEnable(bool value)
+    {
+        if(value) 
+            _controls.Player.Enable();
+        else
+            _controls.Player.Disable();
+        
     }
 
     public void OnXMovement(InputAction.CallbackContext context)
@@ -113,5 +126,12 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
         }
     }
 
-    
+
+    public void OnOpenUI(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            OpenMenuEvent?.Invoke();
+        }
+    }
 }

@@ -396,7 +396,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: artdecoUI_PIPO_green_16
+      name: equip_box
       rect:
         serializedVersion: 2
         x: 16
@@ -405,7 +405,7 @@ TextureImporter:
         height: 172
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 58, y: 54, z: 36, w: 54}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -456,7 +456,6 @@ TextureImporter:
       artdecoUI_PIPO_green_13: 475709683
       artdecoUI_PIPO_green_14: 318874076
       artdecoUI_PIPO_green_15: 1273952210
-      artdecoUI_PIPO_green_16: 728533083
       artdecoUI_PIPO_green_17: 507719018
       artdecoUI_PIPO_green_2: 1396786153
       artdecoUI_PIPO_green_3: 251101110
@@ -466,6 +465,7 @@ TextureImporter:
       artdecoUI_PIPO_green_7: 1548173783
       artdecoUI_PIPO_green_8: 1990043730
       artdecoUI_PIPO_green_9: 104943260
+      equip_box: 728533083
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
