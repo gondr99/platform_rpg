@@ -50,19 +50,19 @@ public class ItemSlotUI : MonoBehaviour, IPointerDownHandler, IPointerEnterHandl
             //Inventory.Instance.EquipItem(item.data);
             RectTransform trm = transform as RectTransform;
             
-            UIContextManager.Instance.OpenEquipContextMenu(trm.position, this);
+            UIHelper.Instance.OpenEquipContextMenu(trm.position, this);
         }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (item == null || item.data == null) return;
-        UIContextManager.Instance.Tooltip.ShowTooltip(item.data as ItemDataEquipment);
+        UIHelper.Instance.ItemTooltip.ShowTooltip(item.data as ItemDataEquipment);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         if (item == null || item.data == null) return;
-        UIContextManager.Instance.Tooltip.HideTooltip();
+        UIHelper.Instance.ItemTooltip.HideTooltip();
     }
 }

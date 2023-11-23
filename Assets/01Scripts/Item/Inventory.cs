@@ -32,7 +32,7 @@ public class Inventory : MonoSingleton<Inventory>
     private ItemSlotUI[] _inventoryItemSlots; //인벤토링 아이템 슬롯(장비등)
     private ItemSlotUI[] _stashItemSlots; //창고아이템 슬롯(재료등)
     private EquipmentSlotUI[] _equipmentSlots;
-    private UIStatSlot[] _statSlots;
+    private StatSlotUI[] _statSlots;
     
     private float _flaskCooldown;
     private float _lastFlaskUseTime;
@@ -54,7 +54,7 @@ public class Inventory : MonoSingleton<Inventory>
         stashDictionary = new Dictionary<ItemData, InventoryItem>();
         _stashItemSlots = _stashSlotParent.GetComponentsInChildren<ItemSlotUI>();
 
-        _statSlots = _statSlotParent.GetComponentsInChildren<UIStatSlot>();
+        _statSlots = _statSlotParent.GetComponentsInChildren<StatSlotUI>();
     }
 
     //디버그용.

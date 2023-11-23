@@ -6,6 +6,6 @@ public class MenuWindowUI : MonoBehaviour, IPointerDownHandler
     
     public void OnPointerDown(PointerEventData eventData)
     {
-        UIContextManager.Instance.CloseEquipContextMenu();
+        UIHelper.Instance.CloseEquipContextMenu();
     }
 }

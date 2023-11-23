@@ -1,8 +1,9 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class UIStatSlot : MonoBehaviour
+public class StatSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private StatType _statType;
     [SerializeField] private string _statName;
@@ -10,6 +11,7 @@ public class UIStatSlot : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _statNameText;
     [SerializeField] private TextMeshProUGUI _statValueText;
     
+    [TextArea][SerializeField] private string _statDescription;
     private void OnValidate()
     {
         gameObject.name = $"Stat - {_statType.ToString()}";
@@ -33,5 +35,15 @@ public class UIStatSlot : MonoBehaviour
         {
             _statValueText.text = playerStat.GetStatByType(_statType).GetValue().ToString();
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        UIHelper.Instance.StatTooltip.ShowStatTooltip(_statDescription);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        UIHelper.Instance.StatTooltip.HideStatTooltip();
     }
 }

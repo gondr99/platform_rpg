@@ -4,14 +4,17 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
-public class UIContextManager : MonoSingleton<UIContextManager>
+public class UIHelper : MonoSingleton<UIHelper>
 {
     [SerializeField] private RectTransform _equipContextMenu;
     private bool _isContextOpen = false;
-    [SerializeField] private ItemTooltipUI _itemTooltip;
-    public ItemTooltipUI Tooltip => _itemTooltip;
+    [SerializeField] private ItemTooltipUI _itemItemTooltip;
+    public ItemTooltipUI ItemTooltip => _itemItemTooltip;
+    private ItemSlotUI _itemTooltipTargetSlot = null;
+
+    [SerializeField] private StatTooltipUI _statTooltip;
+    public StatTooltipUI StatTooltip => _statTooltip;
     
-    private ItemSlotUI _targetSlot = null;
 
     private void Awake()
     {
@@ -21,14 +24,16 @@ public class UIContextManager : MonoSingleton<UIContextManager>
         trashBtn.onClick.AddListener(()=>HandleTrashItemBtn());
         
         _equipContextMenu.gameObject.SetActive(false);
-        _itemTooltip.HideTooltip();
+        //시작하면 감춰두고.
+        _itemItemTooltip.HideTooltip();
+        _statTooltip.HideStatTooltip();
     }
     
 
     public void OpenEquipContextMenu(Vector2 mousePosition, ItemSlotUI slot)
     {
         _isContextOpen = true;
-        _targetSlot = slot;
+        _itemTooltipTargetSlot = slot;
         
         _equipContextMenu.DOKill();
         _equipContextMenu.localScale = new Vector3(0, 0, 1f);
@@ -43,7 +48,7 @@ public class UIContextManager : MonoSingleton<UIContextManager>
     {
         if (!_isContextOpen) return;
         _isContextOpen = false;
-        _targetSlot = null;
+        _itemTooltipTargetSlot = null;
         _equipContextMenu.DOKill();
         _equipContextMenu.DOScale(Vector3.zero, 0.3f).SetEase(Ease.OutBounce).OnComplete(() =>
         {
@@ -53,15 +58,15 @@ public class UIContextManager : MonoSingleton<UIContextManager>
 
     private void HandleEquipItemBtn()
     {
-        if (_targetSlot == null) return;
-        Inventory.Instance.EquipItem(_targetSlot.item.data);
+        if (_itemTooltipTargetSlot == null) return;
+        Inventory.Instance.EquipItem(_itemTooltipTargetSlot.item.data);
         CloseEquipContextMenu();
     }
 
     private void HandleTrashItemBtn()
     {
-        if (_targetSlot == null) return;
-        Inventory.Instance.RemoveItem(_targetSlot.item.data, 1);
+        if (_itemTooltipTargetSlot == null) return;
+        Inventory.Instance.RemoveItem(_itemTooltipTargetSlot.item.data, 1);
         CloseEquipContextMenu();
     }
 
