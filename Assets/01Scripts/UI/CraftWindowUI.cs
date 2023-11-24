@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -13,7 +14,12 @@ public class CraftWindowUI : MonoBehaviour
     [SerializeField] private Image[] _materialsImages;
 
     [SerializeField] private Button _craftButton;
-    
+
+    private void Start()
+    {
+        ClearCraftWindow();
+    }
+
     public void SetUpCraftWindow(ItemDataEquipment data)
     {
         
@@ -46,5 +52,19 @@ public class CraftWindowUI : MonoBehaviour
         {
             Inventory.Instance.CanCraft(data, data.craftingMaterials);
         });
+    }
+
+    public void ClearCraftWindow()
+    {
+        //모든 슬롯 지우고
+        for (int i = 0; i < _materialsImages.Length; ++i)
+        {
+            _materialsImages[i].color = Color.clear;
+            _materialsImages[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.clear;
+
+            _itemIcon.sprite = null;
+            _itemName.text = "제작을 원하는 아이템을 선택하세요.";
+            _itemDescription.text = "아이템 제작";
+        }
     }
 }

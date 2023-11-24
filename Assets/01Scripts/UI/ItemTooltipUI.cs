@@ -15,6 +15,7 @@ public class ItemTooltipUI : MonoBehaviour
 
     public void ShowTooltip(ItemDataEquipment item)
     {
+        if(item == null) return;
         _itemNameText.text = item.itemName;
         _itemTypeText.text = item.equipmentType.ToString();
         _itemDescriptionText.text = item.GetDescription();
