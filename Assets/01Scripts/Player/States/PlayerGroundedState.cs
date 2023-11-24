@@ -54,7 +54,7 @@ public class PlayerGroundedState : PlayerState
     {
         //이미 칼을 던진상태면 더이상 진행안함.
         SwordSkill swordSkill = _player.skill.GetSkill<SwordSkill>(PlayerSkill.Sword);
-        if (swordSkill == null) 
+        if (swordSkill == null || swordSkill.skillEnalbed == false) 
             return;
         
         bool hasSwordAlready = swordSkill.generatedSword != null;

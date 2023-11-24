@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CrystalController : MonoBehaviour
 {
@@ -102,9 +103,12 @@ public class CrystalController : MonoBehaviour
             {
                 Vector2 dir = enemy.transform.position - transform.position;
                 Player player = GameManager.Instance.Player;
-                enemy.HealthCompo.ApplyMagicDamage(_skill.damage, dir.normalized, _skill.knockPower, player);
+                //배율에 따라 증가된 값으로 데미지
+                int damage = Mathf.RoundToInt(
+                        (_skill.damage + player.Stat.intelligence.GetValue()) * _skill.damageMultiplier );
+                enemy.HealthCompo.ApplyMagicDamage(damage, dir.normalized, _skill.knockPower, player);
                 
-                if (_skill.isShockable && player.Stat.CanAilment(Ailment.Shocked)) //쇼크 공격이 가능하고 확률도 통과하면
+                if (_skill.isShockable && Random.value <= _skill.shockPercent) //쇼크 공격이 가능하고 확률도 통과하면
                 {
                     float duration = player.Stat.ailmentTimeMS.GetValue() * 0.001f;
                     enemy.HealthCompo.SetAilment(Ailment.Shocked, duration, 0); //감전은 그 자체로 데미지는 없다.

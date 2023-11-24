@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -52,12 +54,105 @@ public class SwordSkill : Skill
 
     [HideInInspector] public SwordSkillController generatedSword;
 
+    [SerializeField] private SkillTreeSlotUI _enableSkillSlot;
+    [SerializeField] private SkillTreeSlotUI _pierceShotSkillSlot;
+    [SerializeField] private SkillTreeSlotUI _bounceShotSkillSlot;
+    [SerializeField] private SkillTreeSlotUI _spinShotSkillSlot;
+    [SerializeField] private SkillTreeSlotUI _freezeSkillSlot;
+    [SerializeField] private SkillTreeSlotUI _ailmentSkillSlot;
+
+    public bool canFreeze; //타격시 적을 순간적으로 프리즈 시키는가?
+    public bool canAilment;
+    public float ailmentTime = 1f;
+    
+    private void Awake()
+    {
+        _enableSkillSlot.UpgradeEvent += HandleEnableEvent;
+        _pierceShotSkillSlot.UpgradeEvent += HandlePierceShotEvent;
+        _bounceShotSkillSlot.UpgradeEvent += HandleBounceShotEvent;
+        _spinShotSkillSlot.UpgradeEvent += HandleSpinShotEvent;
+        _freezeSkillSlot.UpgradeEvent += HandleFreezeSkillEvent;
+        _ailmentSkillSlot.UpgradeEvent += HandleAilmentSkillEvent;
+    }
+
+    
+    #region 스킬트리 시스템에 반응하는 핸들러 함수들
+
+    private void HandleEnableEvent(int currentcount)
+    {
+        skillEnalbed = true; //해당 스킬을 활성화해줌.
+        _player.PlayerInput.ThrowAimEvent += OnThrowAim; //던지는 키
+    }
+
+    private void HandlePierceShotEvent(int currentcount)
+    {
+        if (currentcount == 1)
+        {
+            swordSkillType = SwordSkillType.Pierce;
+        }
+        _pierceAmount = 2 + currentcount * 2;
+    }
+    private void HandleBounceShotEvent(int currentcount)
+    {
+        if (currentcount == 1)
+        {
+            swordSkillType = SwordSkillType.Bounce;
+        }
+        _bounceAmount = 2 + currentcount;
+    }
+    
+    private void HandleSpinShotEvent(int currentcount)
+    {
+        if (currentcount == 1)
+        {
+            swordSkillType = SwordSkillType.Spin;
+        }
+
+        _hitCooldown = 0.5f - currentcount * 0.05f;
+    }
+    
+    private void HandleFreezeSkillEvent(int currentcount)
+    {
+        canFreeze = true;
+    }
+    
+    private void HandleAilmentSkillEvent(int currentcount)
+    {
+        canAilment = true;
+        ailmentTime = 1f + currentcount * 0.5f;
+    }
+
+
+    #endregion
+    
+    
+
+
     protected override void Start()
     {
         base.Start();
-        _player.PlayerInput.ThrowAimEvent += OnThrowAim; //던지는 키 
+        if (skillEnalbed)
+        {
+            _player.PlayerInput.ThrowAimEvent += OnThrowAim; //던지는 키 
+        }
+        
         GenerateDots(); //점들을 만들어두고.
         SetupGravity(); //현재 스킬의 종류에 맞게 그라비티 셋팅
+    }
+    
+    //각 이벤트 해제
+    private void OnDestroy()
+    {
+        _enableSkillSlot.UpgradeEvent -= HandleEnableEvent;
+        _pierceShotSkillSlot.UpgradeEvent -= HandlePierceShotEvent;
+        _bounceShotSkillSlot.UpgradeEvent -= HandleBounceShotEvent;
+        _spinShotSkillSlot.UpgradeEvent -= HandleSpinShotEvent;
+        _freezeSkillSlot.UpgradeEvent -= HandleFreezeSkillEvent;
+        _ailmentSkillSlot.UpgradeEvent -= HandleAilmentSkillEvent;
+        if (skillEnalbed)
+        {
+            _player.PlayerInput.ThrowAimEvent -= OnThrowAim; //던지는 키
+        }
     }
 
     //각 스킬에 맞게 중력 설정.
@@ -89,11 +184,6 @@ public class SwordSkill : Skill
                 _dots[i].transform.position = DotPositionOnT(i * _spaceBetweenDots);
             }
         }
-    }
-
-    private void OnDestroy()
-    {
-        _player.PlayerInput.ThrowAimEvent -= OnThrowAim; //던지는 키
     }
 
 

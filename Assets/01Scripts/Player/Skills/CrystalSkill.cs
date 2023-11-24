@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -30,7 +31,8 @@ public class CrystalSkill : Skill
     private bool _readyToLaunch = false;
 
     [Header("Ailment")] 
-    public bool isShockable; //감점가능
+    public bool isShockable; //감전가능
+    public float shockPercent = 0.5f;
     
     //최대 5개까지만 크리스털 생성하게 해둠. 
     private Vector2[] offsets =
@@ -42,8 +44,69 @@ public class CrystalSkill : Skill
         new Vector2(0, 0)
     };
 
+    [Header("스킬트리셋")] 
+    [SerializeField] private SkillTreeSlotUI _unlockCryStalSlot;
+    [SerializeField] private SkillTreeSlotUI _explosionCryStalSlot;
+    [SerializeField] private SkillTreeSlotUI _lightingCryStalSlot;
+    [SerializeField] private SkillTreeSlotUI _chaseCryStalSlot;
+    [SerializeField] private SkillTreeSlotUI _multipleCryStalSlot;
+
+    public float damageMultiplier = 1f;
+
+    protected void Awake()
+    {
+        _unlockCryStalSlot.UpgradeEvent += HandleUnlockEvent;
+        _explosionCryStalSlot.UpgradeEvent += HandleExplosionEvent;
+        _lightingCryStalSlot.UpgradeEvent += HandleLightingEvent;
+        _chaseCryStalSlot.UpgradeEvent += HandleChaseEvent;
+        _multipleCryStalSlot.UpgradeEvent += HandleMultipleEvent;
+    }
+    
+    private void OnDestroy()
+    {
+        _unlockCryStalSlot.UpgradeEvent -= HandleUnlockEvent;
+        _explosionCryStalSlot.UpgradeEvent -= HandleExplosionEvent;
+        _lightingCryStalSlot.UpgradeEvent -= HandleLightingEvent;
+        _chaseCryStalSlot.UpgradeEvent -= HandleChaseEvent;
+        _multipleCryStalSlot.UpgradeEvent -= HandleMultipleEvent;
+    }
+
+    #region 스킬트리 업그레이드 핸들러.
+    private void HandleUnlockEvent(int currentcount)
+    {
+        skillEnalbed = true;
+    }
+    
+    private void HandleExplosionEvent(int currentcount)
+    {
+        canExplode = true; //폭발성 가능하게 해주고.
+        damageMultiplier = 1f + currentcount * 0.1f;
+    }
+    
+    private void HandleLightingEvent(int currentcount)
+    {
+        isShockable = true;
+        shockPercent = 0.5f + (currentcount-1) * 0.1f;
+    }
+
+    private void HandleChaseEvent(int currentcount)
+    {
+        canMoveToEnemy = true;
+        explosionRadius = 2f + currentcount * 0.3f;
+    }
+    
+    private void HandleMultipleEvent(int currentcount)
+    {
+        isMultipleCrystal = true;
+        amountOfCrystal = currentcount;
+    }
+
+    #endregion
+
     public override void UseSkill()
     {
+        if (!skillEnalbed) return;
+        
         base.UseSkill();
 
         if (isMultipleCrystal)  //다중발사 시스템일 경우 좀 다르게 동작.

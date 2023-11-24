@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Skill : MonoBehaviour
 {
+    public bool skillEnalbed = false;
+    
     [SerializeField] protected float _cooldown;
     protected float _cooldownTimer;
     protected Player _player;

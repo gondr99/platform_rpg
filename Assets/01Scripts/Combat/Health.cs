@@ -108,7 +108,7 @@ public class Health : MonoBehaviour, IDamageable
         //아머값에 따른 데미지 보정. 동상시에는 아머 감소.
         damage = _owner.Stat.ArmoredDamage(damage, _ailmentStat.HasAilment(Ailment.Chilled)); 
         _currentHealth = Mathf.Clamp(_currentHealth - damage, 0, maxHealth);
-        
+
         //감전데미지 체크
         CheckAilmentByDamage(damage);
         
@@ -120,6 +120,7 @@ public class Health : MonoBehaviour, IDamageable
     {
         int magicDamage = _owner.Stat.GetMagicDamageAfterResist(damage);
         _currentHealth = Mathf.Clamp(_currentHealth - magicDamage, 0, maxHealth);
+        Debug.Log($"apply magic damage to {_owner.gameObject.name}! : {damage}");
         
         knockbackPower.x *= attackDirection.x; //y값은 고정으로.
         

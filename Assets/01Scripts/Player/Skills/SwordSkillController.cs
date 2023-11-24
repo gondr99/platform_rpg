@@ -218,12 +218,18 @@ public class SwordSkillController : MonoBehaviour
     private void DamageToTarget(Enemy enemy)
     {
         //프리징 옵션
-        enemy.FreezeTimerFor(_swordSkill.freezeTime);
+        if(_swordSkill.canFreeze) //프리징활성화시에만
+            enemy.FreezeTimerFor(_swordSkill.freezeTime);
+        
         //데미지 옵션
         Vector2 direction = (enemy.transform.position - transform.position).normalized;
         int damage = Mathf.RoundToInt( _player.Stat.GetDamage() * _swordSkill.damageMultiplier ); //배율에 따라 증뎀.
         enemy.HealthCompo.ApplyDamage(damage, direction, _swordSkill.knockbackPower, GameManager.Instance.Player);
 
+        if (_swordSkill.canAilment)
+        {
+            enemy.HealthCompo.SetAilment(Ailment.Chilled, _swordSkill.ailmentTime, 0 );
+        }
         
         //데미지 줄때마다 소드 스킬 피드백 발동시키기.(소드는 UseSkill을 안써)
         SkillManager.Instance.UseSkillFeedback(PlayerSkill.Sword);

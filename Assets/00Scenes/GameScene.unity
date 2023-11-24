@@ -3874,8 +3874,8 @@ PrefabInstance:
       value: "\uD22C\uCC99\uC6A9 \uCE7C\uC740 \uB0A0\uC544\uAC04 \uACF3\uC5D0\uC11C
         \uD68C\uC804\uD558\uBA70 \uC77C\uC815\uC2DC\uAC04\uB3D9\uC548 \uC801\uB4E4\uC5D0\uAC8C
         \uB370\uBBF8\uC9C0\uB97C \uC8FC\uACE0 \uC790\uB3D9\uC73C\uB85C \uD68C\uC218\uB429\uB2C8\uB2E4.
-        \uC5C5\uADF8\uB808\uC774\uB4DC\uC2DC\uB9C8\uB2E4 \uD68C\uC804\uC2DC\uAC04\uC774
-        0.5\uCD08 \uC99D\uAC00\uD569\uB2C8\uB2E4."
+        \uC5C5\uADF8\uB808\uC774\uB4DC\uC2DC\uB9C8\uB2E4 \uD68C\uC804\uC2DC \uD0C0\uACA9
+        \uCFE8\uD0C0\uC784\uC774 \uAC10\uC18C\uD569\uB2C8\uB2E4."
       objectReference: {fileID: 0}
     - target: {fileID: 1273436637004701180, guid: f5a7859538c400947a43a096614da138, type: 3}
       propertyPath: _shouldBeLocked.Array.size
@@ -8561,6 +8561,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18d72791d7df75d4cacfc1105342e7f3, type: 3}
+--- !u!114 &800273659 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1273436637004701180, guid: f5a7859538c400947a43a096614da138, type: 3}
+  m_PrefabInstance: {fileID: 20924938}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2717cdeba8d0db545b20c6c7f116e25e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &800485408
 GameObject:
   m_ObjectHideFlags: 0
@@ -21981,11 +21992,16 @@ PrefabInstance:
       value: "\uC720\uB3C4 \uD06C\uB9AC\uC2A4\uD0C8"
       objectReference: {fileID: 0}
     - target: {fileID: 1273436637004701180, guid: f5a7859538c400947a43a096614da138, type: 3}
+      propertyPath: maxUpgradeCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1273436637004701180, guid: f5a7859538c400947a43a096614da138, type: 3}
       propertyPath: _skillDescription
       value: "\uB354\uC774\uC0C1 \uD06C\uB9AC\uC2A4\uD0C8\uACFC \uC704\uCE58\uAD50\uD658\uC774
         \uC548\uB418\uC9C0\uB9CC \uB370\uBBF8\uC9C0\uAC00 \uD06C\uAC8C \uC99D\uAC00\uD558\uACE0
         \uD06C\uB9AC\uC2A4\uD0C8\uC774 \uADFC\uAC70\uB9AC\uC758 \uC801\uC744 \uD5A5\uD574
-        \uB098\uC544\uAC00 \uD3ED\uBC1C\uD569\uB2C8\uB2E4.\u3148"
+        \uB098\uC544\uAC00 \uD3ED\uBC1C\uD569\uB2C8\uB2E4. \uC5C5\uADF8\uB808\uC774\uB4DC\uC2DC
+        \uD3ED\uBC1C\uBC18\uACBD\uC774 \uC99D\uAC00\uD569\uB2C8\uB2E4."
       objectReference: {fileID: 0}
     - target: {fileID: 2341361663111378921, guid: f5a7859538c400947a43a096614da138, type: 3}
       propertyPath: m_Type
@@ -22009,6 +22025,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 331511462400944456, guid: f5a7859538c400947a43a096614da138, type: 3}
   m_PrefabInstance: {fileID: 1758432878}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1758432880 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1273436637004701180, guid: f5a7859538c400947a43a096614da138, type: 3}
+  m_PrefabInstance: {fileID: 1758432878}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2717cdeba8d0db545b20c6c7f116e25e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1759421279
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22102,9 +22129,14 @@ PrefabInstance:
       value: "\uAC10\uC804 \uD06C\uB9AC\uC2A4\uD0C8"
       objectReference: {fileID: 0}
     - target: {fileID: 1273436637004701180, guid: f5a7859538c400947a43a096614da138, type: 3}
+      propertyPath: maxUpgradeCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1273436637004701180, guid: f5a7859538c400947a43a096614da138, type: 3}
       propertyPath: _skillDescription
-      value: "\uD06C\uB9AC\uC2A4\uD0C8\uC5D0 \uB9DE\uC740 \uC801\uC774 \uAC10\uC804
-        \uC0C1\uD0DC\uC774\uC0C1\uC5D0 \uAC78\uB9BD\uB2C8\uB2E4."
+      value: "\uD06C\uB9AC\uC2A4\uD0C8\uC5D0 \uB9DE\uC740 \uC801\uC774 50% \uD655\uB960\uB85C
+        \uAC10\uC804 \uC0C1\uD0DC\uC774\uC0C1\uC5D0 \uAC78\uB9BD\uB2C8\uB2E4. \uB808\uBCA8\uC744
+        \uC62C\uB9B4 \uC218\uB85D \uAC10\uC804\uD655\uB960\uC774 \uC62C\uB77C\uAC11\uB2C8\uB2E4."
       objectReference: {fileID: 0}
     - target: {fileID: 2341361663111378921, guid: f5a7859538c400947a43a096614da138, type: 3}
       propertyPath: m_Type
@@ -22128,6 +22160,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 331511462400944456, guid: f5a7859538c400947a43a096614da138, type: 3}
   m_PrefabInstance: {fileID: 1759421279}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1759421281 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1273436637004701180, guid: f5a7859538c400947a43a096614da138, type: 3}
+  m_PrefabInstance: {fileID: 1759421279}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2717cdeba8d0db545b20c6c7f116e25e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1767072477
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24144,11 +24187,16 @@ PrefabInstance:
       value: "\uB2E4\uC911 \uD06C\uB9AC\uC2A4\uD0C8"
       objectReference: {fileID: 0}
     - target: {fileID: 1273436637004701180, guid: f5a7859538c400947a43a096614da138, type: 3}
+      propertyPath: maxUpgradeCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1273436637004701180, guid: f5a7859538c400947a43a096614da138, type: 3}
       propertyPath: _skillDescription
       value: "\uC791\uC740 \uD06C\uB9AC\uC2A4\uD0C8\uC744 \uC5EC\uB7EC\uAC1C \uB9CC\uB4E4\uC5B4
         \uD50C\uB808\uC774\uC5B4 \uB4A4\uB97C \uB530\uB77C\uB2E4\uB2D9\uB2C8\uB2E4.
         \uAC01 \uD06C\uB9AC\uC2A4\uD0C8\uC740 F\uD0A4\uB97C \uB20C\uB7EC \uBC1C\uC0AC\uD560
-        \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+        \uC218 \uC788\uC2B5\uB2C8\uB2E4. \uC5C5\uADF8\uB808\uC774\uB4DC\uC2DC \uC791\uC740
+        \uD06C\uB9AC\uC2A4\uD0C8\uC774 5\uAC1C\uAE4C\uC9C0 \uB298\uC5B4\uB0A9\uB2C8\uB2E4."
       objectReference: {fileID: 0}
     - target: {fileID: 2341361663111378921, guid: f5a7859538c400947a43a096614da138, type: 3}
       propertyPath: m_Type
@@ -24172,6 +24220,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 331511462400944456, guid: f5a7859538c400947a43a096614da138, type: 3}
   m_PrefabInstance: {fileID: 1987825693}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1988092733 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1273436637004701180, guid: f5a7859538c400947a43a096614da138, type: 3}
+  m_PrefabInstance: {fileID: 1987825693}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2717cdeba8d0db545b20c6c7f116e25e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1989794675 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1273436637004701180, guid: f5a7859538c400947a43a096614da138, type: 3}
@@ -28846,6 +28905,17 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1998845383 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1273436637004701180, guid: f5a7859538c400947a43a096614da138, type: 3}
+  m_PrefabInstance: {fileID: 1295935661}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2717cdeba8d0db545b20c6c7f116e25e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2003225551
 GameObject:
   m_ObjectHideFlags: 0
@@ -29149,6 +29219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56882223727b91e488384e0310192d14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillEnalbed: 0
   _cooldown: 1
   _skillType: 1
   whatIsEnemy:
@@ -29193,6 +29264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c8956b6c993bc4a88d94f0ad5bbd6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillEnalbed: 0
   _cooldown: 0
   _skillType: 2
   whatIsEnemy:
@@ -29220,12 +29292,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5d6030db3be544b8ca8bdac2d962ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillEnalbed: 0
   _cooldown: 0
   _skillType: 3
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 256
-  swordSkillType: 3
+  swordSkillType: 0
   _swordPrefab: {fileID: 241971243242143719, guid: 8de6ffe4e5e12b843ae2273a91ad40a4, type: 3}
   _launchForce: {x: 35, y: 25}
   _swordGravity: 4.5
@@ -29238,17 +29311,26 @@ MonoBehaviour:
   _pierceAmount: 2
   _pierceGravity: 1
   _bounceSpeed: 20
-  _bounceAmount: 4
+  _bounceAmount: 2
   _bounceGravity: 3
   _maxTravelDistance: 7
   _spinDuration: 2
   _spinGravity: 1
-  _hitCooldown: 0.35
+  _hitCooldown: 0.5
   _numberOfDots: 20
   _spaceBetweenDots: 0.07
   _dotPrefab: {fileID: 7511963945562560407, guid: 8f44d02308ab5ff46a7d02a33f033b08, type: 3}
   _dotsParent: {fileID: 354998729}
   generatedSword: {fileID: 0}
+  _enableSkillSlot: {fileID: 2089884037738962126}
+  _pierceShotSkillSlot: {fileID: 1565237338}
+  _bounceShotSkillSlot: {fileID: 1978614019}
+  _spinShotSkillSlot: {fileID: 1989794675}
+  _freezeSkillSlot: {fileID: 459634219}
+  _ailmentSkillSlot: {fileID: 800273659}
+  canFreeze: 0
+  canAilment: 0
+  ailmentTime: 1
 --- !u!114 &2021626186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29261,6 +29343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5e2f85324314f84b88f5f813bd587f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillEnalbed: 0
   _cooldown: 0
   _skillType: 4
   whatIsEnemy:
@@ -29286,6 +29369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e5d385701baf14aaef9dda1acf125f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillEnalbed: 0
   _cooldown: 0
   _skillType: 5
   whatIsEnemy:
@@ -29293,19 +29377,26 @@ MonoBehaviour:
     m_Bits: 0
   _crystalPrefab: {fileID: 2170614571147662110, guid: c4627c5b0d4e2f1478accb602e8ad969, type: 3}
   _timeOut: 5
-  cloneInsteadOfCystal: 1
-  damage: 5
+  cloneInsteadOfCystal: 0
+  damage: 10
   knockPower: {x: 4, y: 5}
-  canExplode: 1
+  canExplode: 0
   explosionRadius: 2
-  canMoveToEnemy: 1
+  canMoveToEnemy: 0
   moveSpeed: 10
   findEnemyRadius: 10
   isMultipleCrystal: 0
   amountOfCrystal: 3
   multiCrystalCooldown: 4
   crystalList: []
-  isShockable: 1
+  isShockable: 0
+  shockPercent: 0.5
+  _unlockCryStalSlot: {fileID: 1846685952}
+  _explosionCryStalSlot: {fileID: 1998845383}
+  _lightingCryStalSlot: {fileID: 1759421281}
+  _chaseCryStalSlot: {fileID: 1758432880}
+  _multipleCryStalSlot: {fileID: 1988092733}
+  damageMultiplier: 1
 --- !u!114 &2021626188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29318,6 +29409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85899b3ef79277040b18a00c8926c0bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillEnalbed: 0
   _cooldown: 3
   _skillType: 6
   whatIsEnemy:
