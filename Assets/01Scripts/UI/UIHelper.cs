@@ -18,6 +18,9 @@ public class UIHelper : MonoSingleton<UIHelper>
     [SerializeField] private CraftWindowUI _craftWindowUI;
     public CraftWindowUI CraftWindow => _craftWindowUI;
 
+    [SerializeField] private SkillTooltipUI _skillTooltipUI;
+    public SkillTooltipUI SkillTooltip => _skillTooltipUI;
+
     private void Awake()
     {
         Button equipBtn = _equipContextMenu.transform.Find("EquipButton").GetComponent<Button>();
@@ -29,6 +32,7 @@ public class UIHelper : MonoSingleton<UIHelper>
         //시작하면 감춰두고.
         _itemItemTooltip.HideTooltip();
         _statTooltip.HideStatTooltip();
+        _skillTooltipUI.HideTooltip();
     }
     
 

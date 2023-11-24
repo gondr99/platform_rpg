@@ -22,7 +22,10 @@ public class ItemDataEquipment : ItemData
 
     [Header("item effect")] 
     public ItemEffectSO[] effectList;
-    
+
+    //아이템 효과 적는곳.
+    [TextArea]
+    public string itemEffectDescription;
     
     [Header("Major stat")]
     public int strength;
@@ -155,14 +158,21 @@ public class ItemDataEquipment : ItemData
             AddItemDescription( (int)fieldSet.Value.GetValue(this), fieldSet.Key.ToString() );
         }
 
-        if (_descriptionLength < 8)
+        if (_descriptionLength < 5)
         {
-            for (int i = _descriptionLength; i < 8; ++i)
+            for (int i = _descriptionLength; i < 5; ++i)
             {
                 _stringBuilder.AppendLine();
                 _stringBuilder.Append("");
             }
         }
+
+        if (itemEffectDescription.Length > 0)
+        {
+            _stringBuilder.AppendLine();
+            _stringBuilder.Append(itemEffectDescription);
+        }
+        
         return _stringBuilder.ToString();
     }
 

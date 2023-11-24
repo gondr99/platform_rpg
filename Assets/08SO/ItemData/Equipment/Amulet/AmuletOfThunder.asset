@@ -19,6 +19,9 @@ MonoBehaviour:
   equipmentType: 2
   effectList:
   - {fileID: 11400000, guid: b74818fc1eddaec418be9907e5384c8f, type: 2}
+  itemEffectDescription: "\uB300\uC26C \uC2A4\uD0AC\uACFC \uD22C\uCC99\uAC80 \uC2A4\uD0AC
+    \uC0AC\uC6A9\uC2DC 50%\uC758 \uD655\uB960\uB85C \uBC88\uAC1C\uB099\uD558 \uC2A4\uD0AC\uC774
+    \uC0AC\uC6A9\uB429\uB2C8\uB2E4. (\uCFE8\uD0C0\uC784 5\uCD08)"
   strength: 0
   agility: 0
   intelligence: 0
@@ -37,3 +40,4 @@ MonoBehaviour:
   lightingDamage: 5
   shockPercent: 50
   craftingMaterials: []
+  cooldown: 0
