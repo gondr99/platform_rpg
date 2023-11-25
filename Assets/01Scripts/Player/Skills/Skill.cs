@@ -26,13 +26,13 @@ public class Skill : MonoBehaviour
 
     public virtual bool AttemptUseSkill()
     {
-        if (_cooldownTimer < 0)
+        if (_cooldownTimer < 0 && skillEnalbed)
         {
             _cooldownTimer = _cooldown;
             UseSkill(); //스킬을 사용하고
             return true;
         }
-        Debug.Log("Skill cooldown");
+        Debug.Log("Skill cooldown or locked");
         return false;
     }
 

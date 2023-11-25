@@ -20,9 +20,49 @@ public class BlackholeSkill : Skill
     //스킬의 이펙트가 모두 종료되었을때 발생하는 이벤트.
     public event Action SkillEffectEnd;
     
+    
+    [Header("스킬트리셋")] 
+    [SerializeField] private SkillTreeSlotUI _unlockBlackholeSlot;
+    [SerializeField] private SkillTreeSlotUI _increaseCountSlot;
+    [SerializeField] private SkillTreeSlotUI _increaseRadiusSlot;
+    
+    
     private BlackholeSkillController _blackholeSkill;
+
+
+    private void Awake()
+    {
+        _unlockBlackholeSlot.UpgradeEvent += HandleUnlockEvent;
+        _increaseCountSlot.UpgradeEvent += HandleIncreaseCountEvent;
+        _increaseRadiusSlot.UpgradeEvent += HandleIncreaseRadiusEvent;
+    }
+
+    private void OnDestroy()
+    {
+        _unlockBlackholeSlot.UpgradeEvent -= HandleUnlockEvent;
+        _increaseCountSlot.UpgradeEvent -= HandleIncreaseCountEvent;
+        _increaseRadiusSlot.UpgradeEvent -= HandleIncreaseRadiusEvent;
+    }
+
+    private void HandleUnlockEvent(int currentcount)
+    {
+        skillEnalbed = true;
+    }
+
+    private void HandleIncreaseCountEvent(int currentcount)
+    {
+        maxSize = 15 + (currentcount - 1) * 0.5f;
+    }
+
+    private void HandleIncreaseRadiusEvent(int currentcount)
+    {
+        amountOfAttack = 2 + currentcount;
+    }
+
+
     protected override void Start()
     {
+
         base.Start();
         _blackholeSkill = Instantiate(_blackholeSkillPrefab, transform.position, Quaternion.identity);
         _blackholeSkill.transform.parent = transform;
