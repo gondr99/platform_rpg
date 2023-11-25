@@ -1,13 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 //3초에 한번씩 3타마다 썬더 스트라이크가 사거리내 랜덤 적에게 확률적으로 발동
 public class ThunderStrikeSkill : Skill
 {
     [Header("Skill info")] 
     [SerializeField] private ThunderStrikeController _skillPrefab;
-    public bool isEnabled;  //활성화 여부.
     public float effectRadius = 15f;
     public int activePercent = 30; //30퍼 확률로 발동.
 
@@ -16,11 +17,60 @@ public class ThunderStrikeSkill : Skill
     public bool isShockable; //감점가능
 
     private List<Enemy> _targetList = new List<Enemy>();
+    
+    [Header("스킬트리셋")] 
+    [SerializeField] private SkillTreeSlotUI _unlockThunderSlot;
+    [SerializeField] private SkillTreeSlotUI _unlockShockAilmentSlot;
+    [SerializeField] private SkillTreeSlotUI _increaseThunderCountSlot;
+    [SerializeField] private SkillTreeSlotUI _increaseThunderPercentSlot;
+
+
+    private void Awake()
+    {
+        _unlockThunderSlot.UpgradeEvent += HandleUnlockThunderEvent;
+        _unlockShockAilmentSlot.UpgradeEvent += HandleShockAilmentEvent;
+        _increaseThunderCountSlot.UpgradeEvent += HandleIncreaseCountEvent;
+        _increaseThunderPercentSlot.UpgradeEvent += HandleIncreasePercentEvent;
+    }
+
+    private void OnDestroy()
+    {
+        _unlockThunderSlot.UpgradeEvent -= HandleUnlockThunderEvent;
+        _unlockShockAilmentSlot.UpgradeEvent -= HandleShockAilmentEvent;
+        _increaseThunderCountSlot.UpgradeEvent -= HandleIncreaseCountEvent;
+        _increaseThunderPercentSlot.UpgradeEvent -= HandleIncreasePercentEvent;
+    }
+
+
+    #region 스킬 트리 연결부분
+    private void HandleUnlockThunderEvent(int currentcount)
+    {
+        skillEnalbed = true;
+        activePercent = 50;
+    }
+
+    private void HandleShockAilmentEvent(int currentcount)
+    {
+        isShockable = true;
+    }
+
+    private void HandleIncreaseCountEvent(int currentcount)
+    {
+        amountOfThunder = 1 + currentcount;
+    }
+
+    private void HandleIncreasePercentEvent(int currentcount)
+    {
+        activePercent = 50 + currentcount * 10;
+    }
+
+    #endregion
+
 
     public override void UseSkill()
     {
+        if(!skillEnalbed) return; //비활성화시 작동안함.
         base.UseSkill();
-        if(!isEnabled) return; //비활성화시 작동안함.
 
         if (Random.Range(0, 100) > activePercent)
             return;

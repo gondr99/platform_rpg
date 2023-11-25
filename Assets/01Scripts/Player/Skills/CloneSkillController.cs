@@ -32,7 +32,7 @@ public class CloneSkillController : MonoBehaviour
             _animator.SetInteger(_attackNumberHash, Random.Range(1, _attackCategoryCount + 1));
         }
         _skill = skill;
-        _damageCaster.SetOwner(owner); //데미지 셋팅
+        _damageCaster.SetOwner(owner, castByCloneSkill:true); //데미지 셋팅
         transform.position = originTrm.position + offset;
         FacingClosetTarget(); //가장 가까운 적 찾아서 바라보고.
         FadeAfterDelay(cloneDuration);

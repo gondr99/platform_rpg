@@ -49,7 +49,7 @@ public abstract class Entity : MonoBehaviour
         SpriteRendererCompo = visualTrm.GetComponent<SpriteRenderer>();
         Collider = GetComponent<CapsuleCollider2D>();
         
-        DamageCasterCompo.SetOwner(this); //자신의 스탯상 데미지를 넣어줌.
+        DamageCasterCompo.SetOwner(this, castByCloneSkill:false); //자신의 스탯상 데미지를 넣어줌.
         HealthCompo.SetOwner(this);
         
         HealthCompo.OnKnockBack += HandleKnockback;

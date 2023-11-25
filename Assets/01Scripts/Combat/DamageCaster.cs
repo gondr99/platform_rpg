@@ -16,14 +16,16 @@ public class DamageCaster : MonoBehaviour
     private Collider2D[] _hitResult;
 
     private Entity _owner;
+    private bool _castByCloneSkill;
     private void Awake()
     {
         _hitResult = new Collider2D[_maxHitCount];
     }
 
-    public void SetOwner(Entity owner)
+    public void SetOwner(Entity owner, bool castByCloneSkill)
     {
         _owner = owner;
+        _castByCloneSkill = castByCloneSkill;
     }
 
     public bool CastDamage()
@@ -38,7 +40,12 @@ public class DamageCaster : MonoBehaviour
             Vector2 direction = (_hitResult[i].transform.position - transform.position).normalized;
             if (_hitResult[i].TryGetComponent<IDamageable>(out IDamageable health))
             {
-                health.ApplyDamage(_owner.Stat.GetDamage(), direction, knockbackPower, _owner);
+                int damage = _owner.Stat.GetDamage();
+                if (_castByCloneSkill)
+                {
+                    damage =  Mathf.RoundToInt(damage * SkillManager.Instance.GetSkill<CloneSkill>(PlayerSkill.Clone).damageMultiplier);
+                }
+                health.ApplyDamage(damage, direction, knockbackPower, _owner);
                 SetAilmentByStat(health);
             }
         }
