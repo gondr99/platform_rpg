@@ -30,6 +30,7 @@ public class BlackholeSkill : Skill
     private BlackholeSkillController _blackholeSkill;
 
 
+    #region 스킬트리 연결부분
     private void Awake()
     {
         _unlockBlackholeSlot.UpgradeEvent += HandleUnlockEvent;
@@ -51,13 +52,14 @@ public class BlackholeSkill : Skill
 
     private void HandleIncreaseCountEvent(int currentcount)
     {
-        maxSize = 15 + (currentcount - 1) * 0.5f;
+        amountOfAttack = 2 + currentcount;
     }
 
     private void HandleIncreaseRadiusEvent(int currentcount)
     {
-        amountOfAttack = 2 + currentcount;
+        maxSize = 15 + (currentcount - 1) * 0.5f;
     }
+    #endregion
 
 
     protected override void Start()

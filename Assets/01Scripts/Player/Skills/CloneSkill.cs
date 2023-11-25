@@ -22,6 +22,59 @@ public class CloneSkill : Skill
     [SerializeField] private bool _crystalInsteadOfClone;
     
     public float findEnemyRadius = 5f;
+    
+    
+    [Header("스킬트리셋")] 
+    [SerializeField] private SkillTreeSlotUI _unlockCloneSlot;
+    [SerializeField] private SkillTreeSlotUI _unlockEndCloneSlot;
+    [SerializeField] private SkillTreeSlotUI _unlockCounterCloneSlot;
+    [SerializeField] private SkillTreeSlotUI _AdditionalCloneChanceSlot;
+
+    public float damageMultiplier = 1f; //증뎀량.
+
+    #region 스킬트리 연결부분
+    private void Awake()
+    {
+        _unlockCloneSlot.UpgradeEvent += HandleUnlockCloneEvent;
+        _unlockEndCloneSlot.UpgradeEvent += HandleUnlockEndCloneEvent;
+        _unlockCounterCloneSlot.UpgradeEvent += HandleCounterCloneEvent;
+        _AdditionalCloneChanceSlot.UpgradeEvent += HandleAdditionalCloneEvent;
+    }
+
+    private void OnDestroy()
+    {
+        _unlockCloneSlot.UpgradeEvent -= HandleUnlockCloneEvent;
+        _unlockEndCloneSlot.UpgradeEvent -= HandleUnlockEndCloneEvent;
+        _unlockCounterCloneSlot.UpgradeEvent -= HandleCounterCloneEvent;
+        _AdditionalCloneChanceSlot.UpgradeEvent -= HandleAdditionalCloneEvent;
+    }
+    
+    private void HandleUnlockCloneEvent(int currentcount)
+    {
+        skillEnalbed = true;
+        _createCloneOnDashStart = true;
+        damageMultiplier = 1f + (currentcount - 1) * 0.1f;
+    }
+
+    private void HandleUnlockEndCloneEvent(int currentcount)
+    {
+        _createCloneOnDashOver = true;
+    }
+
+    private void HandleCounterCloneEvent(int currentcount)
+    {
+        _createCloneOnCounterAttack = true;
+    }
+
+    private void HandleAdditionalCloneEvent(int currentcount)
+    {
+        canDuplicateClone = true;
+        duplicatePercent = 0.3f + (currentcount - 1) * 0.05f;
+    }
+
+    
+    #endregion
+    
     public void CreateClone(Transform originTrm, Vector3 offset = new Vector3())
     {
         if (_crystalInsteadOfClone)
