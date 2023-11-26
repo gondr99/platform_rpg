@@ -1,4 +1,5 @@
 
+using System;
 using UnityEngine;
 
 public class Skill : MonoBehaviour
@@ -13,6 +14,8 @@ public class Skill : MonoBehaviour
     
     [HideInInspector] public LayerMask whatIsEnemy;
 
+    public event Action<float, float> OnCoolDown;
+    
     protected virtual void Start()
     {
         _player = GameManager.Instance.Player;
@@ -21,12 +24,22 @@ public class Skill : MonoBehaviour
 
     protected virtual void Update()
     {
-        _cooldownTimer -= Time.deltaTime;
+        if (_cooldownTimer > 0)
+        {
+            _cooldownTimer -= Time.deltaTime;
+
+            if (_cooldownTimer <= 0)
+            {
+                _cooldownTimer = 0;
+            }
+            
+            OnCoolDown?.Invoke(_cooldownTimer, _cooldown);
+        }
     }
 
     public virtual bool AttemptUseSkill()
     {
-        if (_cooldownTimer < 0 && skillEnalbed)
+        if (_cooldownTimer <= 0 && skillEnalbed)
         {
             _cooldownTimer = _cooldown;
             UseSkill(); //스킬을 사용하고

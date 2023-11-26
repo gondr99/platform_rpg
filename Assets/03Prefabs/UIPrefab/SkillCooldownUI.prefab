@@ -86,8 +86,9 @@ GameObject:
   - component: {fileID: 2304629706583935573}
   - component: {fileID: 4687946926434750333}
   - component: {fileID: 1025344912836267892}
+  - component: {fileID: 8831534506685188309}
   m_Layer: 5
-  m_Name: SkillCooldownUI
+  m_Name: SkillCooldownUI - [Dash]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,3 +152,17 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8831534506685188309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7469824420780594629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 896bf3e76a0dacc488f8eb0cbf57e714, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillType: 1
+  _cooldownImage: {fileID: 7670707906908319872}

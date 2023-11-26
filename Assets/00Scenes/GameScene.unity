@@ -2001,11 +2001,11 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 750760235}
   - {fileID: 2053580028}
   - {fileID: 79101905}
   - {fileID: 1725081454}
   - {fileID: 1106350936}
-  - {fileID: 750760235}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5220,7 +5220,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 29.599976, y: 490.25}
+  m_AnchoredPosition: {x: 29.600098, y: 490.25}
   m_SizeDelta: {x: 418.5439, y: 50.0916}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!1001 &459634217
@@ -32271,7 +32271,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7469824420780594629, guid: 835014fadfc5d1942a067675e4bb29b8, type: 3}
       propertyPath: m_Name
-      value: SkillCooldownUI
+      value: SkillCooldownUI - [Dash]
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

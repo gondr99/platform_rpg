@@ -14,7 +14,8 @@ public class SkillPointDisplay : MonoBehaviour
 
     private void OnDisable()
     {
-        LevelUpManager.Instance.SkillPointChanged -= HandleSkillPointChanged;   
+        if(LevelUpManager.Instance != null)
+            LevelUpManager.Instance.SkillPointChanged -= HandleSkillPointChanged;   
     }
 
     private void HandleSkillPointChanged(int point)

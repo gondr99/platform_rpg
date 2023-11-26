@@ -70,19 +70,19 @@ public class SkillTreeSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
             return;
         }
         
-        if (unlocked == false)
-        {
-            unlocked = true;
-            _skillImage.color = Color.white;
-        }
-
+        
         if (LevelUpManager.Instance.CanSpendSkillPoint())
         {
+            if (unlocked == false)
+            {
+                unlocked = true;
+                _skillImage.color = Color.white;
+            }
+            
             ++_currentUpgradeCount;
             UpgradeEvent?.Invoke(_currentUpgradeCount); //현재 업그레이드 상태 전송
             UpdateUI();
         }
-        
     }
 
     public void OnPointerEnter(PointerEventData eventData)

@@ -33,7 +33,16 @@ public class SkillManager : MonoSingleton<SkillManager>
         {
             return target as T;
         }
+        return null;
+    }
 
+    //Enum타입으로 그냥 스킬 가져오는 방법.
+    public Skill GetSkill(PlayerSkill skill)
+    {
+        if (_skills.TryGetValue(skill, out Skill target))
+        {
+            return target;
+        }
         return null;
     }
 
