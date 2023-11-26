@@ -21,7 +21,7 @@ public class FreezeEnemyEffectSO : ItemEffectSO
     public override bool ExecuteEffectByHit(Health health)
     {
         if (!base.ExecuteEffectByHit(health)) return false;
-        if (health.GetNormailizedHealth() > invokeHealthPercent) return false; //체력이 일정퍼센트 이하일때만 발동.
+        if (health.GetNormalizedHealth() > invokeHealthPercent) return false; //체력이 일정퍼센트 이하일때만 발동.
         
         FillTargetList();
         Debug.Log("발동!");

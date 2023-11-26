@@ -44,11 +44,6 @@ public class Health : MonoBehaviour, IDamageable
         _ailmentStat.AilmentDamageEvent -= HandleAilementDamage;
     }
 
-    public float GetNormailizedHealth()
-    {
-        return _currentHealth / (float)maxHealth;
-    }
-    
     private void HandleEndOfAilment(Ailment ailment)
     {
         Debug.Log($"{gameObject.name} : cure from {ailment.ToString()}");

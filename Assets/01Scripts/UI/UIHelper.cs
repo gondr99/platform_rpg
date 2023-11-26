@@ -78,7 +78,7 @@ public class UIHelper : MonoSingleton<UIHelper>
 
     private void Update()
     {
-        if (Mouse.current.rightButton.wasPressedThisFrame)
+        if (Mouse.current.rightButton.wasPressedThisFrame && _isContextOpen)
         {
             CloseEquipContextMenu();
         }

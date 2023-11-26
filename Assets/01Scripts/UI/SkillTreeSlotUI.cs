@@ -76,9 +76,13 @@ public class SkillTreeSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
             _skillImage.color = Color.white;
         }
 
-        ++_currentUpgradeCount;
-        UpgradeEvent?.Invoke(_currentUpgradeCount); //현재 업그레이드 상태 전송
-        UpdateUI();
+        if (LevelUpManager.Instance.CanSpendSkillPoint())
+        {
+            ++_currentUpgradeCount;
+            UpgradeEvent?.Invoke(_currentUpgradeCount); //현재 업그레이드 상태 전송
+            UpdateUI();
+        }
+        
     }
 
     public void OnPointerEnter(PointerEventData eventData)

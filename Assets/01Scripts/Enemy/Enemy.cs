@@ -50,7 +50,7 @@ public abstract class Enemy : Entity
         enemyStat.Modify(enemyStat.damage);
         enemyStat.Modify(enemyStat.maxHealth);
 
-        OnHealthBarChanged?.Invoke(HealthCompo.GetNormailizedHealth()); //최대치로 UI변경. 
+        OnHealthBarChanged?.Invoke(HealthCompo.GetNormalizedHealth()); //최대치로 UI변경. 
     }
 
     protected override void Update()

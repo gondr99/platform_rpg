@@ -29,6 +29,7 @@ public class CloneSkill : Skill
     [SerializeField] private SkillTreeSlotUI _unlockEndCloneSlot;
     [SerializeField] private SkillTreeSlotUI _unlockCounterCloneSlot;
     [SerializeField] private SkillTreeSlotUI _AdditionalCloneChanceSlot;
+    [SerializeField] private SkillTreeSlotUI _crystalInsteadOfCloneSlot;
 
     public float damageMultiplier = 1f; //증뎀량.
 
@@ -39,6 +40,7 @@ public class CloneSkill : Skill
         _unlockEndCloneSlot.UpgradeEvent += HandleUnlockEndCloneEvent;
         _unlockCounterCloneSlot.UpgradeEvent += HandleCounterCloneEvent;
         _AdditionalCloneChanceSlot.UpgradeEvent += HandleAdditionalCloneEvent;
+        _crystalInsteadOfCloneSlot.UpgradeEvent += HandleCrystalCloneEvent;
     }
 
     private void OnDestroy()
@@ -47,6 +49,12 @@ public class CloneSkill : Skill
         _unlockEndCloneSlot.UpgradeEvent -= HandleUnlockEndCloneEvent;
         _unlockCounterCloneSlot.UpgradeEvent -= HandleCounterCloneEvent;
         _AdditionalCloneChanceSlot.UpgradeEvent -= HandleAdditionalCloneEvent;
+        _crystalInsteadOfCloneSlot.UpgradeEvent -= HandleCrystalCloneEvent;
+    }
+
+    private void HandleCrystalCloneEvent(int currentCount)
+    {
+        _crystalInsteadOfClone = true;
     }
     
     private void HandleUnlockCloneEvent(int currentcount)

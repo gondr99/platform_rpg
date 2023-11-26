@@ -56,7 +56,7 @@ public abstract class Entity : MonoBehaviour
         HealthCompo.OnHit += HandleHit;
         HealthCompo.OnDied += HandleDie;
         HealthCompo.OnAilmentChanged.AddListener(HandleAilmentChanged);
-        OnHealthBarChanged?.Invoke(HealthCompo.GetNormailizedHealth()); //최대치로 UI변경.
+        OnHealthBarChanged?.Invoke(HealthCompo.GetNormalizedHealth()); //최대치로 UI변경.
         
         _characterStat = Instantiate(_characterStat); //복제본으로 탑재.
         _characterStat.SetOwner(this); //자기를 오너로 설정
@@ -88,7 +88,7 @@ public abstract class Entity : MonoBehaviour
     protected virtual void HandleHit()
     {
         //UI갱신
-        OnHealthBarChanged?.Invoke(HealthCompo.GetNormailizedHealth());
+        OnHealthBarChanged?.Invoke(HealthCompo.GetNormalizedHealth());
     }
 
     protected virtual void HandleKnockback(Vector2 direction)

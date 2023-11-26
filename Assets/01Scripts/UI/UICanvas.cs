@@ -11,6 +11,7 @@ public class UICanvas : MonoBehaviour
 
     private List<GameObject> _contentChilds = new List<GameObject>();
 
+    private CanvasGroup _menuCanvasGroup;
     private bool _isOpenMenu = false;
     
     private void Awake()
@@ -19,7 +20,9 @@ public class UICanvas : MonoBehaviour
         {
             _contentChilds.Add( contentTrm.GetChild(i).gameObject);
         }
-
+        
+        _menuTrm.gameObject.SetActive(true);
+        _menuCanvasGroup = _menuTrm.GetComponent<CanvasGroup>();
         CloseWindow();
     }
 
@@ -42,11 +45,12 @@ public class UICanvas : MonoBehaviour
     {
         Time.timeScale = 0;
         _inputReader.SetPlayerInputEnable(false);
-        
+        float tweenTime = 0.3f;
         Sequence seq = DOTween.Sequence();
         seq.SetUpdate(true);
-        seq.Append(_menuTrm.DOAnchorPos(new Vector2(50, 50), 0.5f));
-        seq.Join(_menuTrm.DOScaleY(1, 0.5f));
+        seq.Append(_menuTrm.DOAnchorPos(new Vector2(50, 50), tweenTime));
+        seq.Join(_menuTrm.DOScaleY(1, tweenTime));
+        seq.Join(_menuCanvasGroup.DOFade(1, tweenTime));
         seq.AppendCallback(() => _isOpenMenu = true);
     }
 
@@ -54,11 +58,12 @@ public class UICanvas : MonoBehaviour
     {
         Time.timeScale = 1;
         _inputReader.SetPlayerInputEnable(true);
-        
+        float tweenTime = 0.3f;
         Sequence seq = DOTween.Sequence();
         seq.SetUpdate(true);
-        seq.Append(_menuTrm.DOAnchorPos(new Vector2(Screen.width, 50), 0.5f) );
-        seq.Join(_menuTrm.DOScaleY(0.5f, 0.5f));
+        seq.Append(_menuTrm.DOAnchorPos(new Vector2(Screen.width, 50), tweenTime) );
+        seq.Join(_menuTrm.DOScaleY(0.5f, tweenTime));
+        seq.Join(_menuCanvasGroup.DOFade(0, tweenTime));
         seq.AppendCallback(() => _isOpenMenu = false);
     }
 
