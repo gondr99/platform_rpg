@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,6 +12,8 @@ public struct MaterialPair
 
 public class Inventory : MonoSingleton<Inventory>
 {
+    public event Action<bool, float, float> OnFlaskCooldownEvent;
+
     //장비하고 있는 것
     public List<InventoryItem> equipments;
     public Dictionary<ItemDataEquipment, InventoryItem> equipmentDictionary;
@@ -79,6 +82,7 @@ public class Inventory : MonoSingleton<Inventory>
                 _flaskCooldown = flask.cooldown; //이렇게 하면 시작시에도 바로 사용 가능. ///굳이?
                 flask.UseEquipment();
                 _lastFlaskUseTime = Time.time;
+                OnFlaskCooldownEvent?.Invoke(true, _lastFlaskUseTime, _flaskCooldown);
             }
             else
             {
@@ -164,7 +168,12 @@ public class Inventory : MonoSingleton<Inventory>
         equipments.Add(newItem);
         equipmentDictionary.Add(newEquipment, newItem);
         newEquipment.AddModifiers(); //장착한 아이템의 효과 적용.
-        
+
+
+        if (newEquipment.equipmentType == EquipmentType.Flask)
+        {
+            OnFlaskCooldownEvent?.Invoke(true, _lastFlaskUseTime, _flaskCooldown);
+        }
         
         RemoveItem(item);//장착한 아이템은 인벤토리에서 삭제한다. (장비칸으로 넘어갔으니까)
         UpdateSlotUI();
@@ -183,6 +192,12 @@ public class Inventory : MonoSingleton<Inventory>
             //인벤토리로 돌아가야 하면.
             if(backToInventory)
                 AddItem(oldEquipment); //삭제하고 인벤토리에 다시 넣어준다.
+            
+            //플라스크면 이벤트 발행
+            if (oldEquipment.equipmentType == EquipmentType.Flask)
+            {
+                OnFlaskCooldownEvent?.Invoke(false, _lastFlaskUseTime, _flaskCooldown);
+            }
         }
     }
 
