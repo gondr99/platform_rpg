@@ -167,7 +167,7 @@ public class ItemDataEquipment : ItemData
             }
         }
 
-        if (itemEffectDescription.Length > 0)
+        if (!string.IsNullOrEmpty(itemEffectDescription))
         {
             _stringBuilder.AppendLine();
             _stringBuilder.Append(itemEffectDescription);

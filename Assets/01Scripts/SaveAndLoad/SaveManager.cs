@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SaveManager : MonoSingleton<SaveManager>
 {
     [SerializeField] private string fileName;
-    
+
     private GameData _gameData;
     private List<ISaveManager> _saveManagerList;
     private FileDataHandler _fileDataHandler;
@@ -61,10 +63,16 @@ public class SaveManager : MonoSingleton<SaveManager>
     }
 
     [ContextMenu("Delete save file")]
-    private void DeleteSaveData()
+    public void DeleteSaveData()
     {
         //컨텍스트에서 실행시 객체가 없어서 이거 만들어서 해야함.
         _fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName, true);
         _fileDataHandler.DeleteSaveData();
+    }
+
+
+    public bool HasSaveData()
+    {
+        return _fileDataHandler.Load() != null;
     }
 }
