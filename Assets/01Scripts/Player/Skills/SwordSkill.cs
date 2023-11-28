@@ -81,7 +81,8 @@ public class SwordSkill : Skill
     private void HandleEnableEvent(int currentcount)
     {
         skillEnalbed = true; //해당 스킬을 활성화해줌.
-        _player.PlayerInput.ThrowAimEvent += OnThrowAim; //던지는 키
+        Player player = GameManager.Instance.Player;
+        player.PlayerInput.ThrowAimEvent += OnThrowAim; //던지는 키
     }
 
     private void HandlePierceShotEvent(int currentcount)

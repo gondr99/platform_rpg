@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public delegate void SkillUpgrade(int currentCount);
-public class SkillTreeSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class SkillTreeSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISaveManager
 {
     [SerializeField] private string _skillName;
     [TextArea][SerializeField] private string _skillDescription;
@@ -41,6 +41,10 @@ public class SkillTreeSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     private void UpdateUI()
     {
+        if (unlocked)
+        {
+            _skillImage.color = Color.white;
+        }
         _upgradeCountText.text = $"{_currentUpgradeCount.ToString()} / {maxUpgradeCount.ToString()}";
     }
 
@@ -76,7 +80,6 @@ public class SkillTreeSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
             if (unlocked == false)
             {
                 unlocked = true;
-                _skillImage.color = Color.white;
             }
             
             ++_currentUpgradeCount;
@@ -93,5 +96,31 @@ public class SkillTreeSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void OnPointerExit(PointerEventData eventData)
     {
         UIHelper.Instance.SkillTooltip.HideTooltip();
+    }
+
+    public void LoadData(GameData data)
+    {
+        if (data.skillTree.TryGetValue(_skillName, out int value))
+        {
+            unlocked = value > 0;
+            _currentUpgradeCount = value;
+
+            if (unlocked)
+            {
+                UpdateUI();
+                UpgradeEvent?.Invoke(_currentUpgradeCount);
+            }
+        }
+        
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        if (data.skillTree.TryGetValue(_skillName, out int value))
+        {
+            data.skillTree.Remove(_skillName);
+        }
+        
+        data.skillTree.Add(_skillName, _currentUpgradeCount);
     }
 }

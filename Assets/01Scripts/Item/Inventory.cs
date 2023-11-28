@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 //제작을 위한 구조체
@@ -10,7 +11,7 @@ public struct MaterialPair
     public int count;
 }
 
-public class Inventory : MonoSingleton<Inventory>
+public class Inventory : MonoSingleton<Inventory>, ISaveManager
 {
     public event Action<bool, float, float> OnFlaskCooldownEvent;
 
@@ -36,7 +37,13 @@ public class Inventory : MonoSingleton<Inventory>
     private ItemSlotUI[] _stashItemSlots; //창고아이템 슬롯(재료등)
     private EquipmentSlotUI[] _equipmentSlots;
     private StatSlotUI[] _statSlots;
-    
+
+
+    [Header("Database")]
+    public List<InventoryItem> loadedItems;
+    public List<ItemDataEquipment> loadedEquipment;
+
+
     private float _flaskCooldown;
     private float _lastFlaskUseTime;
 
@@ -59,10 +66,31 @@ public class Inventory : MonoSingleton<Inventory>
 
         _statSlots = _statSlotParent.GetComponentsInChildren<StatSlotUI>();
     }
-
-    //디버그용.
+    
     private void Start()
     {
+        if (loadedEquipment.Count > 0)
+        {
+            foreach (ItemDataEquipment equip in loadedEquipment)
+            {
+                EquipItem(equip);
+            }
+        }
+        
+        if (loadedItems.Count > 0)
+        {
+            foreach (InventoryItem item in loadedItems)
+            {
+                for(int i = 0; i < item.stackSize; ++i)
+                {
+                    AddItem(item.data);
+                }
+            }
+
+            return;
+        }
+        
+        //여긴 디버그
         foreach (ItemDataEquipment equipment in initEquipList)
         {
             AddItem(equipment);
@@ -335,5 +363,72 @@ public class Inventory : MonoSingleton<Inventory>
         
         return equipItem;
     }
-    
+
+    public void LoadData(GameData data)
+    {
+        //이거 빌드시 작동안할 확률이 매우 높음.
+        List<ItemData> itemDataBase = GetItemDataBaseFromAssetDatabase();
+        
+        foreach (var pair in data.inventory)
+        {
+            ItemData item = itemDataBase.Find(x => x.itemID == pair.Key);
+            if (item != null)
+            {
+                InventoryItem itemToLoad = new InventoryItem(item);
+                itemToLoad.stackSize = pair.Value;
+                
+                loadedItems.Add(itemToLoad);
+            }
+        }
+
+        //장착 장비들 복원
+        foreach (string itemID in data.equipmentIDList)
+        {
+            ItemData item = itemDataBase.Find(x => x.itemID == itemID);
+            if (item != null)
+            {
+                loadedEquipment.Add(item as ItemDataEquipment);
+            }
+        }
+        Debug.Log("Items loaded");
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.inventory.Clear();
+        data.equipmentIDList.Clear();
+
+        foreach (var pair in inventoryDictionary)
+        {
+            data.inventory.Add(pair.Key.itemID, pair.Value.stackSize);   
+        }
+
+        foreach (var pair in stashDictionary)
+        {
+            data.inventory.Add(pair.Key.itemID, pair.Value.stackSize);
+        }
+        
+        foreach (var pair in equipmentDictionary)
+        {
+            data.equipmentIDList.Add(pair.Key.itemID);
+        }
+    }
+
+
+    private List<ItemData> GetItemDataBaseFromAssetDatabase()
+    {
+        List<ItemData> itemDataBase = new List<ItemData>();
+        string[] assetNames = AssetDatabase.FindAssets("", 
+            new[] { "Assets/08SO/ItemData" });
+
+        foreach (string soName in assetNames)
+        {
+            string assetPath = AssetDatabase.GUIDToAssetPath(soName);
+            ItemData itemData = AssetDatabase.LoadAssetAtPath<ItemData>(assetPath);
+            if(itemData != null)
+                itemDataBase.Add(itemData);
+        }
+
+        return itemDataBase;
+    }
 }
