@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoSingleton<GameManager>
 {
@@ -19,4 +20,10 @@ public class GameManager : MonoSingleton<GameManager>
             return _mainCam;
         }
     }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneList.GameScene.ToString());
+    }
+    
 }

@@ -12,7 +12,7 @@ public class MainMenuUI : MonoBehaviour
 {
     [SerializeField] private SceneList _scene;
     [SerializeField] private GameObject _continueButton;
-    [SerializeField] private Image _frontFadeImage;
+    [SerializeField] private FadeScreenUI _fadeScreen;
 
     private void Start()
     {
@@ -21,12 +21,12 @@ public class MainMenuUI : MonoBehaviour
             _continueButton.SetActive(false);
         }
 
-        _frontFadeImage.DOFade(0, 2f);
+        _fadeScreen.FadeIn(2f);
     }
 
     public void ContinueGame()
     {
-        _frontFadeImage.DOFade(1f, 2f).OnComplete(() =>
+        _fadeScreen.FadeOut(1f).OnComplete(() =>
         {
             SceneManager.LoadScene(_scene.ToString());
         });
@@ -35,7 +35,7 @@ public class MainMenuUI : MonoBehaviour
     public void NewGame()
     {
         SaveManager.Instance.DeleteSaveData();
-        _frontFadeImage.DOFade(1f, 2f).OnComplete(() =>
+        _fadeScreen.FadeOut(1f).OnComplete(() =>
         {
             SceneManager.LoadScene(_scene.ToString());
         });

@@ -12,7 +12,7 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
             // 비활성화 됐다면 기존꺼 내비두고 새로 만든다.
             if ( IsQuitting )
             {
-                return null;
+                _instance = null;
             }
 
             // instance가 NULL일때 새로 생성한다.
