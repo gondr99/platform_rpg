@@ -585,7 +585,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Keyboard Letters and Symbols_22
+      name: G_Key
       rect:
         serializedVersion: 2
         x: 96
@@ -2406,6 +2406,7 @@ TextureImporter:
       D_Key: 1028749658
       E_Key: -1520039939
       F_Key: 340989494
+      G_Key: 5391298
       Keyboard Letters and Symbols_0: 238045582
       Keyboard Letters and Symbols_1: 1113009723
       Keyboard Letters and Symbols_10: 1288973750
@@ -2424,7 +2425,6 @@ TextureImporter:
       Keyboard Letters and Symbols_15: 1676355813
       Keyboard Letters and Symbols_18: 1515069110
       Keyboard Letters and Symbols_2: -208004868
-      Keyboard Letters and Symbols_22: 5391298
       Keyboard Letters and Symbols_23: -1711338956
       Keyboard Letters and Symbols_24: 185646448
       Keyboard Letters and Symbols_25: -443405034

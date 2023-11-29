@@ -13,6 +13,7 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions, Controls.I
     public event Action CrystalSkillEvent;
     public event Action<bool> ThrowAimEvent;
     public event Action HealFlaskEvent;
+    public event Action<bool> InteractionEvent;
     public Vector2 AimPosition { get; private set; }
     public float xInput { get; private set; }
     public float yInput { get; private set; }
@@ -108,6 +109,18 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions, Controls.I
         {
             HealFlaskEvent?.Invoke();
         }
+    }
+
+    public void OnInteraction(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            InteractionEvent?.Invoke(true);
+        }else if (context.canceled)
+        {
+            InteractionEvent?.Invoke(false);
+        }
+        
     }
 
     public void OnJump(InputAction.CallbackContext context)

@@ -125,6 +125,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interaction"",
+                    ""type"": ""Button"",
+                    ""id"": ""1ef6d854-fc83-4193-80a9-031ecb243864"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -292,6 +301,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""HealFlask"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a09b4fa-8408-40be-a015-000fe03de676"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interaction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -356,6 +376,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_UltiSkill = m_Player.FindAction("UltiSkill", throwIfNotFound: true);
         m_Player_CrystalSkill = m_Player.FindAction("CrystalSkill", throwIfNotFound: true);
         m_Player_HealFlask = m_Player.FindAction("HealFlask", throwIfNotFound: true);
+        m_Player_Interaction = m_Player.FindAction("Interaction", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_OpenUI = m_UI.FindAction("OpenUI", throwIfNotFound: true);
@@ -431,6 +452,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_UltiSkill;
     private readonly InputAction m_Player_CrystalSkill;
     private readonly InputAction m_Player_HealFlask;
+    private readonly InputAction m_Player_Interaction;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -446,6 +468,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @UltiSkill => m_Wrapper.m_Player_UltiSkill;
         public InputAction @CrystalSkill => m_Wrapper.m_Player_CrystalSkill;
         public InputAction @HealFlask => m_Wrapper.m_Player_HealFlask;
+        public InputAction @Interaction => m_Wrapper.m_Player_Interaction;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -488,6 +511,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @HealFlask.started += instance.OnHealFlask;
             @HealFlask.performed += instance.OnHealFlask;
             @HealFlask.canceled += instance.OnHealFlask;
+            @Interaction.started += instance.OnInteraction;
+            @Interaction.performed += instance.OnInteraction;
+            @Interaction.canceled += instance.OnInteraction;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -525,6 +551,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @HealFlask.started -= instance.OnHealFlask;
             @HealFlask.performed -= instance.OnHealFlask;
             @HealFlask.canceled -= instance.OnHealFlask;
+            @Interaction.started -= instance.OnInteraction;
+            @Interaction.performed -= instance.OnInteraction;
+            @Interaction.canceled -= instance.OnInteraction;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -610,6 +639,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnUltiSkill(InputAction.CallbackContext context);
         void OnCrystalSkill(InputAction.CallbackContext context);
         void OnHealFlask(InputAction.CallbackContext context);
+        void OnInteraction(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

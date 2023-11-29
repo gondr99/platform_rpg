@@ -8,13 +8,14 @@ using UnityEngine.UI;
 public class SaveManager : MonoSingleton<SaveManager>
 {
     [SerializeField] private string fileName;
-
+    [SerializeField] private bool _isEncrypt;
     private GameData _gameData;
     private List<ISaveManager> _saveManagerList;
     private FileDataHandler _fileDataHandler;
+    
     private void Start()
     {
-        _fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName, true);
+        _fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName, _isEncrypt);
         _saveManagerList = FindAllSaveManagers();
         
         LoadGame();
@@ -66,7 +67,7 @@ public class SaveManager : MonoSingleton<SaveManager>
     public void DeleteSaveData()
     {
         //컨텍스트에서 실행시 객체가 없어서 이거 만들어서 해야함.
-        _fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName, true);
+        _fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName, _isEncrypt);
         _fileDataHandler.DeleteSaveData();
     }
 
