@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class ItemObject : MonoBehaviour
+public class ItemObject : MonoBehaviour, IPIckable
 {
     private Rigidbody2D _rigidbody;
     private SpriteRenderer _spriteRenderer;
@@ -29,7 +29,7 @@ public class ItemObject : MonoBehaviour
         _spriteRenderer.sprite = _itemData.icon;
     }
     
-    public void PickUpItem()
+    public void PickUp()
     {
         if (_itemData.itemType == ItemType.Equipment && !Inventory.Instance.CanAddItem())
         {

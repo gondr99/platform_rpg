@@ -6,6 +6,10 @@ using Random = UnityEngine.Random;
 [CreateAssetMenu(menuName = "SO/Items/DropTable")]
 public class DropTableSO : ScriptableObject
 {
+    public int dropEXP;
+    public int dropGoldMin;
+    public int dropGoldMax;
+    
     public List<ItemData> dropList;
     [Range(0, 100f)]  
     public float dropChance;
@@ -30,6 +34,11 @@ public class DropTableSO : ScriptableObject
         }
 
         return false;
+    }
+
+    public int GetDropGold()
+    {
+        return Random.Range(dropGoldMin, dropGoldMax);
     }
     
     private int GetRandomWeightedIndex()

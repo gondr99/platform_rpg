@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using UnityEngine;
 
 public class CheckPoint : MonoBehaviour
@@ -17,10 +18,11 @@ public class CheckPoint : MonoBehaviour
     [SerializeField] private float _chargingTime = 1.3f;
     private float _currentChargingTime = 0f;
     private bool _isCharging = false;
+    
     private void Awake()
     {
         _animator = GetComponent<Animator>();
-        _interactionUI = transform.Find("KeySprite").GetComponent<InteractionFillUI>();
+        _interactionUI = transform.Find("HoldKeyUI").GetComponent<InteractionFillUI>();
     }
 
     [ContextMenu("Generate checkpoint id")]
@@ -75,6 +77,7 @@ public class CheckPoint : MonoBehaviour
             _currentChargingTime = Mathf.Clamp(_currentChargingTime - Time.deltaTime, 0, _chargingTime);
             _interactionUI.SetNormalizedGauge(_currentChargingTime / _chargingTime);
         }
+        
     }
 
     public void ActiveCheckPoint()

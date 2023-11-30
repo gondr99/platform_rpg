@@ -1,24 +1,37 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class CurrencyManager : MonoSingleton<CurrencyManager>, ISaveManager
 {
+    public Action<int> OnCurrencyChanged;
     [SerializeField] private int _curreny = 0;
 
+    public int Curreny
+    {
+        get => _curreny;
+        private set
+        {
+            _curreny = value;
+            OnCurrencyChanged?.Invoke(_curreny);
+        }
+    }
     public bool HasEnoughMoney(int price)
     {
-        return _curreny >= price;
+        return Curreny >= price;
     }
 
-    public int GetCurrency() => _curreny;
-    
+    public void AddCurreny(int value)
+    {
+        Curreny += value;
+    }
     
     public void LoadData(GameData data)
     {
-        _curreny = data.curreny;
+        Curreny = data.curreny;
     }
 
     public void SaveData(ref GameData data)
     {
-        data.curreny = _curreny;
+        data.curreny = Curreny;
     }
 }
