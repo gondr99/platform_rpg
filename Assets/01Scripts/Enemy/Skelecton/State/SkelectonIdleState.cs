@@ -37,6 +37,7 @@ public class SkelectonIdleState : SkelectonGroundState
     public override void Exit()
     {
         _isAlreadyChanged = true;
+        AudioManager.Instance.PlaySFX(24, _enemy.transform);
         base.Exit();
     }
 }

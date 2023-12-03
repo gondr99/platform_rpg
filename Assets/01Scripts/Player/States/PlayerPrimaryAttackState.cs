@@ -16,6 +16,7 @@ public class PlayerPrimaryAttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
+
         //마지막 공격으로부터 _comboWindow만큼 시간이 흘렀다면 다시 0번 콤보부터 이어서.
         if (_comboCounter > 2 || Time.time >= _lastTimeAttacked + _comboWindow)
             _comboCounter = 0;

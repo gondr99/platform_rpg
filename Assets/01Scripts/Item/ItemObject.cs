@@ -36,6 +36,9 @@ public class ItemObject : MonoBehaviour, IPIckable
             _rigidbody.velocity = new Vector2(0, 7); //잠깐 위로 떠오르고
             return; //안줍는다.
         }
+        
+        AudioManager.Instance.PlaySFX(18, transform);
+        
         Inventory.Instance.AddItem(_itemData);
         Destroy(gameObject);
     }

@@ -82,6 +82,7 @@ public class CheckPoint : MonoBehaviour
 
     public void ActiveCheckPoint()
     {
+        AudioManager.Instance.PlaySFX(5, transform);
         _interactionUI.SetActiveState(false);
         _isCharging = false; 
         isActivated = true;

@@ -28,7 +28,6 @@ public class GameManager : MonoSingleton<GameManager>, ISaveManager
     private void Awake()
     {
         _checkPoints = FindObjectsOfType<CheckPoint>();
-        Debug.Log(_checkPoints.Length);
         CheckPoint.CheckPointActiveEvent += HandleCheckPointActiveEvent;
     }
     

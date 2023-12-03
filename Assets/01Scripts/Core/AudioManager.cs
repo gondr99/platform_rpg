@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 
 public class AudioManager : MonoSingleton<AudioManager>
 {
+    [SerializeField] private float _sfxMinimumDistance = 10f;
     [SerializeField] private AudioSource[] _sfxArray;
     [SerializeField] private AudioSource[] _bgmArray;
 
@@ -26,10 +27,18 @@ public class AudioManager : MonoSingleton<AudioManager>
 
     #region 재생 컨트롤
     
-    public void PlaySFX(int sfxIndex)
+    public void PlaySFX(int sfxIndex, Transform sourceTrm, bool withRandomPitch = false)
     {
+        Transform playerTrm = GameManager.Instance.PlayerTrm;
+        if (sourceTrm != null && Vector2.Distance(sourceTrm.position, playerTrm.position) > _sfxMinimumDistance)
+        {
+            return;
+        }
+        
         if (sfxIndex < _sfxArray.Length)
         {
+            if (_sfxArray[sfxIndex].isPlaying) return; //재생중이면 리턴.
+            _sfxArray[sfxIndex].pitch = withRandomPitch ? Random.Range(0.85f, 1.15f) : 1f;
             _sfxArray[sfxIndex].Play();
         }
     }
@@ -61,4 +70,15 @@ public class AudioManager : MonoSingleton<AudioManager>
     }
 
     #endregion
+    
+    
+    
+    #if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, _sfxMinimumDistance);
+        Gizmos.color = Color.white;
+    }
+#endif
 }

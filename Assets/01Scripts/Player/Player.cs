@@ -123,6 +123,9 @@ public class Player: Entity
     //플레이어의 공격관련 코드들.
     public override void Attack()
     {
+        //공격 사운드 재생
+        AudioManager.Instance.PlaySFX(2, sourceTrm: null, withRandomPitch: true);
+        
         bool hitAttack = false; //공격에 적이 맞았는가?
         if (DamageCasterCompo.CastDamage())
         {

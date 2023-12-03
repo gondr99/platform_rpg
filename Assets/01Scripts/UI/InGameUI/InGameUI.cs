@@ -26,7 +26,6 @@ public class InGameUI : MonoBehaviour
 
     private void HandleExpEvent()
     {
-        Debug.Log(LevelUpManager.Instance.GetNormalizedExp());
         _expSlider.fillAmount = LevelUpManager.Instance.GetNormalizedExp();
     }
 }

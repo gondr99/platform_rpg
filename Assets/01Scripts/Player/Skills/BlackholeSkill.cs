@@ -88,6 +88,7 @@ public class BlackholeSkill : Skill
     {
         base.UseSkill();
         
+        AudioManager.Instance.PlaySFX(6, null);
     }
 
     public void BlackholeFieldOpen(Vector3 position)
