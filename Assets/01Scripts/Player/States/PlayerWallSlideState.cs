@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerWallSlideState : PlayerState
@@ -43,7 +41,7 @@ public class PlayerWallSlideState : PlayerState
         }
     
         //땅에 닿았다면 취소.
-        if (_player.IsGroundDetected())
+        if (_player.IsGroundDetected() || !_player.IsWallDetected())
         {
             _stateMachine.ChangeState(StateEnum.Idle);
         }
