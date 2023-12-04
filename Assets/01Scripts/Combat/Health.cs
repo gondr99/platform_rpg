@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 [Flags]
 public enum Ailment : int
@@ -16,7 +17,7 @@ public class Health : MonoBehaviour, IDamageable
     private int _currentHealth;
 
     public Action OnHit;
-    public Action OnDied;
+    //public Action OnDied;
     public Action<Vector2> OnKnockBack;
     public Action<Color, int> OnDamageText; //데미지 텍스트를 띄워야 할때.
 
@@ -26,7 +27,7 @@ public class Health : MonoBehaviour, IDamageable
 
     
     private Entity _owner;
-    private bool _isDead = false;
+    public bool isDead = false;
     
     [SerializeField] private AilmentStat _ailmentStat; //질병 및 디버프 관리 스탯
     
@@ -35,7 +36,7 @@ public class Health : MonoBehaviour, IDamageable
         _ailmentStat = new AilmentStat();
         _ailmentStat.EndOFAilmentEvent += HandleEndOfAilment;
         _ailmentStat.AilmentDamageEvent += HandleAilementDamage;
-        _isDead = false;
+        isDead = false;
     }
 
     private void OnDestroy()
@@ -87,7 +88,7 @@ public class Health : MonoBehaviour, IDamageable
 
     public void ApplyDamage(int damage, Vector2 attackDirection, Vector2 knockbackPower, Entity dealer)
     {
-        if(_isDead) return; //사망하면 더이상 데미지 없음.
+        if(isDead) return; //사망하면 더이상 데미지 없음.
         
         //완벽 회피 계산.
         if (_owner.Stat.CanEvasion())
@@ -125,16 +126,17 @@ public class Health : MonoBehaviour, IDamageable
 
     private void AfterHitFeedbacks(Vector2 knockbackPower)
     {
-        OnKnockBack?.Invoke(knockbackPower);
-        OnHitEvent?.Invoke();
-        OnHit?.Invoke();
         
         if (_currentHealth == 0)
         {
-            _isDead = true;
-            OnDied?.Invoke();
+            isDead = true;
+            //OnDied?.Invoke();
             OnDeathEvent?.Invoke(knockbackPower);
+            return;
         }
+        OnKnockBack?.Invoke(knockbackPower);
+        OnHitEvent?.Invoke();
+        OnHit?.Invoke();
     }
 
     //상태이상 걸기.

@@ -83,11 +83,12 @@ public class Player: Entity
         PlayerInput.HealFlaskEvent -= HandleFlaskInput;
     }
 
-    protected override void HandleDie()
+    protected override void HandleDie(Vector2 direction)
     {
         //사망처리
         _isDead = true;
         StateMachine.ChangeState(StateEnum.Dead);
+        base.HandleKnockback(direction);
     }
 
     protected override void HandleKnockback(Vector2 direction)

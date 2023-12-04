@@ -55,7 +55,7 @@ public class EnemySkelecton : Enemy
         StateMachine.CurrentState.UpdateState();
     }
 
-    protected override void HandleDie()
+    protected override void HandleDie(Vector2 direction)
     {
         StateMachine.ChangeState(SkelectonStateEnum.Dead);
     }
