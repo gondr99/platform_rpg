@@ -37,7 +37,7 @@ public class PlayerWallSlideState : PlayerState
         }
 
         //다른방향으로 키를 눌렀다면.
-        if (xInput != 0 && Mathf.Abs(_player.FacingDirection + xInput) < 0.3f) 
+        if (Mathf.Abs(xInput + _player.FacingDirection) < 0.5f) 
         {
             _stateMachine.ChangeState(StateEnum.Idle);
         }

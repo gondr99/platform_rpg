@@ -19,7 +19,7 @@ public class PlayerWallJumpState : PlayerState
     private async void DelayToAir()
     {
         await Task.Delay(400); //0.4초 대기후
-        _stateMachine.ChangeState(StateEnum.Air);
+        _stateMachine.ChangeState(StateEnum.Fall);
     }
 
     public override void UpdateState()

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DG.Tweening;
 using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -9,7 +10,7 @@ using Random = UnityEngine.Random;
 public class AudioManager : MonoSingleton<AudioManager>
 {
     [SerializeField] private float _sfxMinimumDistance = 10f;
-    [SerializeField] private AudioSource[] _sfxArray;
+    [SerializeField] private AudioSFX[] _sfxArray;
     [SerializeField] private AudioSource[] _bgmArray;
 
     public bool playBGM;
@@ -57,15 +58,21 @@ public class AudioManager : MonoSingleton<AudioManager>
         
         if (sfxIndex < _sfxArray.Length)
         {
-            if (_sfxArray[sfxIndex].isPlaying) return; //재생중이면 리턴.
-            _sfxArray[sfxIndex].pitch = withRandomPitch ? Random.Range(0.85f, 1.15f) : 1f;
-            _sfxArray[sfxIndex].Play();
+            _sfxArray[sfxIndex].PlaySource(withRandomPitch);
         }
     }
 
-    public void StopSFX(int sfxIndex)
+    public void StopSFX(int sfxIndex, bool isFade = false)
     {
-        _sfxArray[sfxIndex].Stop();
+        _sfxArray[sfxIndex].StopSource(isFade);
+    }
+
+    private void OnDestroy()
+    {
+        for (int i = 0; i < _sfxArray.Length; ++i)
+        {
+            _sfxArray[i].DOKill();
+        }
     }
 
     public void PlayRandomBGM()

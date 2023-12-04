@@ -27,7 +27,7 @@ public class PlayerGroundedState : PlayerState
         base.UpdateState();
         if (!_player.IsGroundDetected())
         {
-            _stateMachine.ChangeState(StateEnum.Air);
+            _stateMachine.ChangeState(StateEnum.Fall);
         }
     }
 

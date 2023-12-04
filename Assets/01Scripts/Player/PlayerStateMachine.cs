@@ -6,7 +6,7 @@ public enum StateEnum
     Idle,
     Move,
     Jump,
-    Air,
+    Fall,
     Dash,
     WallSlide,
     WallJump,
