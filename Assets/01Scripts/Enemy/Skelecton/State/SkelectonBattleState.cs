@@ -5,7 +5,7 @@ using UnityEngine;
 public class SkelectonBattleState : EnemyState<SkelectonStateEnum>
 {
     private EnemySkelecton _enemy;
-    private Transform _playerTrm;
+    protected Player _player;
     private int _moveDirection;
 
     private float _timer;
@@ -18,7 +18,13 @@ public class SkelectonBattleState : EnemyState<SkelectonStateEnum>
     public override void UpdateState()
     {
         base.UpdateState();
-        if (_playerTrm.position.x > _enemy.transform.position.x)
+        
+        if (_player.HealthCompo.isDead)
+        {
+            _stateMachine.ChangeState(SkelectonStateEnum.Idle); 
+        }
+        
+        if (_player.transform.position.x > _enemy.transform.position.x)
             _moveDirection = 1;
         else
             _moveDirection = -1;
@@ -38,7 +44,7 @@ public class SkelectonBattleState : EnemyState<SkelectonStateEnum>
             }
         }
 
-        float distance = Vector2.Distance(_playerTrm.position, _enemy.transform.position);
+        float distance = Vector2.Distance(_player.transform.position, _enemy.transform.position);
         
         
         //앞이 절벽이거나 적이 근거리라면.
@@ -56,19 +62,20 @@ public class SkelectonBattleState : EnemyState<SkelectonStateEnum>
         {
             _stateMachine.ChangeState(SkelectonStateEnum.Idle); // 전투시간을 초과했다면 idle로 이동.
         }
+
     }
 
     public override void Enter()
     {
         base.Enter();
-        _playerTrm = GameManager.Instance.PlayerTrm;
+        _player = GameManager.Instance.Player;
         SetDirectionToEnemy();
     }
 
     //적 위치를 바라보도록 코드
     private void SetDirectionToEnemy()
     {
-        _enemy.FlipController(_playerTrm.position.x - _enemy.transform.position.x);
+        _enemy.FlipController(_player.transform.position.x - _enemy.transform.position.x);
     }
 
     public override void Exit()

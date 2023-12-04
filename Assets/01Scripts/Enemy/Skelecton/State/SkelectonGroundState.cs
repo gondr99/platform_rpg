@@ -5,8 +5,7 @@ using UnityEngine;
 public class SkelectonGroundState : EnemyState<SkelectonStateEnum>
 {
     protected EnemySkelecton _enemy;
-    protected Transform _playerTrm;
-    
+    protected Player _player;
     public SkelectonGroundState(Enemy enemyBase, EnemyStateMachine<SkelectonStateEnum> stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
         _enemy = enemyBase as EnemySkelecton;
@@ -18,7 +17,9 @@ public class SkelectonGroundState : EnemyState<SkelectonStateEnum>
 
         RaycastHit2D hit = _enemy.IsPlayerDetected();
         //플레이와의 거리 : 뒤쪽에서 접근해도 인지할 수 있도록
-        float distance = Vector2.Distance(_enemy.transform.position, _playerTrm.position); 
+
+        if (_player.HealthCompo.isDead) return; //죽었으면 걍 이동.
+        float distance = Vector2.Distance(_enemy.transform.position, _player.transform.position); 
         if ((hit|| distance < 2) && !_enemy.IsObstacleInLine(hit.distance))
         {
             _stateMachine.ChangeState(SkelectonStateEnum.Battle);
@@ -29,7 +30,7 @@ public class SkelectonGroundState : EnemyState<SkelectonStateEnum>
     public override void Enter()
     {
         base.Enter();
-        _playerTrm = GameManager.Instance.PlayerTrm;
+        _player = GameManager.Instance.Player;
     }
 
     public override void Exit()

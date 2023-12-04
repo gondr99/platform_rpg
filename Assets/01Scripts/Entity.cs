@@ -54,7 +54,7 @@ public abstract class Entity : MonoBehaviour
         
         HealthCompo.OnKnockBack += HandleKnockback;
         HealthCompo.OnHit += HandleHit;
-        HealthCompo.OnDied += HandleDie;
+        HealthCompo.OnDeathEvent.AddListener(HandleDie);
         HealthCompo.OnAilmentChanged.AddListener(HandleAilmentChanged);
         OnHealthBarChanged?.Invoke(HealthCompo.GetNormalizedHealth()); //최대치로 UI변경.
         
@@ -66,7 +66,7 @@ public abstract class Entity : MonoBehaviour
     {
         HealthCompo.OnKnockBack -= HandleKnockback;
         HealthCompo.OnHit -= HandleHit;
-        HealthCompo.OnDied -= HandleDie;
+        HealthCompo.OnDeathEvent.RemoveListener(HandleDie);
         HealthCompo.OnAilmentChanged.RemoveListener( HandleAilmentChanged);
     }
 
@@ -96,7 +96,7 @@ public abstract class Entity : MonoBehaviour
         StartCoroutine(HitKnockback(direction));
     }
 
-    protected abstract void HandleDie();
+    protected abstract void HandleDie(Vector2 direction);
 
 
     protected virtual void Start()
