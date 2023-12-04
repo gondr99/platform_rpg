@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -12,7 +14,14 @@ public class AudioManager : MonoSingleton<AudioManager>
 
     public bool playBGM;
     private int _currentBGMIndex = 0;
-    
+    private bool _canPlaySFX; //최초 로딩시에는 재생하지 않도록 하는 변수
+
+    private void Awake()
+    {
+        //시작하고 1초후에 SFX 재생 허락함. 이건 쓰레드써도 돼
+        AllowSFX(1000); 
+    }
+
     private void Update()
     {
         if (!playBGM)
@@ -25,10 +34,21 @@ public class AudioManager : MonoSingleton<AudioManager>
         }
     }
 
+    //SFX를 재생하도록 하는 함수.
+    private async void AllowSFX(int milliSec)
+    {
+        await Task.Delay(milliSec);
+        _canPlaySFX = true;
+    } 
+    
+        
+    
     #region 재생 컨트롤
     
     public void PlaySFX(int sfxIndex, Transform sourceTrm, bool withRandomPitch = false)
     {
+        if (_canPlaySFX == false) return; //준비가 되지 않았다면 패스
+        
         Transform playerTrm = GameManager.Instance.PlayerTrm;
         if (sourceTrm != null && Vector2.Distance(sourceTrm.position, playerTrm.position) > _sfxMinimumDistance)
         {
@@ -74,11 +94,12 @@ public class AudioManager : MonoSingleton<AudioManager>
     
     
     #if UNITY_EDITOR
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, _sfxMinimumDistance);
         Gizmos.color = Color.white;
     }
-#endif
+
+    #endif
 }

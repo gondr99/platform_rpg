@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 
 [Serializable]
@@ -18,7 +19,9 @@ public class GameData
     public int level = 1;
     public int statPoint;
     public int skillPoint;
-    
+
+    public SerializableDictionary<string, float> volumeSettings;
+
     public GameData()
     {
         curreny = 0;
@@ -28,5 +31,6 @@ public class GameData
         equipmentIDList = new List<string>();
         checkpoints = new SerializableDictionary<string, bool>();
         lastVisitedCheckpointID = string.Empty;
+        volumeSettings = new SerializableDictionary<string, float>();
     }
 }

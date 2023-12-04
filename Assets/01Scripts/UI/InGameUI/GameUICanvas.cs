@@ -6,7 +6,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-public class GameUICanvas : MonoBehaviour
+public class GameUICanvas : MonoBehaviour, ISaveManager
 {
     [SerializeField] private RectTransform _menuTrm;
     [SerializeField] private Transform contentTrm;
@@ -18,6 +18,8 @@ public class GameUICanvas : MonoBehaviour
 
     private CanvasGroup _menuCanvasGroup;
     private bool _isOpenMenu = false;
+
+    [SerializeField] private UIVolumeSlider[] _volumeSettings;
     
     private void Awake()
     {
@@ -63,6 +65,7 @@ public class GameUICanvas : MonoBehaviour
         seq.Join(_menuTrm.DOScaleY(1, tweenTime));
         seq.Join(_menuCanvasGroup.DOFade(1, tweenTime));
         seq.AppendCallback(() => _isOpenMenu = true);
+        AudioManager.Instance.PlaySFX(7, null);
     }
 
     private void CloseWindow()
@@ -76,6 +79,7 @@ public class GameUICanvas : MonoBehaviour
         seq.Join(_menuTrm.DOScaleY(0.5f, tweenTime));
         seq.Join(_menuCanvasGroup.DOFade(0, tweenTime));
         seq.AppendCallback(() => _isOpenMenu = false);
+        AudioManager.Instance.PlaySFX(7, null);
     }
 
 
@@ -90,6 +94,7 @@ public class GameUICanvas : MonoBehaviour
         if (menu != null)
         {
             menu.SetActive(true);
+            AudioManager.Instance.PlaySFX(7, null);
         }
     }
 
@@ -121,6 +126,29 @@ public class GameUICanvas : MonoBehaviour
             {
                 break;
             }
+        }
+    }
+
+    public void LoadData(GameData data)
+    {
+        for (int i = 0; i < _volumeSettings.Length; ++i)
+        {
+            UIVolumeSlider item = _volumeSettings[i];
+            if (data.volumeSettings.TryGetValue(item.parameter, out float value))
+            {
+                item.slider.value = value;
+                item.HandleSliderValueChaned(value);
+            }
+        }
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.volumeSettings.Clear();
+        for (int i = 0; i < _volumeSettings.Length; ++i)
+        {
+            UIVolumeSlider item = _volumeSettings[i];
+            data.volumeSettings.Add(item.parameter, item.slider.value);
         }
     }
 }
