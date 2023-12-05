@@ -25,10 +25,9 @@ public class Health : MonoBehaviour, IDamageable
     public UnityEvent OnHitEvent;
     public UnityEvent<Ailment> OnAilmentChanged;
 
-    
     private Entity _owner;
     public bool isDead = false;
-    
+    private bool _isInvincible = false; //무적상태
     [SerializeField] private AilmentStat _ailmentStat; //질병 및 디버프 관리 스탯
     
     protected void Awake()
@@ -88,7 +87,7 @@ public class Health : MonoBehaviour, IDamageable
 
     public void ApplyDamage(int damage, Vector2 attackDirection, Vector2 knockbackPower, Entity dealer)
     {
-        if(isDead) return; //사망하면 더이상 데미지 없음.
+        if(isDead || _isInvincible) return; //사망하거나 무적상태면 더이상 데미지 없음.
         
         //완벽 회피 계산.
         if (_owner.Stat.CanEvasion())
@@ -159,6 +158,11 @@ public class Health : MonoBehaviour, IDamageable
         }
     }
 
+
+    public void MakeInvincible(bool value)
+    {
+        _isInvincible = value;
+    }
     
     
 }

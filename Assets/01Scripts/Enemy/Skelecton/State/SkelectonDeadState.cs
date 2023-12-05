@@ -1,4 +1,6 @@
 ﻿using System.Threading.Tasks;
+using Cinemachine;
+using UnityEngine;
 
 public class SkelectonDeadState : EnemyState<SkelectonStateEnum>
 {
@@ -15,17 +17,14 @@ public class SkelectonDeadState : EnemyState<SkelectonStateEnum>
         _enemy.AnimatorCompo.SetBool(_enemy.GetLastAnimHash(), true); //마지막 재생 애니메이션을 실행하고.
         _enemy.AnimatorCompo.speed = 0;
         _enemy.Collider.enabled = false;
-        
-        
+
+        _enemy.StartDelayCallback(2f, () =>
+        {
+            GameObject.Destroy(_enemy.gameObject);
+        });
+
     }
 
-    //딜레이 타임 후에 위로 올림.
-    private async void ImpactHitAfterDelay()
-    {
-        await Task.Delay(100);
-        _enemy.SetVelocity(0, 10, true);
-    }
-    
     public override void UpdateState()
     {
         base.UpdateState();

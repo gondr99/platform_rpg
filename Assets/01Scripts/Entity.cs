@@ -128,6 +128,21 @@ public abstract class Entity : MonoBehaviour
     {
         AnimatorCompo.speed = 1; //원래 스피드로 되돌리기.
     }
+
+    #region Delay Callback Coroutine
+
+    public Coroutine StartDelayCallback(float delayTime, Action Callback)
+    {
+        return StartCoroutine(DelayCoroutine(delayTime, Callback));
+    }
+
+    protected IEnumerator DelayCoroutine(float delayTime, Action Callback)
+    {
+        yield return new WaitForSeconds(delayTime);
+        Callback?.Invoke();
+    }
+
+    #endregion
     
     #region Check Collision
     public virtual bool IsGroundDetected() =>

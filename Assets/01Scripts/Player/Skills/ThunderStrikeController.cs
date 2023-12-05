@@ -26,7 +26,11 @@ public class ThunderStrikeController : MonoBehaviour
     
     private void Update()
     {
-        if (!_target) return;
+        if (!_target)
+        {
+            Destroy(gameObject);
+            return;
+        }
         
         transform.position =
             Vector2.MoveTowards(transform.position,

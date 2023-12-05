@@ -1,5 +1,3 @@
-using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -25,10 +23,20 @@ public class GameManager : MonoSingleton<GameManager>, ISaveManager
 
     [SerializeField] private CheckPoint[] _checkPoints;
     private string _lastVisitedCheckPointId = string.Empty;
+
+    [SerializeField] private PoolingListSO _poolingList;
+    [SerializeField] private Transform _poolingTrm;
+    
     private void Awake()
     {
         _checkPoints = FindObjectsOfType<CheckPoint>();
         CheckPoint.CheckPointActiveEvent += HandleCheckPointActiveEvent;
+
+        PoolManager.Instance = new PoolManager(_poolingTrm);
+        foreach (PoolingPair pair in _poolingList.list)
+        {
+            PoolManager.Instance.CreatePool(pair.prefab, pair.type, pair.count);
+        }
     }
     
     protected virtual void OnDestroy()

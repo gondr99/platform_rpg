@@ -24,6 +24,7 @@ public class ThunderStrikeSkill : Skill
     [SerializeField] private SkillTreeSlotUI _increaseThunderCountSlot;
     [SerializeField] private SkillTreeSlotUI _increaseThunderPercentSlot;
 
+    private bool _isActivating; //활성화된 상태에서 또 활성화되지 않도록
 
     private void Awake()
     {
@@ -70,12 +71,14 @@ public class ThunderStrikeSkill : Skill
     public override void UseSkill()
     {
         if(!skillEnalbed) return; //비활성화시 작동안함.
+        if (_isActivating) return; //이미 사용중이라면 작동안함
         base.UseSkill();
 
         if (Random.Range(0, 100) > activePercent)
             return;
         
         //확률 통과했다면 시작.
+        
         FillTargetList();
         DamageToTargets();
     }
@@ -83,6 +86,7 @@ public class ThunderStrikeSkill : Skill
     //확률이니 이펙트 상관없이 발동하는것
     public override void UseSkillWithoutCooltimeAndEffect()
     {
+        if (_isActivating) return; //이미 사용중이라면 작동안함
         FillTargetList();
         DamageToTargets();
     }
@@ -92,14 +96,19 @@ public class ThunderStrikeSkill : Skill
         Vector3 offset = new Vector3(0, 3.5f); //머리위에서 부터
         foreach (Enemy enemy in _targetList)
         {
+            if(enemy == null || enemy.gameObject == null) continue;
+            
             ThunderStrikeController thunderInstance = Instantiate(_skillPrefab, enemy.transform.position + offset, Quaternion.identity);
             thunderInstance.Setup(this, enemy);
             await Task.Delay(300);
         }
+
+        _isActivating = false; //이런 작업을 해줘야 Task.Delay에서 리스트가 안고쳐진다.
     }
 
     private void FillTargetList()
     {
+        _isActivating = true; //활성화시키고 (활성화된 동안 다시 발동 안하도록)
         _targetList.Clear();
         Collider2D[] colliders = Physics2D.OverlapCircleAll(_player.transform.position, effectRadius, whatIsEnemy);
 

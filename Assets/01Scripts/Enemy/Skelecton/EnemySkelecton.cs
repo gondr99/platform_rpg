@@ -24,7 +24,7 @@ public class EnemySkelecton : Enemy
         {
             string typeName = state.ToString();
             Type t = Type.GetType($"Skelecton{typeName}State");
-            //이부분은 나중에 정정 필요. 다 this면 걍 타입캐스트 하면 돼.
+            
             if (t != null)
             {
                 var enemyState = Activator.CreateInstance(t, this, StateMachine, typeName) as EnemyState<SkelectonStateEnum>;
@@ -42,9 +42,6 @@ public class EnemySkelecton : Enemy
     {
         base.Start();
         StateMachine.Initialize(SkelectonStateEnum.Idle);
-        //체력에 구독. 만약 구독해제 안되면 이거 나중에 고쳐야함.
-        // 이렇게 하면 안되는게 일단 카운터 어택이면 체력을 더 깔 수가 없음.
-        //HealthCompo.OnHitEvent.AddListener(()=> CanBeStunned());
     }
 
     protected override void Update()

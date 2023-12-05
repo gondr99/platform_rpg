@@ -18,6 +18,9 @@ public class PlayerDashState : PlayerState
         //지나간 자리에 클론 생성.
         CloneSkill cloneSkill = _player.skill.GetSkill<CloneSkill>(PlayerSkill.Clone);
         cloneSkill.CreateCloneOnDashStart();
+        
+        //대시중 무적으로 만들어줌
+        _player.HealthCompo.MakeInvincible(true);
     }
 
     public override void UpdateState()
@@ -36,6 +39,9 @@ public class PlayerDashState : PlayerState
         CloneSkill cloneSkill = _player.skill.GetSkill<CloneSkill>(PlayerSkill.Clone);
         cloneSkill.CreateCloneOnDashOver();
         _player.StopImmediately(false);
+        
+        //대시중 무적으로 만들어줌
+        _player.HealthCompo.MakeInvincible(false);
         base.Exit();
     }
 }
