@@ -29,6 +29,10 @@ public class Health : MonoBehaviour, IDamageable
     public bool isDead = false;
     private bool _isInvincible = false; //무적상태
     [SerializeField] private AilmentStat _ailmentStat; //질병 및 디버프 관리 스탯
+
+    public bool isLastHitCritical = false; //마지막 공격이 크리티컬로 적중했냐?
+    public Vector2 lastAttackDirection;
+    public bool isHitByMelee;
     
     protected void Awake()
     {
@@ -99,12 +103,19 @@ public class Health : MonoBehaviour, IDamageable
         if (dealer.Stat.IsCritical(ref damage))
         {
             Debug.Log($"Critical! : {damage}"); //데미지 증뎀되었음.
+            isLastHitCritical = true;
+        }
+        else
+        {
+            isLastHitCritical = false;
         }
         
         //아머값에 따른 데미지 보정. 동상시에는 아머 감소.
         damage = _owner.Stat.ArmoredDamage(damage, _ailmentStat.HasAilment(Ailment.Chilled)); 
         _currentHealth = Mathf.Clamp(_currentHealth - damage, 0, maxHealth);
-
+        
+        isHitByMelee = true;
+        lastAttackDirection = (transform.position - dealer.transform.position).normalized;
         //감전데미지 체크
         CheckAilmentByDamage(damage);
         
@@ -120,6 +131,7 @@ public class Health : MonoBehaviour, IDamageable
         
         knockbackPower.x *= attackDirection.x; //y값은 고정으로.
         
+        isHitByMelee = false;
         AfterHitFeedbacks(knockbackPower);
     }
 
@@ -133,6 +145,7 @@ public class Health : MonoBehaviour, IDamageable
             OnDeathEvent?.Invoke(knockbackPower);
             return;
         }
+
         OnKnockBack?.Invoke(knockbackPower);
         OnHitEvent?.Invoke();
         OnHit?.Invoke();

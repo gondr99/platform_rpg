@@ -2,5 +2,5 @@
 public abstract class PoolableMono : MonoBehaviour
 {
     public PoolingType poolingType;
-    public abstract void Init();
+    public abstract void ResetPooingItem();
 }

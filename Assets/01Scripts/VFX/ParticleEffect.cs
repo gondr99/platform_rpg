@@ -14,7 +14,7 @@ public class ParticleEffect : PoolableMono
     {
         _particle.Stop();
     }
-    public override void Init()
+    public override void ResetPooingItem()
     {
         
     }

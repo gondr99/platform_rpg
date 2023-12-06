@@ -73,6 +73,7 @@ GameObject:
   - component: {fileID: 8088382346302909923}
   - component: {fileID: 4747295454559249814}
   - component: {fileID: 4738235698260997741}
+  - component: {fileID: 3631417751363529872}
   m_Layer: 8
   m_Name: FeedbackHit
   m_TagString: Untagged
@@ -122,6 +123,23 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 7029567731293925317}
   _delaySecond: 0.2
   _blinkValue: 0.4
+--- !u!114 &3631417751363529872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1941823365649233271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6afa6f44077dc6643903004374171f02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _effectColr: {r: 2.670157, g: 2.1285684, b: 2.1285684, a: 1}
+  _targetHealth: {fileID: 7489734176329906530}
+  _offset: {x: 0.2, y: 0.8}
+  _scaleMinMax: {x: 0.8, y: 1.2}
+  _criticalScaleMinMax: {x: 3.5, y: 4}
 --- !u!1 &2847702303708080987
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,6 +455,9 @@ MonoBehaviour:
   isDead: 0
   _ailmentStat:
     currentAilment: 0
+  isLastHitCritical: 0
+  lastAttackDirection: {x: 0, y: 0}
+  isHitByMelee: 0
 --- !u!1 &8525731926600929287
 GameObject:
   m_ObjectHideFlags: 0

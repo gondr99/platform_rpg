@@ -28,7 +28,7 @@ public class PoolManager
         }
 
         PoolableMono item = _pools[type].Pop();
-        item.Init();
+        item.ResetPooingItem();
         return item;
     }
 

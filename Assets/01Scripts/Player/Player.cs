@@ -86,6 +86,7 @@ public class Player: Entity
     protected override void HandleDie(Vector2 direction)
     {
         //사망처리
+        HandleHit(); //체력바 초기화시켜주고
         _isDead = true;
         StateMachine.ChangeState(StateEnum.Dead);
         base.HandleKnockback(direction);
