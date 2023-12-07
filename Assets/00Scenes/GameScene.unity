@@ -29080,9 +29080,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipments: []
-  inventory: []
-  stash: []
-  _inventorySlotParent: {fileID: 1685790686}
+  _equipStashSlotParent: {fileID: 1685790686}
   _stashSlotParent: {fileID: 422198253}
   _equipmentSlotParent: {fileID: 1229643741}
   _statSlotParent: {fileID: 1743543721}
@@ -31865,7 +31863,7 @@ GameObject:
   - component: {fileID: 1685790689}
   - component: {fileID: 1685790688}
   m_Layer: 5
-  m_Name: Inventory
+  m_Name: EquipStash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
