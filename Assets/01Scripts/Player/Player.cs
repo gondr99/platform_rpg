@@ -25,6 +25,12 @@ public class Player: Entity
     
     public bool IsBusy { get; private set; } = false;
 
+    #region Player components
+
+    public PlayerFXPlayer FxPlayer { get; private set; }
+
+    #endregion
+    
     public SkillManager skill;
     
     public PlayerStateMachine StateMachine { get; private set; }
@@ -49,12 +55,21 @@ public class Player: Entity
         foreach (StateEnum state in Enum.GetValues(typeof(StateEnum)) )
         {
             string typeName = state.ToString();
-            Type t = Type.GetType($"Player{typeName}State");
-            var playerState = Activator.CreateInstance(t, this, StateMachine, typeName) as PlayerState;
+            try
+            {
+                Type t = Type.GetType($"Player{typeName}State");
+                var playerState = Activator.CreateInstance(t, this, StateMachine, typeName) as PlayerState;
 
-            StateMachine.AddState(state, playerState);
+                StateMachine.AddState(state, playerState);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"{typeName} is loading error, Message : {ex.Message}");
+            }
         }
 
+        //FX재생을 위한 플레이어.
+        FxPlayer = transform.Find("PlayerFX").GetComponent<PlayerFXPlayer>();
     }
     
     protected override void Start()

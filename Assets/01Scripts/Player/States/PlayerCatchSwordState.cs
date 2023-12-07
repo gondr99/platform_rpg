@@ -21,6 +21,8 @@ public class PlayerCatchSwordState : PlayerState
         }
         
         _player.SetVelocity(skill.returnImpactPower * - _player.FacingDirection, _rigidbody.velocity.y, true);
+        
+        //_player.FxPlayer.PlayDustEffect(); //보류
     }
 
     public override void UpdateState()

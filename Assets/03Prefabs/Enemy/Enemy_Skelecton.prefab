@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6afa6f44077dc6643903004374171f02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _effectColr: {r: 2.670157, g: 2.1285684, b: 2.1285684, a: 1}
+  _effectColr: {r: 4.310383, g: 1.4842355, b: 1.4842355, a: 1}
   _targetHealth: {fileID: 7489734176329906530}
   _offset: {x: 0.2, y: 0.8}
   _scaleMinMax: {x: 0.8, y: 1.2}
@@ -532,7 +532,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -34765783
   m_SortingLayer: 4
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: -85727878, guid: 687df074731fbf744b668d2275dbb675, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

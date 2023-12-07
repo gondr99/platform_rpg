@@ -24,6 +24,10 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
                 {
                     Debug.LogError($"{typeof(T).Name} is not exits");
                 }
+                else
+                {
+                    IsQuitting = false; //재사용 용도면.
+                }
                 
             }
             return _instance;

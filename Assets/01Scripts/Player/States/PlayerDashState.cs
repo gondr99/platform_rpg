@@ -21,6 +21,7 @@ public class PlayerDashState : PlayerState
         
         //대시중 무적으로 만들어줌
         _player.HealthCompo.MakeInvincible(true);
+        _player.FxPlayer.SetAfterImageMode(true);
     }
 
     public override void UpdateState()
@@ -42,6 +43,7 @@ public class PlayerDashState : PlayerState
         
         //대시중 무적으로 만들어줌
         _player.HealthCompo.MakeInvincible(false);
+        _player.FxPlayer.SetAfterImageMode(false);
         base.Exit();
     }
 }

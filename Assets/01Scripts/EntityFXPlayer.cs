@@ -1,29 +1,70 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EntityFXPlayer : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer _spriteRenderer;
-    [SerializeField] private Transform _vfxPosition;
-    [SerializeField] private Color _chillColor;
-    [SerializeField] private Color _igniteColor;
-    [SerializeField] private Color _shockColor;
-    private Material _material;
+    [SerializeField] protected SpriteRenderer _spriteRenderer;
+    [SerializeField] protected Transform _vfxPosition;
+    [SerializeField] protected Color _chillColor;
+    [SerializeField] protected Color _igniteColor;
+    [SerializeField] protected Color _shockColor;
+    protected Material _material;
 
-    private readonly int _hashIsEffect = Shader.PropertyToID("_IsEffect");
-    private readonly int _hashEffectColor = Shader.PropertyToID("_EffectColor");
-    private readonly int _hashEffectIntensity = Shader.PropertyToID("_EffectIntensity");
+    protected readonly int _hashIsEffect = Shader.PropertyToID("_IsEffect");
+    protected readonly int _hashEffectColor = Shader.PropertyToID("_EffectColor");
+    protected readonly int _hashEffectIntensity = Shader.PropertyToID("_EffectIntensity");
 
-    private ParticleEffect _ignite, _chill, _shock;
+    protected ParticleEffect _ignite, _chill, _shock;
+
     
-    private void Awake()
+
+    [Header("AfterImage")] 
+    [SerializeField] protected float _afterImageInterval = 0.03f;
+    [SerializeField] protected float _afterImageLivetime = 0.4f; 
+    [SerializeField] protected bool _afterImageMode;
+    protected float _currentTimer = 0f;
+
+    protected Player _player;
+    protected virtual void Awake()
     {
         _material = _spriteRenderer.material;
     }
 
-    //디버프 상태를 받아서 표기해주는 함수
+    protected virtual void Start()
+    {
+        _player = GameManager.Instance.Player;
+    }
+
+    #region after image generator
+    public void SetAfterImageMode(bool value)
+    {
+        _afterImageMode = value;
+    }
+
+    protected virtual void Update()
+    {
+        if (_afterImageMode)
+        {
+            _currentTimer -= Time.deltaTime;
+            if (_currentTimer <= 0)
+            {
+                AfterImage afterImage = PoolManager.Instance.Pop(PoolingType.AfterImage) as AfterImage;
+                if (afterImage != null)
+                {
+                    Vector3 position = _spriteRenderer.transform.position;
+                    Sprite sprite = _spriteRenderer.sprite;
+                    bool isFlip = _player.FacingDirection == -1;
+                    afterImage.StartFade(position, sprite, _afterImageLivetime, isFlip);
+                    _currentTimer = _afterImageInterval;
+                }
+            }
+        }
+    }
+    
+
+    #endregion
+    
+    #region ailment effect
     public void HandleAilmentState(Ailment ailment)
     {
         
@@ -46,7 +87,7 @@ public class EntityFXPlayer : MonoBehaviour
         VisualizeIcon(ailment);
     }
 
-    private void VisualizeIcon(Ailment ailment)
+    protected virtual void VisualizeIcon(Ailment ailment)
     {
         //여긴 좀 개선할 수 있을거 같은데... 고민좀 해보자.
         if ((ailment & Ailment.Ignited) > 0 && _ignite == null)
@@ -87,10 +128,12 @@ public class EntityFXPlayer : MonoBehaviour
       
     }
 
-    private void PlayVFXParticle(ParticleEffect effect)
+    protected void PlayVFXParticle(ParticleEffect effect)
     {
         effect.transform.parent = transform;
         effect.transform.position = _vfxPosition.position;
         effect.PlayParticle();
     }
+
+    #endregion
 }
