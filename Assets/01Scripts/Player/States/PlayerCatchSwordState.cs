@@ -11,7 +11,7 @@ public class PlayerCatchSwordState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        SwordSkill skill = _player.skill.GetSkill<SwordSkill>(PlayerSkill.Sword);
+        SwordSkill skill = _player.skill.GetSkill<SwordSkill>();
         SwordSkillController sword = skill.generatedSword;
         
         if ((_player.transform.position.x > sword.transform.position.x && _player.FacingDirection > 0) ||

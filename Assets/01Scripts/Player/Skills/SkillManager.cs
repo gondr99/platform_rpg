@@ -15,21 +15,26 @@ public enum PlayerSkill
 
 public class SkillManager : MonoSingleton<SkillManager>
 {
-    private Dictionary<PlayerSkill, Skill> _skills = new Dictionary<PlayerSkill, Skill>();
-
+    private Dictionary<Type, Skill> _skills;
+    private Dictionary<PlayerSkill, Type> _skillTypeDictionary;
     private void Awake()
     {
+        _skills = new Dictionary<Type, Skill>();
+        _skillTypeDictionary = new Dictionary<PlayerSkill, Type>();
+        
         foreach (PlayerSkill skill in Enum.GetValues(typeof(PlayerSkill)))
         {
             Skill skillComponent = GetComponent($"{skill}Skill") as Skill;
-            _skills.Add(skill, skillComponent);
+            Type type = skillComponent.GetType();
+            _skills.Add(type, skillComponent);
+            _skillTypeDictionary.Add(skill, type);
         }
     }
 
-    public T GetSkill<T>(PlayerSkill skill) where T : Skill
+    public T GetSkill<T>() where T : Skill
     {
-        
-        if (_skills.TryGetValue(skill, out Skill target))
+        Type t = typeof(T);
+        if (_skills.TryGetValue(t, out Skill target))
         {
             return target as T;
         }
@@ -39,7 +44,8 @@ public class SkillManager : MonoSingleton<SkillManager>
     //Enum타입으로 그냥 스킬 가져오는 방법.
     public Skill GetSkill(PlayerSkill skill)
     {
-        if (_skills.TryGetValue(skill, out Skill target))
+        Type type = _skillTypeDictionary[skill];
+        if (_skills.TryGetValue(type, out Skill target))
         {
             return target;
         }

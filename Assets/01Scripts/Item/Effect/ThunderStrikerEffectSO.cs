@@ -39,7 +39,7 @@ public class ThunderStrikerEffectSO : ItemEffectSO
     {
         if (Random.Range(0, 100f) < effectChance )
         {
-            ThunderStrikeSkill skill = SkillManager.Instance.GetSkill<ThunderStrikeSkill>(PlayerSkill.ThunderStrike);
+            ThunderStrikeSkill skill = SkillManager.Instance.GetSkill<ThunderStrikeSkill>();
             skill.UseSkillWithoutCooltimeAndEffect();
         }
     }

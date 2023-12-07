@@ -44,7 +44,7 @@ public class PlayerGroundedState : PlayerState
     private void OnUltiSkill()
     {
         _player.flyTimerOnUlti = _groundFlyTime;
-        if (_player.skill.GetSkill<BlackholeSkill>(PlayerSkill.Blackhole).AttemptUseSkill())
+        if (_player.skill.GetSkill<BlackholeSkill>().AttemptUseSkill())
         {
             _stateMachine.ChangeState(StateEnum.Blackhole);
         }
@@ -53,7 +53,7 @@ public class PlayerGroundedState : PlayerState
     private void OnThrowAim(bool state)
     {
         //이미 칼을 던진상태면 더이상 진행안함.
-        SwordSkill swordSkill = _player.skill.GetSkill<SwordSkill>(PlayerSkill.Sword);
+        SwordSkill swordSkill = _player.skill.GetSkill<SwordSkill>();
         if (swordSkill == null || swordSkill.skillEnalbed == false) 
             return;
         

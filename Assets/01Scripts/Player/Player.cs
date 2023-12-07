@@ -120,7 +120,7 @@ public class Player: Entity
             return;
         
         //대시 스킬 사용 성공시.
-        if (skill.GetSkill<DashSkill>(PlayerSkill.Dash).AttemptUseSkill())
+        if (skill.GetSkill<DashSkill>().AttemptUseSkill())
         {
             StateMachine.ChangeState(StateEnum.Dash);
         }
@@ -128,7 +128,7 @@ public class Player: Entity
 
     private void HandleCrystalInput()
     {
-        CrystalSkill crystalSkill = skill.GetSkill<CrystalSkill>(PlayerSkill.Crystal);
+        CrystalSkill crystalSkill = skill.GetSkill<CrystalSkill>();
         crystalSkill.AttemptUseSkill(); //사용시도.
     }
 
@@ -149,7 +149,7 @@ public class Player: Entity
             //공격성공시 현재 플레이어 콤보상태 계산.
             if (currentCompoCounter == 2)
             {
-                ThunderStrikeSkill thunder = skill.GetSkill<ThunderStrikeSkill>(PlayerSkill.ThunderStrike);
+                ThunderStrikeSkill thunder = skill.GetSkill<ThunderStrikeSkill>();
                 thunder.AttemptUseSkill(); //3타 공격 성공시 시도.
             }
 

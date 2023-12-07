@@ -152,7 +152,7 @@ public class CrystalSkill : Skill
 
             if (cloneInsteadOfCystal)
             {
-                _player.skill.GetSkill<CloneSkill>(PlayerSkill.Clone).CreateClone(_currentCrystal.transform);
+                _player.skill.GetSkill<CloneSkill>().CreateClone(_currentCrystal.transform);
             }
            
             _currentCrystal?.EndOfCrystal();

@@ -57,7 +57,7 @@ public class PlayerCounterAttackState : PlayerState
                     if (_cloneCreated == false)
                     {
                         _cloneCreated = true;
-                        _player.skill.GetSkill<CloneSkill>(PlayerSkill.Clone).CreateCloneOnCounterAttack(enemy.transform);
+                        _player.skill.GetSkill<CloneSkill>().CreateCloneOnCounterAttack(enemy.transform);
                     }
                 }
             }

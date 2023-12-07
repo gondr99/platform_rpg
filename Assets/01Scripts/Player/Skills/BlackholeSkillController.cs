@@ -107,7 +107,7 @@ public class BlackholeSkillController : MonoBehaviour
     {
         _cloneAttackTimer = _skill.cloneAttackCooldown;
 
-        CloneSkill cloneSkill = SkillManager.Instance.GetSkill<CloneSkill>(PlayerSkill.Clone);
+        CloneSkill cloneSkill = SkillManager.Instance.GetSkill<CloneSkill>();
 
         float xOffset = Mathf.Sign(Random.value - 0.5f) * 2f; //50%확률로 왼쪽 오른쪽
         int randomIdx = Random.Range(0, _hitTargets.Count);

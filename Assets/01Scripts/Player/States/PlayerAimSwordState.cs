@@ -17,7 +17,7 @@ public class PlayerAimSwordState : PlayerState
         _releaseKey = false;
         _player.PlayerInput.ThrowAimEvent += OnThrowAim;
         
-        _player.skill.GetSkill<SwordSkill>(PlayerSkill.Sword)?.DotsActive(true);
+        _player.skill.GetSkill<SwordSkill>()?.DotsActive(true);
     }
 
     public override void UpdateState()
@@ -43,7 +43,7 @@ public class PlayerAimSwordState : PlayerState
 
     public override void Exit()
     {
-        _player.skill.GetSkill<SwordSkill>(PlayerSkill.Sword)?.DotsActive(false);
+        _player.skill.GetSkill<SwordSkill>()?.DotsActive(false);
         _player.PlayerInput.ThrowAimEvent -= OnThrowAim;
         base.Exit();
     }

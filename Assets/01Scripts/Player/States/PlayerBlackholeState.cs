@@ -24,7 +24,7 @@ public class PlayerBlackholeState : PlayerState
         _rigidbody.gravityScale = 0;
         _player.canStateChangeable = false; //상태를 변경하지 못하도록 하고
 
-        _skill = _player.skill.GetSkill<BlackholeSkill>(PlayerSkill.Blackhole);
+        _skill = _player.skill.GetSkill<BlackholeSkill>();
 
         _skill.SkillEffectEnd += OnSkillEffectEnd;
     }

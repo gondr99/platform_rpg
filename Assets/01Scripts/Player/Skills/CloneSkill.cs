@@ -87,7 +87,7 @@ public class CloneSkill : Skill
     {
         if (_crystalInsteadOfClone)
         {
-            _player.skill.GetSkill<CrystalSkill>(PlayerSkill.Crystal).CreateCrystal(originTrm.position + offset);
+            _player.skill.GetSkill<CrystalSkill>().CreateCrystal(originTrm.position + offset);
             return;
         }
         
