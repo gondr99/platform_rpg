@@ -40,7 +40,7 @@ MonoBehaviour:
     _baseValue: 5
     modifiers: 
   criticalChance:
-    _baseValue: 90
+    _baseValue: 10
     modifiers: 
   criticalDamage:
     _baseValue: 150

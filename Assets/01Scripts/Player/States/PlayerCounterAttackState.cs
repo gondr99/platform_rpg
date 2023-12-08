@@ -53,6 +53,9 @@ public class PlayerCounterAttackState : PlayerState
                     _counterTimer = 5f; //일단 크게 넣어주면 애니메이터에 의해서 알아서 종료된다.
                     _player.AnimatorCompo.SetBool(_successCounterHash, true);
                     
+                    //카메라 쉐이크
+                    _player.FxPlayer.ShakeCamera(new Vector2(0, 0.5f));
+                    
                     //카운터 성공시에 분신 생성.
                     if (_cloneCreated == false)
                     {

@@ -9,7 +9,8 @@ public enum PoolingType
     ShockVFX,
     SlashVFX,
     HitImpactVFX,
-    AfterImage
+    AfterImage,
+    DamageText
 }
 
 [Serializable]

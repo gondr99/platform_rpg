@@ -116,6 +116,10 @@ public class Health : MonoBehaviour, IDamageable
         
         isHitByMelee = true;
         lastAttackDirection = (transform.position - dealer.transform.position).normalized;
+        
+        //여기서 데미지 띄워주기
+        DamageTextManager.Instance.PopupDamageText(_owner.transform.position, damage, isLastHitCritical ? DamageCategory.Critical : DamageCategory.Noraml);
+        
         //감전데미지 체크
         CheckAilmentByDamage(damage);
         
@@ -131,6 +135,8 @@ public class Health : MonoBehaviour, IDamageable
         
         knockbackPower.x *= attackDirection.x; //y값은 고정으로.
         
+        //데미지 띄우기
+        DamageTextManager.Instance.PopupDamageText(_owner.transform.position, magicDamage, DamageCategory.Noraml);
         isHitByMelee = false;
         AfterHitFeedbacks(knockbackPower);
     }
@@ -167,7 +173,9 @@ public class Health : MonoBehaviour, IDamageable
             int shockDamage = Mathf.Min( 3, Mathf.RoundToInt( damage * 0.1f));
             _currentHealth = Mathf.Clamp(_currentHealth - shockDamage, 0, maxHealth);
             
-            Debug.Log($"{gameObject.name} : shocked damage added = {shockDamage}");
+            //디버프용 데미지 텍스트 추가
+            DamageTextManager.Instance.PopupDamageText(_owner.transform.position, shockDamage, DamageCategory.Debuff);
+            //Debug.Log($"{gameObject.name} : shocked damage added = {shockDamage}");
         }
     }
 

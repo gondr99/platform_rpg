@@ -32,9 +32,10 @@ public class PoolManager
         return item;
     }
 
-    public void Push(PoolableMono obj)
+    public void Push(PoolableMono obj, bool resetParent = false)
     {
-        obj.transform.parent = _trmParent;
+        if(resetParent)
+            obj.transform.parent = _trmParent;
         _pools[obj.poolingType].Push(obj);
     }
 

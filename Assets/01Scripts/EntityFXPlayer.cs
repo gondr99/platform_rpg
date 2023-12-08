@@ -1,4 +1,5 @@
 using System;
+using Cinemachine;
 using UnityEngine;
 
 public class EntityFXPlayer : MonoBehaviour
@@ -16,6 +17,7 @@ public class EntityFXPlayer : MonoBehaviour
 
     protected ParticleEffect _ignite, _chill, _shock;
 
+    protected CinemachineImpulseSource _impulseSource;
     
 
     [Header("AfterImage")] 
@@ -28,8 +30,14 @@ public class EntityFXPlayer : MonoBehaviour
     protected virtual void Awake()
     {
         _material = _spriteRenderer.material;
+        _impulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
+    public void ShakeCamera(Vector2 direction)
+    {
+        _impulseSource.GenerateImpulseWithVelocity(direction);
+    }
+    
     protected virtual void Start()
     {
         _player = GameManager.Instance.Player;
@@ -98,7 +106,7 @@ public class EntityFXPlayer : MonoBehaviour
         else if((ailment & Ailment.Ignited) == 0 && _ignite != null)
         {
             _ignite.StopParticle();
-            PoolManager.Instance.Push(_ignite);
+            PoolManager.Instance.Push(_ignite, true);
             _ignite = null;
         }
         
@@ -110,7 +118,7 @@ public class EntityFXPlayer : MonoBehaviour
         else if((ailment & Ailment.Shocked) == 0  && _shock != null)
         {
             _shock.StopParticle();
-            PoolManager.Instance.Push(_shock);
+            PoolManager.Instance.Push(_shock, true);
             _shock = null;
         }
         
@@ -122,7 +130,7 @@ public class EntityFXPlayer : MonoBehaviour
         else if((ailment & Ailment.Chilled) == 0 && _chill != null)
         {
             _chill.StopParticle();
-            PoolManager.Instance.Push(_chill);
+            PoolManager.Instance.Push(_chill, true);
             _chill = null;
         }
       

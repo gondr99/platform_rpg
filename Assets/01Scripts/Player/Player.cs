@@ -31,7 +31,7 @@ public class Player: Entity
 
     #endregion
     
-    public SkillManager skill;
+    [HideInInspector] public SkillManager skill;
     
     public PlayerStateMachine StateMachine { get; private set; }
     [SerializeField] private InputReader _inputReader;
