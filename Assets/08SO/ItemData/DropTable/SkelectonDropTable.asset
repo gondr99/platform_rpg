@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98433d4f866f84d46be18bb357473f1d, type: 3}
   m_Name: SkelectonDropTable
   m_EditorClassIdentifier: 
-  dropEXP: 10
+  dropEXP: 50
   dropGoldMin: 2
   dropGoldMax: 5
   dropList:

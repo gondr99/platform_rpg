@@ -52,7 +52,7 @@ public class LevelUpManager : MonoSingleton<LevelUpManager>, ISaveManager
     {
         _currentExp += exp;
         ExpChanged?.Invoke();
-        if (_currentExp > nextExpPoint)
+        if (_currentExp >= nextExpPoint)
         {
             LevelUpProcess();
         }
@@ -64,6 +64,7 @@ public class LevelUpManager : MonoSingleton<LevelUpManager>, ISaveManager
         level += 1;
         SkillPoint += 1;
         StatPoint += 5;
+        ExpChanged?.Invoke();
     }
 
     //디버그용 코드들
