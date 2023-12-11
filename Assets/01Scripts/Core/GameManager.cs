@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -37,6 +38,8 @@ public class GameManager : MonoSingleton<GameManager>, ISaveManager
         {
             PoolManager.Instance.CreatePool(pair.prefab, pair.type, pair.count);
         }
+
+        DOTween.Init(recycleAllByDefault: true, useSafeMode: true, LogBehaviour.Verbose).SetCapacity(400, 100);
     }
     
     protected virtual void OnDestroy()

@@ -22,7 +22,7 @@ public class IceAndFireEffectSO : ItemEffectSO
         }
 
         Player player = GameManager.Instance.Player;
-        if (player.currentCompoCounter != 2) return false; //매 3타마다 발동
+        if (player.currentComboCounter != 2) return false; //매 3타마다 발동
         
         CastIceAndFire(player);
         

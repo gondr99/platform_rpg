@@ -45,7 +45,7 @@ public class Player: Entity
     protected bool _isDead = false;
     
     //현재 콤보상태 저장
-    [HideInInspector] public int currentCompoCounter = 0;
+    [HideInInspector] public int currentComboCounter = 0;
     
     protected override void Awake()
     {
@@ -147,7 +147,7 @@ public class Player: Entity
         if (DamageCasterCompo.CastDamage())
         {
             //공격성공시 현재 플레이어 콤보상태 계산.
-            if (currentCompoCounter == 2)
+            if (currentComboCounter == 2)
             {
                 ThunderStrikeSkill thunder = skill.GetSkill<ThunderStrikeSkill>();
                 thunder.AttemptUseSkill(); //3타 공격 성공시 시도.

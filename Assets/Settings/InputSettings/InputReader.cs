@@ -21,7 +21,6 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions, Controls.I
     public event Action OpenMenuEvent;
 
     private Controls _controls;
-    private Controls.IPlayerActions _playerActionsImplementation;
 
     private void OnEnable()
     {
