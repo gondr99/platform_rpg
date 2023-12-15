@@ -19,11 +19,17 @@ public class SkelectonGroundState : EnemyState<SkelectonStateEnum>
         //플레이와의 거리 : 뒤쪽에서 접근해도 인지할 수 있도록
 
         if (_player.HealthCompo.isDead) return; //죽었으면 걍 이동.
-        float distance = Vector2.Distance(_enemy.transform.position, _player.transform.position); 
-        if ((hit|| distance < 2) && !_enemy.IsObstacleInLine(hit.distance))
+        float distance = Vector2.Distance(_enemy.transform.position, _player.transform.position);
+        if (distance < 2 || (hit && !_enemyBase.IsObstacleInLine(hit.distance)))
         {
             _stateMachine.ChangeState(SkelectonStateEnum.Battle);
+            return;
         }
+
+        //if ((hit|| distance < 2) && !_enemy.IsObstacleInLine(hit.distance))
+        //{
+        //    _stateMachine.ChangeState(SkelectonStateEnum.Battle);
+        //}
         
     }
 
